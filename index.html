@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar de oportunidades bursátiles</title>
+<meta name="theme-color" content="#14213a">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: cabecera con el veredicto del día → termómetro de indicadores → tarjetas de oportunidades → agenda → historial */
+:root {
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --ink: #14213a;
+  --muted: #5b6678;
+  --line: #dde2ea;
+  --accent: #1d6fb8;
+  --accent-soft: #e3eef9;
+  --up: #12804f;
+  --down: #c2352b;
+  --warn: #b7791f;
+  --up-soft: #e3f4ec;
+  --down-soft: #fbe9e7;
+  --warn-soft: #fbf1df;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1522; --surface: #162034; --ink: #e8edf5; --muted: #9aa6b8; --line: #26324a;
+    --accent: #6cb2f0; --accent-soft: #1b2e4a; --up: #43c38a; --down: #f0776c; --warn: #e5ad55;
+    --up-soft: #133327; --down-soft: #3a1c1c; --warn-soft: #3a2c14; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1522; --surface: #162034; --ink: #e8edf5; --muted: #9aa6b8; --line: #26324a;
+  --accent: #6cb2f0; --accent-soft: #1b2e4a; --up: #43c38a; --down: #f0776c; --warn: #e5ad55;
+  --up-soft: #133327; --down-soft: #3a1c1c; --warn-soft: #3a2c14; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 56px; display: grid; gap: 36px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 800; line-height: 1.12; }
+h2 { font-size: 1.25rem; font-weight: 700; }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+
+header.top { display: grid; gap: 14px; }
+.meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; color: var(--muted); font-size: 0.92rem; }
+.brand { font-family: var(--font-display); font-weight: 700; color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.82rem; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 0.82rem; font-weight: 600; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.mood-negativo { background: var(--down-soft); color: var(--down); }
+.mood-positivo { background: var(--up-soft); color: var(--up); }
+.mood-neutral { background: var(--warn-soft); color: var(--warn); }
+.live-on { background: var(--accent-soft); color: var(--accent); }
+.live-off { background: var(--line); color: var(--muted); }
+.pricebox .now { font-size: 0.9rem; font-weight: 600; }
+.tile .live-tag { font-size: 0.72rem; color: var(--accent); font-weight: 600; }
+.summary { max-width: 70ch; color: var(--ink); margin: 0; }
+
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.section-head p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 2px; }
+.tile .lab { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+.tile .val { font-size: 1.28rem; }
+.tile .chg { font-size: 0.85rem; }
+.tile .note { font-size: 0.78rem; color: var(--muted); line-height: 1.35; }
+.tile .src { font-size: 0.75rem; color: var(--muted); }
+.good { color: var(--up); } .bad { color: var(--down); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters button { font: inherit; font-size: 0.88rem; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; display: grid; gap: 10px; align-content: start; border-top: 4px solid var(--accent); }
+.card.observacion { border-top-color: var(--warn); }
+.card .row1 { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.ticker { font-family: var(--font-num); font-size: 1.35rem; line-height: 1; }
+.cname { font-weight: 600; }
+.sub { color: var(--muted); font-size: 0.86rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 0.76rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.chip.r-alto { background: var(--down-soft); color: var(--down); }
+.chip.r-medio { background: var(--warn-soft); color: var(--warn); }
+.chip.r-bajo { background: var(--up-soft); color: var(--up); }
+.chip.st-observacion { background: var(--warn-soft); color: var(--warn); }
+.pricebox { display: grid; gap: 2px; padding: 9px 12px; background: var(--bg); border-radius: 8px; }
+.pricebox .p { font-size: 0.95rem; }
+.pricebox .d { font-size: 0.84rem; color: var(--muted); }
+.card p { margin: 0; font-size: 0.95rem; }
+.card .lbl { font-family: var(--font-display); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); display: block; margin-bottom: 2px; }
+.card .srcs { font-size: 0.8rem; color: var(--muted); }
+
+.agenda { display: grid; gap: 8px; }
+.ag { display: grid; grid-template-columns: 120px 1fr; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+.ag .when { font-family: var(--font-num); color: var(--accent); font-size: 0.9rem; padding-top: 2px; }
+.ag .what { font-weight: 600; }
+.ag .why { color: var(--muted); font-size: 0.92rem; }
+
+.hist { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-display); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+.tk { font-family: var(--font-num); font-size: 0.85rem; padding: 1px 7px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin: 0 4px 4px 0; display: inline-block; }
+.tk.observacion { background: var(--warn-soft); color: var(--warn); }
+
+.disclaimer { font-size: 0.86rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; max-width: 80ch; }
+.error { background: var(--down-soft); color: var(--down); padding: 14px 16px; border-radius: 10px; }
+
+@media (max-width: 520px) {
+  .wrap { padding: 20px 16px 44px; gap: 30px; }
+  .cards { grid-template-columns: 1fr; }
+  .ag { grid-template-columns: 1fr; gap: 4px; }
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .card { transition: transform .15s ease; }
+}
+</style>
+</head>
+<body>
+<main class="wrap" id="app">
+  <header class="top" id="top">
+    <div class="meta"><span class="brand">Radar bursátil · Agus</span><span id="mood" class="pill">Cargando</span><span id="live" class="pill live-off">Cotizaciones: conectando…</span><span id="session"></span></div>
+    <h1 id="headline">Cargando la revisión del día…</h1>
+    <p class="summary" id="summary"></p>
+  </header>
+
+  <section id="termometro" aria-labelledby="h-term">
+    <div class="section-head"><h2 id="h-term">Termómetro del mercado</h2><p>Cada número indica su fuente y hora</p></div>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section id="oportunidades" aria-labelledby="h-op">
+    <div class="section-head">
+      <h2 id="h-op">Oportunidades para analizar</h2>
+      <div class="filters" role="group" aria-label="Filtrar oportunidades">
+        <button type="button" id="f-todas" data-f="todas" aria-pressed="true">Todas</button>
+        <button type="button" id="f-arg" data-f="arg" aria-pressed="false">Argentina</button>
+        <button type="button" id="f-ced" data-f="ced" aria-pressed="false">CEDEARs</button>
+        <button type="button" id="f-bajo" data-f="bajo" aria-pressed="false">Riesgo bajo</button>
+        <button type="button" id="f-obs" data-f="obs" aria-pressed="false">En observación</button>
+      </div>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="agenda-sec" aria-labelledby="h-ag">
+    <div class="section-head"><h2 id="h-ag">Qué mirar en los próximos días</h2></div>
+    <div class="agenda" id="agenda"></div>
+  </section>
+
+  <section id="historial" aria-labelledby="h-hist">
+    <div class="section-head"><h2 id="h-hist">Historial de revisiones</h2><p>Lo que marcó el radar cada día y a qué precio</p></div>
+    <div class="hist"><table><thead><tr><th>Día</th><th>Clima</th><th>Lectura</th><th>Marcadas</th></tr></thead><tbody id="histbody"></tbody></table></div>
+  </section>
+
+  <p class="disclaimer" id="disclaimer">La revisión y las oportunidades las arma Claude cada día hábil antes de la apertura, a partir de noticias y datos públicos. Las cotizaciones marcadas como “en vivo” se refrescan cada minuto desde Yahoo Finance, DolarApi y ArgentinaDatos, y pueden tener algunos minutos de demora. No es asesoramiento financiero: es una lista de ideas para que investigues y decidas vos. Los precios son aproximados y pueden haber cambiado; revisalos siempre en tu bróker antes de operar. Invertí solo dinero que no vayas a necesitar en el corto plazo y diversificá. Claude es un producto de Anthropic, por eso esta página no evalúa la acción de Anthropic.</p>
+</main>
+
+<script>
+(function () {
+  var ARG = ["ADR / BYMA", "BYMA / ADR (PAM)", "BYMA"];
+  var state = { data: null, filter: "todas", live: null };
+
+  // Símbolos de Yahoo Finance para cada indicador y equivalencias de tickers locales.
+  var IND_SYM = { merval: "^MERV", spx: "^GSPC", nasdaq: "^IXIC", vix: "^VIX", wti: "CL=F", btc: "BTC-USD" };
+  var TICKER_SYM = { PAMP: "PAM", BRKB: "BRK-B", "BRK.B": "BRK-B", TGSU2: "TGS", TECO2: "TEO", CEPU: "CEPU", TRAN: "TRAN.BA", TGNO4: "TGNO4.BA", ALUA: "ALUA.BA", TXAR: "TXAR.BA", COME: "COME.BA" };
+  function yahooSym(o) { return o.yahoo || TICKER_SYM[o.ticker] || o.ticker; }
+
+  var nf = function (d) { return new Intl.NumberFormat("es-AR", { minimumFractionDigits: d, maximumFractionDigits: d }); };
+  function money(x, cur) {
+    if (typeof x !== "number") return "—";
+    var d = x >= 1000 ? 0 : 2;
+    var pre = cur === "ARS" ? "$" : "US$";
+    return pre + nf(d).format(x);
+  }
+  function hhmm(iso) {
+    try { return new Date(iso).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Argentina/Buenos_Aires" }); } catch (e) { return ""; }
+  }
+  function liveQuote(sym) {
+    var q = state.live && state.live.quotes && state.live.quotes[sym];
+    return q && !q.error && typeof q.price === "number" ? q : null;
+  }
+  function liveIndicator(i) {
+    var L = state.live; if (!L) return null;
+    if (IND_SYM[i.id]) {
+      var q = liveQuote(IND_SYM[i.id]); if (!q) return null;
+      var v;
+      if (i.id === "vix") v = nf(1).format(q.price);
+      else if (i.id === "wti") v = "US$" + nf(1).format(q.price);
+      else if (i.id === "btc") v = "US$" + nf(0).format(q.price);
+      else v = nf(0).format(q.price);
+      return { value: v, unit: i.id === "btc" || i.id === "wti" || i.id === "vix" ? "" : "pts", change: q.changePct, note: "En vivo · " + hhmm(q.time) };
+    }
+    if (i.id === "ccl" && L.dolar && L.dolar.ccl && !L.dolar.error) {
+      var d = L.dolar, parts = [];
+      if (d.mep) parts.push("MEP $" + nf(0).format(d.mep.venta));
+      if (d.oficial) parts.push("oficial $" + nf(0).format(d.oficial.venta));
+      return { value: "$" + nf(0).format(d.ccl.venta), unit: "", change: null, note: parts.join(" · ") + " · en vivo " + hhmm(d.ccl.fecha) };
+    }
+    if (i.id === "riesgo" && L.riesgo && typeof L.riesgo.valor === "number") {
+      return { value: nf(0).format(L.riesgo.valor), unit: "pb", change: null, note: "Último dato: " + L.riesgo.fecha };
+    }
+    return null;
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function fmtPct(x) {
+    var s = (x > 0 ? "+" : "") + x.toFixed(x % 1 === 0 ? 1 : 2).replace(".", ",") + "%";
+    return s;
+  }
+  function moodText(m) { return m === "positivo" ? "Día positivo" : m === "negativo" ? "Día negativo" : "Día mixto"; }
+  function riskText(r) { return "Riesgo " + r; }
+
+  function renderHeader(d) {
+    var mood = document.getElementById("mood");
+    mood.textContent = moodText(d.mood);
+    mood.className = "pill mood-" + d.mood;
+    document.getElementById("session").textContent = d.session;
+    document.getElementById("headline").textContent = d.headline;
+    document.getElementById("summary").textContent = d.summary;
+  }
+
+  function renderTiles(d) {
+    var box = document.getElementById("tiles");
+    box.textContent = "";
+    d.indicators.forEach(function (base) {
+      var lv = liveIndicator(base);
+      var i = lv ? Object.assign({}, base, lv) : base;
+      var t = el("div", "tile"); t.id = "ind-" + i.id;
+      t.appendChild(el("span", "lab", i.label));
+      var v = el("span", "val num", i.value + (i.unit ? " " + i.unit : ""));
+      t.appendChild(v);
+      if (typeof i.change === "number") {
+        var goodMove = i.invert ? i.change < 0 : i.change > 0;
+        var c = el("span", "chg num " + (i.change === 0 ? "" : goodMove ? "good" : "bad"), (i.change > 0 ? "▲ " : i.change < 0 ? "▼ " : "") + fmtPct(i.change));
+        t.appendChild(c);
+      }
+      if (i.note) t.appendChild(el("span", lv ? "note live-tag" : "note", i.note));
+      if (lv) {
+        t.appendChild(el("span", "src", lv.unit === "pb" ? "Fuente: ArgentinaDatos" : i.id === "ccl" ? "Fuente: DolarApi" : "Fuente: Yahoo Finance"));
+      } else if (i.source) {
+        var s = el("span", "src"); var a = el("a", null, i.source.name); a.href = i.source.url; a.target = "_blank"; a.rel = "noopener";
+        s.appendChild(document.createTextNode("Fuente: ")); s.appendChild(a); t.appendChild(s);
+      }
+      box.appendChild(t);
+    });
+  }
+
+  function passes(o) {
+    var f = state.filter;
+    if (f === "todas") return true;
+    if (f === "arg") return ARG.indexOf(o.market) !== -1 || /BYMA/.test(o.market) && !/CEDEAR/.test(o.market);
+    if (f === "ced") return /CEDEAR/.test(o.market);
+    if (f === "bajo") return o.risk === "bajo";
+    if (f === "obs") return o.status === "observacion";
+    return true;
+  }
+
+  function block(label, text) {
+    var p = el("p");
+    p.appendChild(el("span", "lbl", label));
+    p.appendChild(document.createTextNode(text));
+    return p;
+  }
+
+  function renderCards(d) {
+    var box = document.getElementById("cards");
+    box.textContent = "";
+    var list = d.opportunities.filter(passes);
+    if (!list.length) { box.appendChild(el("p", "sub", "No hay oportunidades con este filtro hoy.")); return; }
+    list.forEach(function (o) {
+      var c = el("article", "card " + o.status); c.id = "op-" + o.ticker.toLowerCase();
+      var r1 = el("div", "row1");
+      var left = el("div");
+      left.appendChild(el("div", "ticker", o.ticker));
+      left.appendChild(el("div", "cname", o.name));
+      left.appendChild(el("div", "sub", o.market + " · " + o.sector));
+      r1.appendChild(left);
+      c.appendChild(r1);
+      var chips = el("div", "chips");
+      chips.appendChild(el("span", "chip st-" + o.status, o.status === "observacion" ? "En observación" : "Candidata"));
+      chips.appendChild(el("span", "chip r-" + o.risk, riskText(o.risk)));
+      chips.appendChild(el("span", "chip", o.horizon));
+      c.appendChild(chips);
+      var pb = el("div", "pricebox");
+      var q = liveQuote(yahooSym(o));
+      if (q) {
+        var txt = "Ahora " + money(q.price, q.currency);
+        if (typeof q.changePct === "number") txt += " · " + (q.changePct > 0 ? "▲ " : q.changePct < 0 ? "▼ " : "") + fmtPct(q.changePct) + " hoy";
+        if (typeof q.fromHighPct === "number" && q.fromHighPct < -1) txt += " · " + nf(0).format(Math.abs(q.fromHighPct)) + "% bajo su máximo de 52 semanas";
+        var now = el("span", "now num " + (q.changePct > 0 ? "good" : q.changePct < 0 ? "bad" : ""), txt);
+        pb.appendChild(now);
+        pb.appendChild(el("span", "d", "Al momento de la revisión: " + o.price));
+      } else {
+        pb.appendChild(el("span", "p num", o.price));
+      }
+      pb.appendChild(el("span", "d", o.discount));
+      c.appendChild(pb);
+      c.appendChild(block("Por qué", o.thesis));
+      c.appendChild(block("Riesgos", o.risks));
+      c.appendChild(block("Qué vigilar", o.watch));
+      if (o.sources && o.sources.length) {
+        var s = el("div", "srcs"); s.appendChild(document.createTextNode("Fuentes: "));
+        o.sources.forEach(function (src, idx) {
+          var a = el("a", null, src.name); a.href = src.url; a.target = "_blank"; a.rel = "noopener";
+          s.appendChild(a); if (idx < o.sources.length - 1) s.appendChild(document.createTextNode(" · "));
+        });
+        c.appendChild(s);
+      }
+      box.appendChild(c);
+    });
+  }
+
+  function renderAgenda(d) {
+    var box = document.getElementById("agenda"); box.textContent = "";
+    (d.agenda || []).forEach(function (a) {
+      var r = el("div", "ag");
+      r.appendChild(el("div", "when", a.date));
+      var w = el("div"); w.appendChild(el("div", "what", a.event)); w.appendChild(el("div", "why", a.why));
+      r.appendChild(w); box.appendChild(r);
+    });
+  }
+
+  function renderHistory(d) {
+    var tb = document.getElementById("histbody"); tb.textContent = "";
+    (d.history || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).forEach(function (h) {
+      var tr = el("tr");
+      tr.appendChild(el("td", "num", h.label || h.date));
+      var m = el("td"); m.appendChild(el("span", "pill mood-" + h.mood, moodText(h.mood).replace("Día ", ""))); tr.appendChild(m);
+      tr.appendChild(el("td", null, h.headline));
+      var p = el("td");
+      (h.picks || []).forEach(function (k) {
+        var s = el("span", "tk " + (k.status || ""), k.ticker + (k.price && k.price !== "—" ? " · " + k.price : ""));
+        p.appendChild(s);
+      });
+      tr.appendChild(p); tb.appendChild(tr);
+    });
+  }
+
+  function renderAll() {
+    var d = state.data;
+    renderHeader(d); renderTiles(d); renderCards(d); renderAgenda(d); renderHistory(d);
+  }
+
+  document.querySelectorAll(".filters button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      state.filter = b.getAttribute("data-f");
+      document.querySelectorAll(".filters button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      if (state.data) renderCards(state.data);
+    });
+  });
+
+  function setLiveBadge(ok, when) {
+    var b = document.getElementById("live");
+    if (ok) { b.className = "pill live-on"; b.textContent = "En vivo · " + hhmm(when); }
+    else { b.className = "pill live-off"; b.textContent = "Cotizaciones en vivo no disponibles"; }
+  }
+
+  function loadLive() {
+    if (!state.data) return;
+    var syms = state.data.opportunities.map(yahooSym).join(",");
+    fetch("/api/quotes?symbols=" + encodeURIComponent(syms), { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (L) {
+        state.live = L;
+        setLiveBadge(true, L.updated);
+        renderTiles(state.data); renderCards(state.data);
+      })
+      .catch(function () { if (!state.live) setLiveBadge(false); });
+  }
+
+  setInterval(function () { if (document.visibilityState === "visible") loadLive(); }, 60000);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") loadLive(); });
+
+  fetch("/data.json", { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(function (d) { state.data = d; renderAll(); loadLive(); })
+    .catch(function () {
+      var h = document.getElementById("headline");
+      h.textContent = "No se pudo cargar la revisión del día";
+      var s = document.getElementById("summary");
+      s.textContent = "Recargá la página en unos segundos. Si el problema sigue, avisale a Claude para que revise la actualización.";
+      s.className = "summary error";
+    });
+})();
+</script>
+</body>
+</html>
