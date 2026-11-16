@@ -1,10 +1,10 @@
 // Cotizaciones en vivo para el Radar bursátil.
 // GET /api/quotes?symbols=YPF,GOOGL,BRK-B
-// Devuelve índices fijos (Merval, S&P 500, Nasdaq, VIX, WTI, Bitcoin), dólares, riesgo país
+// Devuelve índices fijos (S&P 500, Nasdaq, VIX, WTI, Bitcoin), dólares, riesgo país
 // y los símbolos pedidos, con precio, variación de la última rueda y distancia al máximo de 52 semanas.
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
-const INDICES = ["^MERV", "^GSPC", "^IXIC", "^VIX", "CL=F", "BTC-USD"];
+const INDICES = ["^GSPC", "^IXIC", "^VIX", "CL=F", "BTC-USD"];
 const SYMBOL_OK = /^[A-Z0-9.\-^=]{1,15}$/i;
 
 async function getJson(url) {

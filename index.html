@@ -179,7 +179,8 @@ tr:last-child td { border-bottom: 0; }
   var state = { data: null, filter: "todas", live: null };
 
   // Símbolos de Yahoo Finance para cada indicador y equivalencias de tickers locales.
-  var IND_SYM = { merval: "^MERV", spx: "^GSPC", nasdaq: "^IXIC", vix: "^VIX", wti: "CL=F", btc: "BTC-USD" };
+  // El Merval no se toma de Yahoo: su símbolo ^MERV sigue la escala anterior al relanzamiento del MSCI Merval.
+  var IND_SYM = { spx: "^GSPC", nasdaq: "^IXIC", vix: "^VIX", wti: "CL=F", btc: "BTC-USD" };
   var TICKER_SYM = { PAMP: "PAM", BRKB: "BRK-B", "BRK.B": "BRK-B", TGSU2: "TGS", TECO2: "TEO", CEPU: "CEPU", TRAN: "TRAN.BA", TGNO4: "TGNO4.BA", ALUA: "ALUA.BA", TXAR: "TXAR.BA", COME: "COME.BA" };
   function yahooSym(o) { return o.yahoo || TICKER_SYM[o.ticker] || o.ticker; }
 
@@ -193,6 +194,11 @@ tr:last-child td { border-bottom: 0; }
   function hhmm(iso) {
     try { return new Date(iso).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Argentina/Buenos_Aires" }); } catch (e) { return ""; }
   }
+  function parseNum(t) {
+    if (typeof t !== "string") return null;
+    var n = parseFloat(t.replace(/[^0-9.,]/g, "").replace(/\./g, "").replace(",", "."));
+    return isFinite(n) && n > 0 ? n : null;
+  }
   function liveQuote(sym) {
     var q = state.live && state.live.quotes && state.live.quotes[sym];
     return q && !q.error && typeof q.price === "number" ? q : null;
@@ -201,6 +207,8 @@ tr:last-child td { border-bottom: 0; }
     var L = state.live; if (!L) return null;
     if (IND_SYM[i.id]) {
       var q = liveQuote(IND_SYM[i.id]); if (!q) return null;
+      var ref = parseNum(i.value);
+      if (ref && (q.price / ref > 1.35 || q.price / ref < 0.65)) return null; // dato en vivo incoherente: se muestra el de la revisión
       var v;
       if (i.id === "vix") v = nf(1).format(q.price);
       else if (i.id === "wti") v = "US$" + nf(1).format(q.price);
