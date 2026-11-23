@@ -1,112 +1,112 @@
 {
-  "updated": "2026-11-20T08:40:41-03:00",
-  "session": "Viernes 20 de noviembre de 2026 · antes de la apertura (cierres del jueves 19; bitcoin y futuros de Wall Street son de esta mañana). Hoy BYMA opera normal; el lunes 23 es feriado en Argentina (Día de la Soberanía Nacional, trasladado) y el mercado local no abre",
+  "updated": "2026-11-23T08:43:34-03:00",
+  "session": "Lunes 23 de noviembre de 2026 · antes de la apertura. Hoy es feriado en Argentina (Día de la Soberanía Nacional, trasladado): BYMA no opera, pero Wall Street abre normal. Cifras de cierre del viernes 20; bitcoin y futuros son de esta mañana",
   "mood": "negativo",
-  "headline": "Jueves negro: Wall Street cae más de 2% y el riesgo país salta 81 puntos a 931, con el dólar en récord",
-  "summary": "El jueves fue la peor rueda en semanas: el S&P 500 cayó 2,02% y sumó su sexta baja seguida (ya está 8,2% abajo de su récord de octubre), el Nasdaq perdió 2,25% y el Dow cerró debajo de 50.000 por primera vez desde junio, con más de 90% de las acciones del S&P en rojo. Pesaron la venta en tecnología e inteligencia artificial (Nvidia −3,3%, Amazon −3,9%, Alphabet −3,5% después de haber subido 4% en la mañana), la apuesta a una suba de tasas en diciembre y una tasa a 10 años que sigue arriba de 5%; el VIX saltó cerca de 16% a 28,4. El debut de Anthropic en el Nasdaq cerró 17% arriba del precio de colocación, pero no alcanzó para sostener al resto (es solo un evento: Claude es un producto de Anthropic y esta página no evalúa esa acción). En Argentina el golpe fue más fuerte: el riesgo país subió 81 puntos a 931, los bonos en dólares cayeron hasta 4%, el Merval bajó a 80.831 puntos y los ADR se hundieron hasta 10,4% (Supervielle), con Galicia en su piso desde marzo de 2024; el contado con liquidación llegó a $1.744 y la brecha con el oficial superó 10%, algo que no pasaba desde septiembre de 2025. Los analistas suman como causas la debilidad del real tras la reelección de Lula, los vencimientos de deuda de 2027 y el ruido político. Esta mañana los futuros del Nasdaq vuelven a bajar entre 0,9% y 1,4% y el bitcoin tocó su nivel más bajo desde julio. Para buscar oportunidades el mensaje es de prudencia: hay calidad con descuentos grandes (Microsoft, Nvidia, Mercado Libre, Alphabet), pero conviene entrar de a partes muy chicas, priorizar lo defensivo y lo que cotiza en dólares con poco riesgo argentino, y tener en cuenta que el lunes 23 BYMA no opera.",
+  "headline": "Viernes negro: el S&P 500 entra en corrección, el Nasdaq cae 5,3% y el riesgo país toca 1.070; esta mañana los futuros rebotan fuerte",
+  "summary": "El viernes cerró la peor semana de Wall Street en años: el S&P 500 cayó 3,70% a 6.910 puntos, quedó más de 10% debajo de su récord de octubre (técnicamente, en corrección) y sumó siete bajas seguidas, mientras el Nasdaq perdió 5,28% en el día y 10% en la semana. El detonante fue Nvidia, que se hundió 14% a US$125,53 después de que Reuters informara que la SEC revisa su contabilidad, y arrastró a Micron y AMD (más de 13% abajo cada una); el VIX saltó 26% a 35,9, su cierre más alto desde marzo. En Argentina el golpe fue más profundo: el riesgo país escaló hasta 1.070 puntos (subió más de 230 en la semana y es el máximo de 2026), los bonos en dólares siguieron cayendo, YPF terminó la semana en US$32,32 (mínimo en dos años) y Galicia en US$25,29, aunque el Merval en pesos apenas perdió 1% semanal (80.679 puntos) porque el contado con liquidación trepó a $1.790 y la brecha llegó a 13%. Esta mañana el panorama cambió de signo: los futuros del Nasdaq 100 suben cerca de 3% y los del S&P 500 alrededor de 2,5%, Nvidia rebota 8% antes de la apertura y el bitcoin se recupera a la zona de US$61.000 después de tocar US$55.100 el fin de semana. Hoy BYMA está cerrado por feriado, así que los ADR y los CEDEAR se mueven en Nueva York sin que se pueda operar en el mercado local. Para buscar oportunidades, el rebote de hoy no cambia el fondo: la investigación sobre Nvidia sigue abierta, el miércoles sale la inflación PCE que puede reforzar una suba de tasas en diciembre, y en Argentina la señal clave es si el riesgo país se estabiliza; conviene entrar de a partes muy chicas, priorizar lo defensivo y no perseguir el rebote del primer día.",
   "indicators": [
     {
       "id": "merval",
       "label": "MSCI Merval",
-      "value": "80.831",
-      "unit": "puntos",
-      "change": -1.5,
+      "value": "80.679",
+      "unit": "pts",
+      "change": -0.19,
       "invert": false,
-      "note": "cierre del jueves 19 en pesos según Puntal, que informó una baja de 2%; contra el cierre del miércoles (82.059) la caída calculada es de 1,5%",
+      "note": "cierre del viernes 20 según Infobae (−1% en la semana en pesos, −11% en dólares); la variación diaria está calculada contra los 80.831 del jueves 19. Hoy BYMA no opera por feriado",
       "source": {
-        "name": "Puntal",
-        "url": "https://www.puntal.com.ar/riesgo-pais/acciones-y-bonos-argentinos-cayeron-fuerte-y-el-riesgo-pais-supero-900-n268524"
+        "name": "Infobae (balance semanal, 21/11)",
+        "url": "https://www.infobae.com/economia/2026/11/21/el-riesgo-pais-escalo-230-puntos-y-las-acciones-argentinas-se-hundieron-hasta-25-en-una-semana-muy-negativa-de-wall-street/"
       }
     },
     {
       "id": "riesgo",
       "label": "Riesgo país",
-      "value": "931",
-      "unit": "puntos básicos",
-      "change": 9.6,
+      "value": "1.070",
+      "unit": "pb",
+      "change": 14.9,
       "invert": true,
-      "note": "cierre del jueves 19: subió 81 puntos (desde 848), con bonos en dólares hasta 4% abajo",
+      "note": "cierre del viernes 20 (máximo de 2026 y más alto desde octubre de 2024); subió desde 931 el jueves y desde 832 la semana anterior",
       "source": {
-        "name": "El Economista",
-        "url": "https://eleconomista.com.ar/economia/el-riesgo-pais-disparo-dolar-alcanzo-su-valor-mas-alto-ano-n99781"
+        "name": "DolarHoy (viernes 20/11)",
+        "url": "https://dolarhoy.com/mercado/viernes-negro-en-el-mercado-argentino-el-riesgo-pais-supera-los-1-000-puntos-por-primera-vez-desde-octubre-de-2025-2026112011520"
       }
     },
     {
       "id": "ccl",
       "label": "Dólar CCL",
-      "value": "$1.744",
-      "unit": "pesos",
-      "change": 1.6,
+      "value": "$1.790",
+      "unit": "ARS",
+      "change": 2.64,
       "invert": true,
-      "note": "cierre del jueves 19 ($1.744,37) · MEP $1.641,27 · oficial BNA $1.580–1.585 (venta, máximo nominal del año) · brecha CCL contra el mayorista arriba de 10%, la más alta desde septiembre de 2025",
+      "note": "cierre del viernes 20 ($1.790,39, brecha de 13,3% con el mayorista) · MEP $1.682,79 (brecha 6,5%) · mayorista $1.580, con la mayor suba semanal en 19 meses",
       "source": {
-        "name": "Rosario3",
-        "url": "https://www.rosario3.com/ecos365/noticias/claves-del-dia-dolar-en-alerta-brasil-contagia-nervios-y-el-hospital-italiano-apuesta-fuerte-en-funes-20261120-0001.html"
+        "name": "Ámbito (dólar, cierre 20/11)",
+        "url": "https://www.ambito.com/finanzas/dolar-hoy-cuanto-cerro-este-viernes-20-noviembre-n6347715"
       }
     },
     {
       "id": "spx",
       "label": "S&P 500",
-      "value": "7.175,83",
-      "unit": "puntos",
-      "change": -2.02,
+      "value": "6.910,39",
+      "unit": "pts",
+      "change": -3.7,
       "invert": false,
-      "note": "cierre del jueves 19, sexta baja seguida y 8,2% debajo de su récord de octubre; futuros de hoy entre −0,3% y −0,5%",
+      "note": "cierre del viernes 20: séptima baja seguida, más de 10% debajo del récord del 6 de octubre y −8,6% en la semana. Esta mañana los futuros suben alrededor de 2,5%",
       "source": {
-        "name": "AP / ABC News",
-        "url": "https://abcnews.com/Business/wireStory/major-us-stock-indexes-fared-thursday-11192026-138303454"
+        "name": "StockInvest.us (cierre 20/11)",
+        "url": "https://stockinvest.us/digest/digest-us-market-close-2026-11-20"
       }
     },
     {
       "id": "nasdaq",
       "label": "Nasdaq Composite",
-      "value": "23.879,20",
-      "unit": "puntos",
-      "change": -2.25,
+      "value": "22.617,73",
+      "unit": "pts",
+      "change": -5.28,
       "invert": false,
-      "note": "cierre del jueves 19; los futuros del Nasdaq 100 caen entre 0,9% y 1,4% esta mañana",
+      "note": "cierre del viernes 20, −10% en la semana y ya negativo en el año; los futuros del Nasdaq 100 suben cerca de 3% esta mañana",
       "source": {
-        "name": "AP / ABC News",
-        "url": "https://abcnews.com/Business/wireStory/major-us-stock-indexes-fared-thursday-11192026-138303454"
+        "name": "StockInvest.us (cierre 20/11)",
+        "url": "https://stockinvest.us/digest/digest-us-market-close-2026-11-20"
       }
     },
     {
       "id": "vix",
       "label": "VIX (miedo)",
-      "value": "28,44",
-      "unit": "puntos",
-      "change": 15.8,
+      "value": "35,89",
+      "unit": "pts",
+      "change": 26.2,
       "invert": true,
-      "note": "cierre del jueves 19 según un resumen de mercado; llegó a 29,13 en el día, su nivel más alto desde marzo",
+      "note": "cierre del viernes 20, el más alto desde fines de marzo (otro proveedor informa 37,43)",
       "source": {
-        "name": "Global Markets Close (Strategitz)",
-        "url": "https://strategitz.substack.com/p/global-markets-close-november-19"
+        "name": "Closing Look, 20/11",
+        "url": "https://cappnotes.substack.com/p/closing-look-friday-november-20-2026"
       }
     },
     {
       "id": "wti",
       "label": "Petróleo WTI",
-      "value": "US$83,21",
-      "unit": "por barril",
-      "change": 1.09,
+      "value": "US$83,98",
+      "unit": "barril",
+      "change": 0.93,
       "invert": false,
-      "note": "cierre del jueves 19 (variación calculada contra US$82,31 del miércoles); Brent US$91,98. Esta mañana el Brent ronda US$92,2 y va a una baja semanal cercana a 3,5%",
+      "note": "cierre del viernes 20 (variación calculada contra US$83,21 del jueves); Brent US$92,57. Tercera baja semanal seguida (WTI −5,2% en la semana) por la normalización de los envíos por Ormuz",
       "source": {
-        "name": "World Oil Monitor",
-        "url": "https://worldoilmonitor.com/"
+        "name": "EnergyNow (cierre 20/11)",
+        "url": "https://energynow.com/2026/11/oil-prices-rebound-friday-on-middle-east-tensions-but-fall-for-third-straight-week-wti-closes-at-83-98-brent-at-92-57/"
       }
     },
     {
       "id": "btc",
       "label": "Bitcoin",
-      "value": "≈ US$61.510",
-      "unit": "dólares",
-      "change": -2.7,
+      "value": "≈ US$61.225",
+      "unit": "USD",
+      "change": 2.75,
       "invert": false,
-      "note": "madrugada del viernes 20 (datos de CoinGecko, variación en 24 h); tocó US$61.273, su nivel más bajo desde julio, con salidas de US$2.900 millones de los ETF en noviembre y el índice de miedo cerca de 12",
+      "note": "mañana del lunes 23 (OKX, variación en 24 h); el fin de semana tocó cerca de US$55.100 y el índice de miedo y codicia está en 11",
       "source": {
-        "name": "CoinGabbar",
-        "url": "https://www.coingabbar.com/en/crypto-news-today-cftc-rules-japan-risk-anthropic-bitcoin-price"
+        "name": "OKX (precio de esta mañana)",
+        "url": "https://www.okx.com/en-us/price/bitcoin-btc"
       }
     }
   ],
@@ -114,25 +114,29 @@
     {
       "ticker": "BRKB",
       "yahoo": "BRK-B",
-      "name": "Berkshire Hathaway",
+      "name": "Berkshire Hathaway (clase B)",
       "market": "CEDEAR",
       "sector": "Conglomerado / seguros",
       "status": "candidata",
       "risk": "bajo",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$572,04 (cierre 19/11, −0,45%)",
-      "discount": "≈ 4,2% debajo de su máximo de 52 semanas (US$596,92)",
-      "thesis": "Es la opción defensiva del radar y el jueves lo volvió a mostrar: mientras el S&P 500 caía 2%, Berkshire apenas cedió 0,45%. La empresa tiene una caja de unos US$357.000 millones para aprovechar caídas y en el tercer trimestre recompró US$9.600 millones de acciones propias, más del doble que el trimestre anterior; además, su abogado general compró US$250.000 en acciones el 12/11 a unos US$594. Para alguien que quiere seguir invertido en Estados Unidos sin la volatilidad de la tecnología, es una base razonable para ir armando de a partes.",
-      "risks": "No está barata: algunos analistas tienen objetivos por debajo del precio actual (uno de US$547,67) y ya subió cerca de 18% en tres meses. Si el mercado rebota fuerte, va a quedar atrás de la tecnología.",
-      "watch": "Que siga comportándose mejor que el índice en las bajas y novedades sobre uso de la caja o nuevas recompras.",
+      "price": "≈ US$570,00 (cierre 20/11, −0,36%)",
+      "discount": "Apenas cedió 0,36% el viernes mientras el S&P 500 perdía 3,70%",
+      "thesis": "Es la opción defensiva de la lista y el viernes lo demostró: en el día en que el S&P 500 se hundió 3,70% y el Nasdaq 5,28%, la acción de Berkshire bajó solo 0,36%. Su negocio está en seguros, ferrocarriles, energía y consumo, con muy poca exposición a la burbuja de la inteligencia artificial que hoy se está desinflando, y tiene una caja enorme que le permite aprovechar las caídas. Para un inversor argentino suma un segundo beneficio: el CEDEAR sigue al contado con liquidación, que el viernes subió a $1.790, así que funciona como cobertura cambiaria con riesgo bajo.",
+      "risks": "Si mañana el rebote de la tecnología es fuerte, Berkshire puede quedarse atrás. Un CCL que baje desde estos niveles récord achica la ganancia en pesos. Rinde menos que el mercado en años de euforia.",
+      "watch": "Si mantiene su comportamiento estable en una semana corta y con datos de inflación; la cotización del CCL cuando BYMA reabra el martes.",
       "sources": [
         {
-          "name": "Yahoo Finance",
-          "url": "https://finance.yahoo.com/quote/BRK-B/"
+          "name": "Yahoo Finance, historial de BRK-B",
+          "url": "https://finance.yahoo.com/quote/BRK-B/history/"
         },
         {
-          "name": "TIKR",
-          "url": "https://www.tikr.com/blog/berkshire-hathaway-is-up-18-in-3-months-its-general-counsel-just-bought-250000-more"
+          "name": "StockInvest.us (cierre 20/11)",
+          "url": "https://stockinvest.us/digest/digest-us-market-close-2026-11-20"
+        },
+        {
+          "name": "Ámbito (dólar, cierre 20/11)",
+          "url": "https://www.ambito.com/finanzas/dolar-hoy-cuanto-cerro-este-viernes-20-noviembre-n6347715"
         }
       ]
     },
@@ -140,51 +144,23 @@
       "ticker": "MSFT",
       "name": "Microsoft",
       "market": "CEDEAR",
-      "sector": "Tecnología / nube",
+      "sector": "Tecnología / software y nube",
       "status": "candidata",
       "risk": "medio",
-      "horizon": "Mediano a largo plazo",
-      "price": "≈ US$498,30 (cierre 19/11, −1,97%)",
-      "discount": "≈ 22% debajo del objetivo promedio de US$636 (consenso relevado el 13/11)",
-      "thesis": "Volvió a perder los US$500 y quedó unos 22% debajo del precio objetivo promedio de los analistas (US$636,12), con 52 de 57 analistas que la recomiendan comprar o comprar fuerte y ninguno vender; Citi mantuvo el 12/11 su recomendación de compra con objetivo de US$680. Es de las tecnológicas con negocio más diversificado (nube, software de oficina, juegos) y viene de presentar un balance mejor a lo esperado. La caída del jueves fue menor que la del Nasdaq, lo que habla de una acción más resistente dentro del sector.",
-      "risks": "Si la Reserva Federal sube la tasa en diciembre, las acciones de crecimiento pueden seguir corrigiendo. El gasto enorme en centros de datos para inteligencia artificial preocupa al mercado, y una tasa a 10 años arriba de 5% presiona las valuaciones.",
-      "watch": "Si sostiene la zona de US$490–500 y la evolución de la tasa a 10 años.",
-      "sources": [
-        {
-          "name": "Stocktitan",
-          "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-19-2026"
-        },
-        {
-          "name": "24/7 Wall St.",
-          "url": "https://247wallst.com/investing/2026/11/13/this-magnificent-seven-stock-could-be-headed-for-a-major-breakout/"
-        }
-      ]
-    },
-    {
-      "ticker": "NVDA",
-      "name": "Nvidia",
-      "market": "CEDEAR",
-      "sector": "Semiconductores",
-      "status": "candidata",
-      "risk": "alto",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$145,98 (cierre 19/11, −3,30%)",
-      "discount": "Por debajo de su mínimo previo de 52 semanas (US$148,80) y unos 40% debajo de su máximo (US$243,37)",
-      "thesis": "La acción perforó su mínimo del año pese a un balance muy por encima de lo esperado; el mercado está castigando la transición en la conducción de la empresa y las dudas sobre cuánto más van a gastar las grandes tecnológicas en inteligencia artificial. Según datos de LSEG citados por Reuters, cotiza a unas 12 veces las ganancias esperadas para los próximos 12 meses, la valuación más baja desde noviembre de 2012, algo muy poco habitual para una empresa que sigue creciendo. Es una idea para quien tolera mucha volatilidad: si se compra, conviene hacerlo en partes chicas y espaciadas.",
-      "risks": "La caída puede seguir: no hay señales de piso todavía, la acción ya cayó cerca de 29% en el año y cualquier recorte del gasto en centros de datos o restricciones de exportación a China pegan directo. El cambio de conducción suma incertidumbre.",
-      "watch": "Si recupera los US$148,80 (el viejo mínimo) y qué dicen los grandes clientes sobre su gasto en inteligencia artificial.",
+      "price": "≈ US$484,52 (cierre 20/11, −2,77%)",
+      "discount": "Bajó 2,77% el viernes, mucho menos que el Nasdaq (−5,28%)",
+      "thesis": "En la venta del viernes Microsoft cayó 2,77%, menos de la mitad que el Nasdaq, y siguió como la segunda empresa más valiosa de Estados Unidos con unos US$3,72 billones. Su negocio de software para empresas y de nube genera caja aunque se enfríe la carrera por los chips, y por eso suele resistir mejor que los fabricantes de hardware en estas correcciones. Criteria la mantiene en su cartera recomendada de CEDEAR (10% del peso, cartera actualizada al 15/10). Es una forma de entrar a la tecnología con menos sobresaltos que Nvidia.",
+      "risks": "Si la corrección de la inteligencia artificial se profundiza, ninguna tecnológica grande queda a salvo. Un dato de inflación alto el miércoles puede castigar a las acciones de crecimiento. El rebote de hoy puede ser pasajero.",
+      "watch": "Cómo cierra el rebote de hoy; el dato de inflación PCE del miércoles 25; noticias sobre el gasto en centros de datos.",
       "sources": [
         {
-          "name": "Stocktitan",
-          "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-19-2026"
+          "name": "StockTitan (cierre 20/11)",
+          "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-20-2026"
         },
         {
-          "name": "Wealth Professional",
-          "url": "https://www.wealthprofessional.ca/investments/equity-markets/wall-street-absorbs-the-hit-as-nvidia-touches-a-52-week-low/394013"
-        },
-        {
-          "name": "FourWeekMBA",
-          "url": "https://fourweekmba.com/ai-nvidia-erases-its-2026-gains-down-29-and-1-7t-from-peak/"
+          "name": "Criteria, cartera de CEDEAR",
+          "url": "https://criteria.com.ar/invertir-en-cedears/"
         }
       ]
     },
@@ -192,27 +168,59 @@
       "ticker": "GOOGL",
       "name": "Alphabet (Google)",
       "market": "CEDEAR",
-      "sector": "Tecnología / publicidad",
-      "status": "observacion",
+      "sector": "Tecnología / publicidad, nube e IA",
+      "status": "candidata",
       "risk": "medio",
-      "horizon": "Mediano a largo plazo",
-      "price": "≈ US$272,66 (cierre 19/11, −3,46%)",
-      "discount": "≈ 33% por debajo de su máximo de 52 semanas (US$408,61)",
-      "thesis": "El jueves subió 4% en la mañana y terminó cayendo 3,46%, lo que muestra cuánto la mueve hoy el sentimiento sobre inteligencia artificial. Alphabet tiene, según Trefis, alrededor de 9,9% de Anthropic después de la colocación (dato que solo mencionamos como hecho: esta página no evalúa la acción de Anthropic), y su negocio de búsqueda, YouTube y nube sigue siendo muy rentable. Los brokers locales la incluyeron en sus carteras de noviembre de CEDEARs junto a Apple y Nvidia. La dejamos en observación porque la volatilidad está muy alta y su precio quedó muy atado a lo que pase con las valuaciones del sector.",
-      "risks": "Recortó sus recompras de acciones mientras invierte fuerte en otras empresas de inteligencia artificial; riesgo regulatorio en Estados Unidos y Europa; alta sensibilidad a la tasa de interés.",
-      "watch": "Que la volatilidad baje (VIX debajo de 25) antes de pasarla a candidata.",
+      "horizon": "Largo plazo (2 años o más)",
+      "price": "≈ US$265,29 (cierre 20/11, −2,7%)",
+      "discount": "El viernes superó a Nvidia en valor de mercado y quedó como la tercera empresa más grande de EE.UU.",
+      "thesis": "Alphabet cayó 2,7% el viernes, bastante menos que el resto de la tecnología, y terminó superando a Nvidia en valor de mercado. A diferencia de los fabricantes de chips, sus ingresos vienen de la publicidad, YouTube y la nube, que no dependen de que siga el ritmo de compras de procesadores. Es la mayor posición de la cartera de CEDEAR de Criteria (17%) y expertos citados por Rosario Finanzas la prefieren junto a Apple y Nvidia, con la recomendación de recomponer posiciones de a poco. La pasamos de observación a candidata porque mostró resistencia relativa en el peor día de la corrección.",
+      "risks": "Sigue expuesta a la venta generalizada de tecnología y a los juicios por competencia en Estados Unidos. Tiger Global redujo su posición en 42% en el último trimestre, una señal de que no todos los grandes fondos la ven barata.",
+      "watch": "Si sostiene el liderazgo relativo esta semana; la inflación PCE del miércoles.",
       "sources": [
         {
-          "name": "Stocktitan",
-          "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-19-2026"
+          "name": "AI Stock Wire (Nvidia debajo de Alphabet)",
+          "url": "https://aistockwire.com/blog/nvidia-nvda-falls-below-alphabet-googl-market-value-no-4-november-2026"
         },
         {
-          "name": "Trefis",
-          "url": "https://www.trefis.com/articles/624608/what-does-the-anthropic-ipo-mean-for-alphabet-stock/2026-11-12"
-        },
-        {
-          "name": "Rosario Finanzas",
+          "name": "Rosario Finanzas, cartera de noviembre",
           "url": "https://rosariofinanzas.ar/noticias/cartera-de-noviembre-que-bonos-acciones-y-cedears-recomiendan-los-expertos"
+        },
+        {
+          "name": "CEOWORLD (Tiger Global)",
+          "url": "https://ceoworld.biz/2026/11/23/billionaire-chase-colemans-tiger-global-cut-alphabet-42-percent-then-made-nvidia-its-top-bet/"
+        }
+      ]
+    },
+    {
+      "ticker": "NVDA",
+      "name": "Nvidia",
+      "market": "CEDEAR",
+      "sector": "Tecnología / semiconductores",
+      "status": "observacion",
+      "risk": "alto",
+      "horizon": "Largo plazo, solo con una parte chica",
+      "price": "≈ US$125,53 (cierre 20/11, −14,01%); esta mañana sube cerca de 8% antes de la apertura",
+      "discount": "Perdió más de 26% en la semana y quedó como la cuarta empresa más valiosa de EE.UU.",
+      "thesis": "Después de la caída de 14% del viernes, su peor día desde el episodio de DeepSeek, Nvidia acumula una baja de más de 26% en la semana y quedó detrás de Alphabet en valor de mercado. Sigue siendo el principal proveedor de chips para inteligencia artificial y varios inversores grandes la siguen eligiendo (Tiger Global la convirtió en su mayor apuesta), pero la pasamos a observación: Reuters informó que la SEC revisa su contabilidad, el fiscal de California amplió una investigación que incluye posibles delitos y el secretario del Tesoro, Scott Bessent, dijo que el gobierno va a examinar sus ventas de chips a China. Mientras eso no se aclare, el precio puede moverse con cada titular.",
+      "risks": "La investigación contable es el riesgo central: si aparecen irregularidades, la caída puede seguir. Alta volatilidad (el rebote de 8% de hoy puede revertirse rápido). La salida de Jensen Huang como director ejecutivo sigue generando ruido.",
+      "watch": "Novedades de la SEC y de California; respuesta del directorio a lo pedido por Bessent; si el rebote de hoy se sostiene al cierre.",
+      "sources": [
+        {
+          "name": "StockInvest.us (cierre 20/11)",
+          "url": "https://stockinvest.us/digest/digest-us-market-close-2026-11-20"
+        },
+        {
+          "name": "Investing.com (futuros, 23/11)",
+          "url": "https://www.investing.com/news/economy-news/futures-bounce-after-ai-selloff-bessent-on-nvidia-probe--whats-moving-markets-5044447"
+        },
+        {
+          "name": "Invezz, cinco cosas antes de la apertura",
+          "url": "https://invezz.com/news/2026/11/23/us-stock-futures-today-nvidia-ai-rebound-fed-november-23/"
+        },
+        {
+          "name": "CEOWORLD (Tiger Global)",
+          "url": "https://ceoworld.biz/2026/11/23/billionaire-chase-colemans-tiger-global-cut-alphabet-42-percent-then-made-nvidia-its-top-bet/"
         }
       ]
     },
@@ -224,51 +232,55 @@
       "status": "candidata",
       "risk": "medio",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$1.355,49 (cierre 19/11, −4,75%)",
-      "discount": "≈ 40% debajo del objetivo de consenso (≈ US$2.244) y 35% debajo del de Goldman Sachs (US$2.100)",
-      "thesis": "Volvió a caer fuerte y ya está muy por debajo de lo que valoran los analistas: Goldman Sachs bajó su objetivo a US$2.100 el 11/11 pero mantuvo la recomendación de compra, y Scotiabank lo recortó a US$2.300 el 5/11 manteniéndola por encima del promedio del sector. Los 26 analistas que la siguen tienen objetivos entre US$1.750 y US$2.800, todos arriba del precio actual. Sus ingresos crecen cerca de 45% interanual; lo que castigó a la acción fue la ganancia más baja de lo esperado por la inversión en logística y crédito.",
-      "risks": "El ruido regional pega directo: la debilidad del real tras la reelección de Lula afecta a Brasil, su mercado principal, y el riesgo argentino también. Los márgenes pueden seguir bajo presión mientras invierte.",
-      "watch": "Si deja de caer en la zona de US$1.350 y la evolución del real brasileño.",
+      "price": "Consultá la cotización en tu bróker (no encontramos un cierre confiable del 20/11; última referencia: US$1.355,49 el 19/11)",
+      "discount": "Objetivo de Bank of America US$2.000 (recortado el 19/11, mantiene compra); consenso de MarketBeat ≈ US$2.161",
+      "thesis": "Mercado Libre viene castigada por tres cosas a la vez: un balance del tercer trimestre con márgenes más finos (ganancia de US$448 millones contra US$473 millones esperados), la caída del real después de la reelección de Lula (Brasil genera más de la mitad de sus ingresos) y la venta general de tecnología. Aun así, los analistas siguen viendo mucho margen: Bank of America bajó su objetivo a US$2.000 pero mantiene la recomendación de compra, Cantor Fitzgerald y Raymond James también apuntan a US$2.000, y el consenso de MarketBeat (catorce compras, una compra fuerte y cinco neutrales) ronda US$2.161, bastante arriba de la última referencia de US$1.355. Es una empresa que crece fuerte en comercio y crédito, comprada a un precio que no se veía desde hace años.",
+      "risks": "UBS es más cauto (objetivo US$1.600, neutral) y JPMorgan tiene US$1.850 también neutral. Si el real sigue débil o la empresa vuelve a sacrificar margen para crecer, la presión puede durar. La exposición a Argentina suma volatilidad con el riesgo país en 1.070.",
+      "watch": "El real brasileño; el comportamiento del CEDEAR cuando reabra BYMA; si el rebote tecnológico de hoy la alcanza.",
       "sources": [
         {
-          "name": "Yahoo Finance",
-          "url": "https://finance.yahoo.com/quote/MELI/"
+          "name": "StockAnalysis, MELI",
+          "url": "https://stockanalysis.com/stocks/meli/"
         },
         {
-          "name": "TIKR (Goldman Sachs)",
-          "url": "https://www.tikr.com/blog/mercadolibre-keeps-sliding-why-goldman-sachs-still-sees-41-upside"
+          "name": "ad-hoc-news (recorte de BofA)",
+          "url": "https://ad-hoc-news.de/boerse/news/corporate-news/mercadolibre-stock-ifc-deal-and-bofa-target-cut-shape-week/70541964"
         },
         {
-          "name": "TIKR (Scotiabank)",
-          "url": "https://www.tikr.com/blog/52-upside-for-mercadolibre-scotiabank-thinks-so-and-heres-how"
+          "name": "TIKR (consenso)",
+          "url": "https://www.tikr.com/blog/a-10-billion-fund-bought-these-3-stocks-last-quarter"
+        },
+        {
+          "name": "Bloomberg (balance)",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-04/mercadolibre-results-meet-estimates-as-fintech-e-commerce-grow"
         }
       ]
     },
     {
       "ticker": "TS",
       "name": "Tenaris",
-      "market": "ADR / BYMA",
-      "sector": "Energía / tubos de acero",
+      "market": "ADR / BYMA (también CEDEAR)",
+      "sector": "Energía / tubos para petróleo y gas",
       "status": "candidata",
       "risk": "medio",
-      "horizon": "Mediano plazo",
-      "price": "Consultá la cotización en tu bróker (no encontramos un cierre confiable del 19/11)",
-      "discount": "Objetivo promedio de 12 analistas US$64,96; Stifel lo subió a US$67",
-      "thesis": "Es la forma más defensiva de tener algo argentino en la cartera: factura en dólares en todo el mundo y depende poco del riesgo país, y el jueves fue de las pocas que subió al mediodía mientras los bancos se hundían. En el tercer trimestre ganó US$1,01 por acción contra US$0,83 esperado (21% por encima) y mejoró la perspectiva para el cuarto trimestre. El consenso de 12 analistas la recomienda comprar con objetivo de US$64,96, y el martes 24/11 corta un dividendo.",
-      "risks": "Depende del precio del petróleo y de la actividad de perforación en Estados Unidos; aranceles al acero; si el petróleo sigue bajando, el sector energético sufre.",
-      "watch": "La fecha de corte del dividendo del 24/11 y el petróleo.",
+      "horizon": "Mediano plazo (6 a 18 meses)",
+      "price": "Consultá la cotización en tu bróker (no encontramos un cierre confiable del 20/11; Investing.com marcaba ≈ US$57,51 el 19/11)",
+      "discount": "Rango de 52 semanas US$37,69–64,60; es de las pocas acciones del panel argentino que suben en el año",
+      "thesis": "Según el informe semanal de IEB del 20/11, los ADR argentinos caen en promedio 29,6% en dólares en el año y solo Tenaris y Ternium están en positivo. La razón es que Tenaris vende tubos para la industria petrolera en todo el mundo, cobra en dólares y depende poco de la economía argentina, así que el salto del riesgo país la afecta mucho menos que a bancos o energéticas locales. Además, un agregador de datos informa un dividendo de US$1,18 por ADR con fecha de corte el martes 24/11 (no lo pudimos confirmar en un comunicado de la empresa; en 2025 pagó el anticipo a fines de noviembre).",
+      "risks": "Un petróleo que siga bajando (tres semanas seguidas en baja) puede frenar los pedidos de tubos. El dato del dividendo no está confirmado oficialmente: verificalo en tu bróker antes de contar con él. Después del corte del dividendo la acción suele bajar por ese monto.",
+      "watch": "Confirmación del dividendo y su fecha; precio del petróleo; el informe de IEB de la semana.",
       "sources": [
         {
-          "name": "24/7 Wall St.",
-          "url": "https://247wallst.com/cards/tenaris-q3-2026-earnings-ts-01m6pxpkgas7n6rfjvpf26t71d"
+          "name": "Investing.com, Tenaris",
+          "url": "https://www.investing.com/equities/tenaris-sa"
         },
         {
-          "name": "Stock Analysis",
-          "url": "https://stockanalysis.com/stocks/ts/"
+          "name": "Trendlyne (dividendos de TS)",
+          "url": "https://us.trendlyne.com/us/equity/corporate-actions/TS/1404970/tenaris-s-a-adr/"
         },
         {
-          "name": "Infobae",
-          "url": "https://www.infobae.com/economia/2026/11/19/las-acciones-argentinas-se-hundieron-hasta-10-en-wall-street-y-el-riesgo-pais-escalo-80-puntos/"
+          "name": "KCH FM (informe de IEB)",
+          "url": "https://kchcomunicacion.com/2026/11/22/adr-argentinos-en-wall-street-se-hunden-hasta-61-en-el-ano/"
         }
       ]
     },
@@ -277,27 +289,31 @@
       "yahoo": "PAM",
       "name": "Pampa Energía",
       "market": "ADR / BYMA",
-      "sector": "Energía / electricidad y gas",
+      "sector": "Energía / generación eléctrica y gas",
       "status": "candidata",
       "risk": "medio",
-      "horizon": "Mediano a largo plazo",
-      "price": "Consultá la cotización en tu bróker (última referencia: ≈ US$62,50 el 18/11; el jueves 19 el ADR cedió solo 0,6%)",
-      "discount": "Cerca de su mínimo de 52 semanas (≈ US$60,89–62,65) y 28% abajo en doce meses",
-      "thesis": "En el día en que los ADR argentinos se hundieron hasta 10%, Pampa casi no se movió, lo que muestra que el mercado ya la venía castigando mucho. Su ganancia operativa ajustada del tercer trimestre fue de US$398 millones, 23% más que un año antes, y los analistas que la siguen la recomiendan en promedio comprar; JPMorgan bajó su objetivo a US$100 desde US$105 (con recomendación neutral), todavía muy por encima del precio actual. Los brokers locales la incluyen entre sus elegidas de noviembre junto a YPF y Vista.",
-      "risks": "Sigue siendo riesgo argentino: si el riesgo país continúa subiendo, arrastra a todo el panel. Cambios en tarifas de energía o en la regulación pueden afectar su negocio eléctrico.",
-      "watch": "Si el riesgo país se estabiliza debajo de 900 y la evolución del precio del gas.",
+      "horizon": "Mediano a largo plazo (1 a 3 años)",
+      "price": "Consultá la cotización en tu bróker (el viernes 20 el ADR tocó un mínimo de 52 semanas de US$60,65 durante la rueda; cierre del 19/11: US$62,04)",
+      "discount": "Objetivo promedio de 9 analistas ≈ US$121 (Investing.com), casi el doble del precio actual",
+      "thesis": "Pampa tocó el viernes su mínimo de 52 semanas en US$60,65 y cae casi 30% en el año, en parte por un balance del tercer trimestre que quedó bastante por debajo de lo esperado. Pero en una semana en la que los ADR argentinos se hundieron, fue de las pocas que llegaron a subir a media rueda del viernes, porque su negocio (generación eléctrica y producción de gas en Vaca Muerta) es más estable que el de los bancos. Los analistas siguen viéndola barata: Investing.com informa nueve recomendaciones de compra, ninguna de venta y un objetivo promedio de US$121,09, y Adcap mantiene compra con US$120 (este último es anterior a la caída de noviembre).",
+      "risks": "Con el riesgo país en 1.070 todo el panel argentino puede seguir bajando. El balance flojo indica que la caída de precios del gas y la energía ya pesa en los resultados. Los objetivos de los analistas son de antes del deterioro de noviembre.",
+      "watch": "El riesgo país cuando reabra el mercado el martes; si defiende la zona de US$60.",
       "sources": [
         {
-          "name": "Ámbito",
-          "url": "https://www.ambito.com/los-bonos-dolares-rebotan-medio-la-euforia-anthropic-n6347109"
+          "name": "Investing.com (mínimo de 52 semanas)",
+          "url": "https://www.investing.com/news/company-news/pampa-energia-stock-hits-52week-low-at-6065-usd-93CH-5042022"
         },
         {
-          "name": "Benzinga",
-          "url": "https://www.benzinga.com/quote/PAM/charts"
+          "name": "Yahoo Finance, PAM",
+          "url": "https://finance.yahoo.com/quote/PAM/"
         },
         {
-          "name": "Stock Analysis",
-          "url": "https://stockanalysis.com/stocks/pam/"
+          "name": "Investing.com, Pampa ADR",
+          "url": "https://www.investing.com/equities/pampa-energia-sa"
+        },
+        {
+          "name": "Ámbito (Adcap)",
+          "url": "https://www.ambito.com/energia/acciones-energeticas-las-mas-elegidas-los-inversores-que-potencial-suba-ven-los-analistas-2026-n6224267"
         }
       ]
     },
@@ -308,58 +324,54 @@
       "sector": "Energía / petróleo y gas",
       "status": "observacion",
       "risk": "alto",
-      "horizon": "Largo plazo (2 años o más)",
-      "price": "YPFD en BYMA ≈ $5.820 (19/11, −3,64%, IOL); para el ADR consultá la cotización en tu bróker (última referencia: US$36,44 el 17/11)",
-      "discount": "Cerca del mínimo de 52 semanas del ADR (US$32,74); su máximo fue US$57,87",
-      "thesis": "Los fundamentos siguen siendo buenos: en el tercer trimestre su producción de petróleo de Vaca Muerta creció 32% y generó US$901 millones de flujo de caja libre, según el análisis de Criteria. Pero la pasamos de candidata a observación porque el jueves el riesgo país saltó 81 puntos, los ADR argentinos se desplomaron y el petróleo está en camino a una baja semanal cercana a 6%: con ese cuadro conviene esperar que el riesgo país se estabilice antes de sumar.",
-      "risks": "Es la acción más expuesta a la vez al riesgo argentino y al precio del petróleo; el litigio por la expropiación sigue abierto; un dólar disparado complica el cuadro macro.",
-      "watch": "Que el riesgo país vuelva debajo de 900 y que el WTI se sostenga arriba de US$80.",
+      "horizon": "Largo plazo, solo con una parte chica",
+      "price": "≈ US$32,32 (ADR, cierre 20/11; −12,5% en la semana)",
+      "discount": "Mínimo en dos años; su máximo de 52 semanas había sido US$57,87",
+      "thesis": "YPF cerró la semana en US$32,32, su nivel más bajo en dos años, después de caer 12,5% en dólares. Es la empresa que más directamente refleja el riesgo argentino: con el riesgo país en 1.070 y los bonos con paridades que bajaron fuerte en la semana, el mercado castiga a las energéticas y bancos locales. Analistas del sector como Lazzati la mantienen entre sus preferidas por el crecimiento de Vaca Muerta, pero advierten que la volatilidad va a seguir alta mientras el riesgo país no baje de forma sostenida. La dejamos en observación hasta ver si se estabiliza el frente financiero.",
+      "risks": "Riesgo político y financiero argentino en su peor momento del año; petróleo en baja tres semanas seguidas; si el riesgo país sigue subiendo, puede perforar nuevos mínimos.",
+      "watch": "Riesgo país y bonos en dólares el martes; petróleo; noticias sobre los vencimientos de deuda de 2027.",
       "sources": [
         {
-          "name": "IOL",
-          "url": "https://iol.invertironline.com/titulo/cotizacion/BCBA/YPFD/YPF/"
+          "name": "Infobae (balance semanal, 21/11)",
+          "url": "https://www.infobae.com/economia/2026/11/21/el-riesgo-pais-escalo-230-puntos-y-las-acciones-argentinas-se-hundieron-hasta-25-en-una-semana-muy-negativa-de-wall-street/"
         },
         {
-          "name": "Criteria",
-          "url": "https://criteria.com.ar/analisis-de-acciones-locales-argentinas/ypf-resultados-3t26/"
-        },
-        {
-          "name": "Morningstar",
-          "url": "https://www.morningstar.com/stocks/xnys/ypf/quote"
+          "name": "El Economista (Lazzati)",
+          "url": "https://eleconomista.com.ar/finanzas/el-mayor-experto-acciones-energia-revela-puede-pasar-ypf-pampa-vista-tgs-transener-n89877"
         }
       ]
     }
   ],
   "agenda": [
     {
-      "date": "Vie 20/11",
-      "event": "Cierre de una semana muy negativa en Wall Street (el S&P 500 lleva seis bajas seguidas y cae 5,1% en la semana); último día hábil de la semana en Argentina",
-      "why": "Muestra si aparece algún rebote o si sigue la venta en tecnología. Como el lunes BYMA no opera, muchos inversores locales pueden reducir posiciones antes del fin de semana largo."
-    },
-    {
       "date": "Lun 23/11",
-      "event": "Feriado en Argentina (Día de la Soberanía Nacional, trasladado): BYMA cerrado, Wall Street abre normal",
-      "why": "Los ADR y los CEDEAR siguen moviéndose en Nueva York sin que se pueda operar en el mercado local; conviene tenerlo en cuenta para no quedar con órdenes a medias."
+      "event": "Feriado en Argentina (Día de la Soberanía Nacional, trasladado): BYMA cerrado, Wall Street abre normal con futuros en fuerte suba",
+      "why": "Los ADR y CEDEAR se mueven en Nueva York sin que se pueda operar localmente; el martes BYMA tendrá que ponerse al día con dos ruedas de Wall Street."
     },
     {
       "date": "Mar 24/11",
-      "event": "Tenaris corta su dividendo",
-      "why": "Para cobrarlo hay que tener la acción antes de esa fecha."
+      "event": "Balances de Dell y HP (después del cierre); posible corte del dividendo de Tenaris (dato no confirmado oficialmente)",
+      "why": "Dell es un termómetro de la demanda de servidores para inteligencia artificial, justo en medio de la corrección del sector."
     },
     {
       "date": "Mié 25/11",
-      "event": "Dato de inflación PCE de octubre en Estados Unidos (8:30 hora de Nueva York)",
-      "why": "Es la medida de inflación que sigue la Reserva Federal; un dato alto refuerza la apuesta a una suba de tasas en diciembre, que hoy pesa sobre las acciones caras."
+      "event": "Inflación PCE de octubre y segunda estimación del PIB del tercer trimestre en EE.UU. (8:30 de Nueva York); balance de Deere antes de la apertura",
+      "why": "Es el último dato de inflación antes de la reunión de la Reserva Federal del 8 y 9 de diciembre; se espera una suba anual de 3,8% en la general y 3,2% en la subyacente. Un dato alto refuerza la apuesta a una suba de tasas."
     },
     {
       "date": "Jue 26/11",
-      "event": "Feriado de Acción de Gracias en Estados Unidos: Wall Street cerrado (el viernes 27 opera media jornada)",
-      "why": "Semana corta y con poco volumen, que suele amplificar los movimientos."
+      "event": "Acción de Gracias: Wall Street cerrado",
+      "why": "Semana corta y con poco volumen, lo que suele amplificar los movimientos."
+    },
+    {
+      "date": "Vie 27/11",
+      "event": "Wall Street opera media jornada",
+      "why": "Poca liquidez; cuidado con órdenes a precio de mercado."
     },
     {
       "date": "Esta semana",
-      "event": "Riesgo país, dólar y real brasileño",
-      "why": "El riesgo país en 931 y la brecha arriba de 10% son las señales que más importan para las acciones argentinas; una estabilización del real ayudaría a Mercado Libre y al panel local."
+      "event": "Riesgo país, bonos en dólares y brecha cambiaria",
+      "why": "Con el riesgo país en 1.070 y la brecha en 13%, cualquier señal de estabilización (o de más deterioro) va a definir el rumbo de las acciones argentinas."
     }
   ],
   "history": [
@@ -600,6 +612,54 @@
           "ticker": "YPF",
           "status": "observacion",
           "price": "YPFD en BYMA ≈ $5.820 (19/11, −3,64%, IOL); para el ADR consultá la cotización en tu bróker (última referencia: US$36,44 el 17/11)"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-23",
+      "label": "Lun 23/11",
+      "mood": "negativo",
+      "headline": "Viernes negro: el S&P 500 entra en corrección, el Nasdaq cae 5,3% y el riesgo país toca 1.070; esta mañana los futuros rebotan fuerte",
+      "picks": [
+        {
+          "ticker": "BRKB",
+          "status": "candidata",
+          "price": "≈ US$570,00 (cierre 20/11, −0,36%)"
+        },
+        {
+          "ticker": "MSFT",
+          "status": "candidata",
+          "price": "≈ US$484,52 (cierre 20/11, −2,77%)"
+        },
+        {
+          "ticker": "GOOGL",
+          "status": "candidata",
+          "price": "≈ US$265,29 (cierre 20/11, −2,7%)"
+        },
+        {
+          "ticker": "NVDA",
+          "status": "observacion",
+          "price": "≈ US$125,53 (cierre 20/11, −14,01%); esta mañana sube cerca de 8% antes de la apertura"
+        },
+        {
+          "ticker": "MELI",
+          "status": "candidata",
+          "price": "Consultá la cotización en tu bróker (no encontramos un cierre confiable del 20/11; última referencia: US$1.355,49 el 19/11)"
+        },
+        {
+          "ticker": "TS",
+          "status": "candidata",
+          "price": "Consultá la cotización en tu bróker (no encontramos un cierre confiable del 20/11; Investing.com marcaba ≈ US$57,51 el 19/11)"
+        },
+        {
+          "ticker": "PAMP",
+          "status": "candidata",
+          "price": "Consultá la cotización en tu bróker (el viernes 20 el ADR tocó un mínimo de 52 semanas de US$60,65 durante la rueda; cierre del 19/11: US$62,04)"
+        },
+        {
+          "ticker": "YPF",
+          "status": "observacion",
+          "price": "≈ US$32,32 (ADR, cierre 20/11; −12,5% en la semana)"
         }
       ]
     }
