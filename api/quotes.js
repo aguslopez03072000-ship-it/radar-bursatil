@@ -1,7 +1,8 @@
 // Cotizaciones en vivo para el Radar bursátil.
 // GET /api/quotes?symbols=YPF,GOOGL,BRK-B
 // Devuelve índices fijos (S&P 500, Nasdaq, VIX, WTI, Bitcoin), dólares, riesgo país
-// y los símbolos pedidos, con precio, variación de la última rueda y distancia al máximo de 52 semanas.
+// y los símbolos pedidos, con precio, variación de la última rueda, distancia al máximo de 52 semanas,
+// variación del último mes, del año y posición frente a su promedio de 50 ruedas (para ver cómo llega a su reporte).
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
 const INDICES = ["^GSPC", "^IXIC", "^VIX", "CL=F", "BTC-USD"];
@@ -20,7 +21,10 @@ async function yahoo(symbol) {
   if (!res) throw new Error("Sin datos para " + symbol);
   const m = res.meta || {};
   const q = (res.indicators && res.indicators.quote && res.indicators.quote[0]) || {};
-  const closes = (q.close || []).filter(function (x) { return typeof x === "number"; });
+  const ts = res.timestamp || [];
+  const pairs = [];
+  (q.close || []).forEach(function (c, i) { if (typeof c === "number") pairs.push([ts[i], c]); });
+  const closes = pairs.map(function (p) { return p[1]; });
   const highs = (q.high || []).filter(function (x) { return typeof x === "number"; });
   const lows = (q.low || []).filter(function (x) { return typeof x === "number"; });
   const price = typeof m.regularMarketPrice === "number" ? m.regularMarketPrice : closes[closes.length - 1];
@@ -28,6 +32,15 @@ async function yahoo(symbol) {
   const high52 = Math.max(m.fiftyTwoWeekHigh || 0, highs.length ? Math.max.apply(null, highs) : 0, price || 0);
   const lowCandidates = [m.fiftyTwoWeekLow, lows.length ? Math.min.apply(null, lows) : undefined].filter(function (x) { return typeof x === "number" && x > 0; });
   const low52 = lowCandidates.length ? Math.min.apply(null, lowCandidates) : null;
+  const n = closes.length;
+  const monthAgo = n > 22 ? closes[n - 22] : null;
+  const last50 = closes.slice(-50);
+  const sma50 = last50.length >= 20 ? last50.reduce(function (a, b) { return a + b; }, 0) / last50.length : null;
+  const year = new Date().getUTCFullYear();
+  let yearStart = null;
+  for (let i = 0; i < pairs.length; i++) {
+    if (pairs[i][0] && new Date(pairs[i][0] * 1000).getUTCFullYear() === year) { yearStart = i > 0 ? pairs[i - 1][1] : pairs[i][1]; break; }
+  }
   return {
     symbol: symbol,
     currency: m.currency || null,
@@ -37,6 +50,9 @@ async function yahoo(symbol) {
     high52: high52 || null,
     low52: low52,
     fromHighPct: price && high52 ? (price / high52 - 1) * 100 : null,
+    change1mPct: price && monthAgo ? (price / monthAgo - 1) * 100 : null,
+    ytdPct: price && yearStart ? (price / yearStart - 1) * 100 : null,
+    vsSma50Pct: price && sma50 ? (price / sma50 - 1) * 100 : null,
     time: m.regularMarketTime ? new Date(m.regularMarketTime * 1000).toISOString() : null
   };
 }
@@ -65,7 +81,7 @@ function settle(p) {
 
 module.exports = async function handler(req, res) {
   const raw = String((req.query && req.query.symbols) || "");
-  const asked = raw.split(",").map(function (s) { return s.trim().toUpperCase(); }).filter(function (s) { return SYMBOL_OK.test(s); }).slice(0, 25);
+  const asked = raw.split(",").map(function (s) { return s.trim().toUpperCase(); }).filter(function (s) { return SYMBOL_OK.test(s); }).slice(0, 45);
   const all = Array.from(new Set(INDICES.concat(asked)));
 
   const results = await Promise.all(all.map(function (s) { return settle(yahoo(s)); }));

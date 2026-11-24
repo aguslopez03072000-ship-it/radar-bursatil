@@ -50,6 +50,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-body); 
 a { color: var(--accent); }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 56px; display: grid; gap: 36px; }
+.wrap > * { min-width: 0; }
 h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
 h1 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); font-weight: 800; line-height: 1.12; }
 h2 { font-size: 1.25rem; font-weight: 700; }
@@ -119,6 +120,54 @@ tr:last-child td { border-bottom: 0; }
 .tk { font-family: var(--font-num); font-size: 0.85rem; padding: 1px 7px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin: 0 4px 4px 0; display: inline-block; }
 .tk.observacion { background: var(--warn-soft); color: var(--warn); }
 
+.jump { display: flex; flex-wrap: wrap; gap: 6px; }
+.jump a { font-size: 0.85rem; text-decoration: none; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.jump a:hover { border-color: var(--accent); color: var(--accent); }
+
+.alert { display: none; gap: 10px; align-items: center; flex-wrap: wrap; padding: 12px 16px; border-radius: 10px; background: var(--warn-soft); color: var(--ink); border: 1px solid var(--warn); }
+.alert.show { display: flex; }
+.alert strong { color: var(--warn); }
+.btn { font: inherit; font-size: 0.86rem; font-weight: 600; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); }
+
+.subhead { font-family: var(--font-display); font-weight: 700; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 18px 0 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.subhead:first-child { margin-top: 0; }
+.movers-live { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.mv { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--up); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+.mv.neg { border-left-color: var(--down); }
+.mv .top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.mv .pct { font-family: var(--font-num); font-size: 1.05rem; }
+.mv .nm { font-size: 0.84rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mine { font-size: 0.7rem; font-weight: 700; padding: 1px 7px; border-radius: 999px; background: var(--accent); color: #fff; white-space: nowrap; display: inline-block; justify-self: start; margin-left: 4px; }
+.mv .mine { margin-left: 0; }
+.mvlist { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+.mvlist .pct { font-family: var(--font-num); white-space: nowrap; }
+.mvlist td.why { color: var(--muted); font-size: 0.88rem; min-width: 240px; }
+.empty { color: var(--muted); font-size: 0.92rem; padding: 10px 0; }
+
+.wl { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.wcard { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
+.wcard.soon { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.wcard .row1 { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+.when { text-align: right; display: grid; gap: 2px; justify-items: end; }
+.when .dt { font-family: var(--font-num); font-size: 0.92rem; }
+.when { max-width: 58%; }
+.when .dt.est-w { font-family: var(--font-body); font-size: 0.88rem; color: var(--muted); }
+.when .cd { font-size: 0.76rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.when .cd.est { background: var(--line); color: var(--muted); }
+.when .cd.done { background: var(--up-soft); color: var(--up); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; background: var(--bg); border-radius: 8px; padding: 8px 10px; }
+.stats div { display: grid; gap: 1px; }
+.stats .k { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.stats .v { font-family: var(--font-num); font-size: 0.86rem; }
+.trend { font-size: 0.78rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; justify-self: start; }
+.trend.up { background: var(--up-soft); color: var(--up); }
+.trend.down { background: var(--down-soft); color: var(--down); }
+.trend.flat { background: var(--warn-soft); color: var(--warn); }
+.wcard p { margin: 0; font-size: 0.9rem; }
+.wcard .lbl { font-family: var(--font-display); font-weight: 700; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); display: block; margin-bottom: 1px; }
+.wcard .srcs { font-size: 0.78rem; color: var(--muted); }
+
 .disclaimer { font-size: 0.86rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; max-width: 80ch; }
 .error { background: var(--down-soft); color: var(--down); padding: 14px 16px; border-radius: 10px; }
 
@@ -127,6 +176,8 @@ tr:last-child td { border-bottom: 0; }
   .cards { grid-template-columns: 1fr; }
   .ag { grid-template-columns: 1fr; gap: 4px; }
   .tiles { grid-template-columns: repeat(2, 1fr); }
+  .wl { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
 }
 @media (prefers-reduced-motion: no-preference) {
   .card { transition: transform .15s ease; }
@@ -139,11 +190,32 @@ tr:last-child td { border-bottom: 0; }
     <div class="meta"><span class="brand">Radar bursátil · Agus</span><span id="mood" class="pill">Cargando</span><span id="live" class="pill live-off">Cotizaciones: conectando…</span><span id="session"></span></div>
     <h1 id="headline">Cargando la revisión del día…</h1>
     <p class="summary" id="summary"></p>
+    <nav class="jump" aria-label="Secciones">
+      <a href="#termometro">Termómetro</a><a href="#movimientos">Movimientos ±15%</a><a href="#reportes">Reportes de tu lista</a><a href="#oportunidades">Oportunidades</a><a href="#historial">Historial</a>
+    </nav>
+    <div class="alert" id="alert" role="status"></div>
   </header>
 
   <section id="termometro" aria-labelledby="h-term">
     <div class="section-head"><h2 id="h-term">Termómetro del mercado</h2><p>Cada número indica su fuente y hora</p></div>
     <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section id="movimientos" aria-labelledby="h-mov">
+    <div class="section-head">
+      <h2 id="h-mov">Movimientos de 15% o más</h2>
+      <div class="filters"><button type="button" class="btn ghost" id="notif-btn">Activar avisos en este dispositivo</button></div>
+    </div>
+    <div class="subhead" id="mv-live-head">Ahora en Wall Street <span id="mv-live-time" class="sub"></span></div>
+    <div class="movers-live" id="mv-live"><p class="empty">Buscando movimientos en vivo…</p></div>
+    <div class="subhead">Últimos días, con la explicación</div>
+    <p class="sub" id="mv-note"></p>
+    <div class="mvlist"><table><thead><tr><th>Día</th><th>Acción</th><th>Variación</th><th>Por qué</th></tr></thead><tbody id="mv-body"></tbody></table></div>
+  </section>
+
+  <section id="reportes" aria-labelledby="h-rep">
+    <div class="section-head"><h2 id="h-rep">Reportes de tu lista</h2><p>Próximo balance de cada acción y cómo llega</p></div>
+    <div class="wl" id="wl"></div>
   </section>
 
   <section id="oportunidades" aria-labelledby="h-op">
@@ -170,7 +242,7 @@ tr:last-child td { border-bottom: 0; }
     <div class="hist"><table><thead><tr><th>Día</th><th>Clima</th><th>Lectura</th><th>Marcadas</th></tr></thead><tbody id="histbody"></tbody></table></div>
   </section>
 
-  <p class="disclaimer" id="disclaimer">La revisión y las oportunidades las arma Claude cada día hábil antes de la apertura, a partir de noticias y datos públicos. Las cotizaciones marcadas como “en vivo” se refrescan cada minuto desde Yahoo Finance, DolarApi y ArgentinaDatos, y pueden tener algunos minutos de demora. No es asesoramiento financiero: es una lista de ideas para que investigues y decidas vos. Los precios son aproximados y pueden haber cambiado; revisalos siempre en tu bróker antes de operar. Invertí solo dinero que no vayas a necesitar en el corto plazo y diversificá. Claude es un producto de Anthropic, por eso esta página no evalúa la acción de Anthropic.</p>
+  <p class="disclaimer" id="disclaimer">La revisión y las oportunidades las arma Claude cada día hábil antes de la apertura, a partir de noticias y datos públicos. Las cotizaciones marcadas como “en vivo” se refrescan cada minuto desde Yahoo Finance, DolarApi y ArgentinaDatos, y pueden tener algunos minutos de demora. Las fechas de reporte marcadas como estimadas surgen del calendario habitual de cada empresa y se confirman cuando la empresa las anuncia. No es asesoramiento financiero: es una lista de ideas para que investigues y decidas vos. Los precios son aproximados y pueden haber cambiado; revisalos siempre en tu bróker antes de operar. Invertí solo dinero que no vayas a necesitar en el corto plazo y diversificá. Claude es un producto de Anthropic, por eso esta página no evalúa la acción de Anthropic.</p>
 </main>
 
 <script>
@@ -181,7 +253,7 @@ tr:last-child td { border-bottom: 0; }
   // Símbolos de Yahoo Finance para cada indicador y equivalencias de tickers locales.
   // El Merval no se toma de Yahoo: su símbolo ^MERV sigue la escala anterior al relanzamiento del MSCI Merval.
   var IND_SYM = { spx: "^GSPC", nasdaq: "^IXIC", vix: "^VIX", wti: "CL=F", btc: "BTC-USD" };
-  var TICKER_SYM = { PAMP: "PAM", BRKB: "BRK-B", "BRK.B": "BRK-B", TGSU2: "TGS", TECO2: "TEO", CEPU: "CEPU", TRAN: "TRAN.BA", TGNO4: "TGNO4.BA", ALUA: "ALUA.BA", TXAR: "TXAR.BA", COME: "COME.BA" };
+  var TICKER_SYM = { BTC: "BTC-USD", PAMP: "PAM", BRKB: "BRK-B", "BRK.B": "BRK-B", TGSU2: "TGS", TECO2: "TEO", CEPU: "CEPU", TRAN: "TRAN.BA", TGNO4: "TGNO4.BA", ALUA: "ALUA.BA", TXAR: "TXAR.BA", COME: "COME.BA" };
   function yahooSym(o) { return o.yahoo || TICKER_SYM[o.ticker] || o.ticker; }
 
   var nf = function (d) { return new Intl.NumberFormat("es-AR", { minimumFractionDigits: d, maximumFractionDigits: d }); };
@@ -367,9 +439,201 @@ tr:last-child td { border-bottom: 0; }
     });
   }
 
+  // ---------- Reportes de la lista ----------
+  var DAYS = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+  function todayAR() {
+    var s = new Date().toLocaleDateString("en-CA", { timeZone: "America/Argentina/Buenos_Aires" });
+    return new Date(s + "T00:00:00");
+  }
+  function parseDay(iso) { return iso && /^\d{4}-\d{2}-\d{2}$/.test(iso) ? new Date(iso + "T00:00:00") : null; }
+  function dayLabel(dt) { return DAYS[dt.getDay()] + " " + dt.getDate() + "/" + (dt.getMonth() + 1); }
+  function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+  function signed(x, d) { return (x > 0 ? "+" : "") + nf(d == null ? 1 : d).format(x) + "%"; }
+
+  function wlOrder(w) {
+    var t = todayAR(), nd = parseDay(w.next && w.next.date), ld = parseDay(w.last && w.last.date);
+    if (nd && daysBetween(t, nd) >= 0) return daysBetween(t, nd);
+    if (ld && daysBetween(ld, t) <= 3) return -1;
+    if (w.next && w.next.none) return 9999;
+    return 5000;
+  }
+
+  function trendOf(q) {
+    if (!q || typeof q.change1mPct !== "number") return null;
+    var m = q.change1mPct, s = q.vsSma50Pct;
+    if (m >= 5 && (s == null || s > 0)) return { cls: "up", txt: "Llega en alza" };
+    if (m <= -5 && (s == null || s < 0)) return { cls: "down", txt: "Llega en baja" };
+    return { cls: "flat", txt: "Llega sin tendencia clara" };
+  }
+
+  function stat(k, v, cls) { var d = el("div"); d.appendChild(el("span", "k", k)); d.appendChild(el("span", "v " + (cls || ""), v)); return d; }
+
+  function renderWatchlist(d) {
+    var box = document.getElementById("wl"); box.textContent = "";
+    var list = (d.watchlist || []).slice().sort(function (a, b) { return wlOrder(a) - wlOrder(b); });
+    if (!list.length) { box.appendChild(el("p", "empty", "Todavía no hay acciones cargadas en tu lista.")); return; }
+    var t = todayAR();
+    list.forEach(function (w) {
+      var c = el("article", "wcard"); c.id = "rep-" + w.ticker.toLowerCase().replace(/[^a-z0-9]/g, "");
+      var r1 = el("div", "row1");
+      var left = el("div");
+      left.appendChild(el("div", "ticker", w.ticker));
+      left.appendChild(el("div", "cname", w.name));
+      r1.appendChild(left);
+      var when = el("div", "when");
+      var nd = parseDay(w.next && w.next.date), ld = parseDay(w.last && w.last.date);
+      var recent = ld && daysBetween(ld, t) >= 0 && daysBetween(ld, t) <= 3;
+      if (nd && daysBetween(t, nd) >= 0) {
+        var n = daysBetween(t, nd);
+        when.appendChild(el("span", "dt", dayLabel(nd) + (w.next.time ? " · " + w.next.time : "")));
+        when.appendChild(el("span", "cd", n === 0 ? "Reporta hoy" : n === 1 ? "Reporta mañana" : "En " + n + " días"));
+        if (n <= 7) c.className += " soon";
+      } else if (recent) {
+        when.appendChild(el("span", "dt", "Reportó el " + dayLabel(ld)));
+        when.appendChild(el("span", "cd done", daysBetween(ld, t) === 0 ? "Reportó hoy" : "Reporte reciente"));
+        if (w.next && w.next.window) when.appendChild(el("span", "sub", "Próximo: " + w.next.window));
+      } else {
+        when.appendChild(el("span", "dt est-w", (w.next && w.next.window) || "Sin fecha"));
+        if (!(w.next && w.next.none)) when.appendChild(el("span", "cd est", "Sin confirmar"));
+      }
+      r1.appendChild(when);
+      c.appendChild(r1);
+      if (w.next && w.next.quarter && !(w.next.none)) c.appendChild(el("span", "sub", "Trimestre: " + w.next.quarter));
+
+      var q = liveQuote(yahooSym(w));
+      if (q) {
+        var st = el("div", "stats");
+        st.appendChild(stat("Precio", money(q.price, q.currency)));
+        st.appendChild(stat("Hoy", typeof q.changePct === "number" ? signed(q.changePct) : "—", q.changePct > 0 ? "good" : q.changePct < 0 ? "bad" : ""));
+        st.appendChild(stat("Último mes", typeof q.change1mPct === "number" ? signed(q.change1mPct) : "—", q.change1mPct > 0 ? "good" : q.change1mPct < 0 ? "bad" : ""));
+        st.appendChild(stat("Vs. máximo", typeof q.fromHighPct === "number" ? signed(q.fromHighPct) : "—", q.fromHighPct < -1 ? "bad" : ""));
+        c.appendChild(st);
+        var tr = trendOf(q);
+        if (tr && !(w.next && w.next.none)) c.appendChild(el("span", "trend " + tr.cls, tr.txt + (typeof q.ytdPct === "number" ? " · " + signed(q.ytdPct, 0) + " en el año" : "")));
+      } else {
+        c.appendChild(el("span", "sub", "Cotización en vivo no disponible en este momento."));
+      }
+      if (w.expect) { var pe = el("p"); pe.appendChild(el("span", "lbl", "Qué espera el mercado")); pe.appendChild(document.createTextNode(w.expect)); c.appendChild(pe); }
+      if (w.last && w.last.text) { var pl = el("p"); pl.appendChild(el("span", "lbl", recent ? "Lo que reportó" : "Último reporte")); pl.appendChild(document.createTextNode(w.last.text)); c.appendChild(pl); }
+      if (w.sources && w.sources.length) {
+        var s = el("div", "srcs"); s.appendChild(document.createTextNode("Fuentes: "));
+        w.sources.forEach(function (src, i) { var a = el("a", null, src.name); a.href = src.url; a.target = "_blank"; a.rel = "noopener"; s.appendChild(a); if (i < w.sources.length - 1) s.appendChild(document.createTextNode(" · ")); });
+        c.appendChild(s);
+      }
+      box.appendChild(c);
+    });
+  }
+
+  // ---------- Movimientos ±15% ----------
+  function watchSet() {
+    var set = {};
+    ((state.data && state.data.watchlist) || []).forEach(function (w) { set[w.ticker] = true; set[yahooSym(w)] = true; });
+    ((state.data && state.data.opportunities) || []).forEach(function (o) { set[o.ticker] = true; set[yahooSym(o)] = true; });
+    return set;
+  }
+
+  function renderMoversHistory(d) {
+    var M = d.movers || {}, tb = document.getElementById("mv-body"); tb.textContent = "";
+    document.getElementById("mv-note").textContent = M.note || "";
+    var mine = watchSet();
+    var items = (M.items || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : Math.abs(b.change) - Math.abs(a.change); });
+    if (!items.length) { var tr0 = el("tr"); var td0 = el("td", "empty", "Sin movimientos de 15% o más en los últimos días."); td0.colSpan = 4; tr0.appendChild(td0); tb.appendChild(tr0); return; }
+    items.forEach(function (m) {
+      var tr = el("tr");
+      tr.appendChild(el("td", "num", m.label || m.date));
+      var tdA = el("td"); var tk = el("span", "tk", m.ticker); tdA.appendChild(tk);
+      if (mine[m.ticker]) tdA.appendChild(el("span", "mine", "En tu lista"));
+      tdA.appendChild(el("div", "sub", m.name + (m.session && m.session !== "cierre" ? " · " + m.session : "")));
+      tr.appendChild(tdA);
+      var tdP = el("td", "pct " + (m.change > 0 ? "good" : "bad"), (m.change > 0 ? "▲ " : "▼ ") + signed(m.change, 2));
+      if (m.price) { tdP.appendChild(el("div", "sub", m.price)); }
+      tr.appendChild(tdP);
+      var tdW = el("td", "why", m.reason || "");
+      if (m.source) { tdW.appendChild(document.createTextNode(" ")); var a = el("a", null, m.source.name); a.href = m.source.url; a.target = "_blank"; a.rel = "noopener"; tdW.appendChild(a); }
+      tr.appendChild(tdW);
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderMoversLive() {
+    var box = document.getElementById("mv-live"); box.textContent = "";
+    var L = state.movers;
+    var tEl = document.getElementById("mv-live-time");
+    if (!L || !L.ok) {
+      tEl.textContent = "";
+      box.appendChild(el("p", "empty", "La lista en vivo no está disponible ahora; abajo tenés los movimientos de los últimos días."));
+      return;
+    }
+    tEl.textContent = "· actualizado " + hhmm(L.updated);
+    var mine = watchSet();
+    if (!L.items.length) { box.appendChild(el("p", "empty", "Por ahora ninguna acción se mueve 15% o más en la rueda.")); return; }
+    L.items.forEach(function (m) {
+      var c = el("div", "mv" + (m.changePct < 0 ? " neg" : ""));
+      var top = el("div", "top");
+      var tk = el("span", "ticker", m.symbol); tk.style.fontSize = "1rem"; top.appendChild(tk);
+      top.appendChild(el("span", "pct " + (m.changePct > 0 ? "good" : "bad"), (m.changePct > 0 ? "▲ " : "▼ ") + signed(m.changePct, 2)));
+      c.appendChild(top);
+      c.appendChild(el("span", "nm", m.name));
+      var meta = el("span", "sub", money(m.price, m.currency) + (m.marketCap ? " · cap. US$" + nf(1).format(m.marketCap / 1e9) + " mil M" : ""));
+      c.appendChild(meta);
+      if (mine[m.symbol]) c.appendChild(el("span", "mine", "En tu lista"));
+      box.appendChild(c);
+    });
+  }
+
+  // Avisos: banner en la página y notificación del navegador para movimientos nuevos.
+  function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+  function canNotify() { return typeof Notification !== "undefined" && Notification.permission === "granted"; }
+  function updateNotifBtn() {
+    var b = document.getElementById("notif-btn");
+    if (typeof Notification === "undefined") { b.style.display = "none"; return; }
+    if (Notification.permission === "granted") { b.textContent = "Avisos activados"; b.disabled = true; }
+    else if (Notification.permission === "denied") { b.textContent = "Avisos bloqueados en el navegador"; b.disabled = true; }
+  }
+  document.getElementById("notif-btn").addEventListener("click", function () {
+    if (typeof Notification === "undefined") return;
+    try { Notification.requestPermission().then(updateNotifBtn); } catch (e) { updateNotifBtn(); }
+  });
+
+  function checkAlerts() {
+    var L = state.movers, box = document.getElementById("alert");
+    if (!L || !L.ok || !L.items.length) { box.className = "alert"; return; }
+    var mine = watchSet();
+    var top = L.items.slice(0, 4).map(function (m) { return m.symbol + " " + signed(m.changePct, 1); }).join(" · ");
+    var mineHits = L.items.filter(function (m) { return mine[m.symbol]; });
+    box.textContent = "";
+    box.appendChild(el("strong", null, L.items.length + (L.items.length === 1 ? " acción se mueve" : " acciones se mueven") + " 15% o más hoy"));
+    box.appendChild(el("span", null, top + (mineHits.length ? " · En tu lista: " + mineHits.map(function (m) { return m.symbol; }).join(", ") : "")));
+    var a = el("a", null, "Ver movimientos"); a.href = "#movimientos"; box.appendChild(a);
+    box.className = "alert show";
+
+    var day = todayAR().toISOString().slice(0, 10);
+    var seen = store("radar-avisados") || {};
+    if (seen.day !== day) seen = { day: day, s: {} };
+    var fresh = L.items.filter(function (m) { return !seen.s[m.symbol]; });
+    if (fresh.length && canNotify()) {
+      try {
+        new Notification("Radar bursátil: movimientos de 15% o más", {
+          body: fresh.slice(0, 5).map(function (m) { return m.symbol + " " + signed(m.changePct, 1); }).join(" · "),
+          icon: "/icon-192.png", tag: "radar-movers"
+        });
+      } catch (e) {}
+    }
+    fresh.forEach(function (m) { seen.s[m.symbol] = true; });
+    store("radar-avisados", seen);
+  }
+
+  function loadMovers() {
+    fetch("/api/movers?min=15", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (L) { state.movers = L; renderMoversLive(); checkAlerts(); })
+      .catch(function () { state.movers = null; renderMoversLive(); });
+  }
+
   function renderAll() {
     var d = state.data;
-    renderHeader(d); renderTiles(d); renderCards(d); renderAgenda(d); renderHistory(d);
+    renderHeader(d); renderTiles(d); renderMoversHistory(d); renderWatchlist(d); renderCards(d); renderAgenda(d); renderHistory(d);
+    updateNotifBtn();
   }
 
   document.querySelectorAll(".filters button").forEach(function (b) {
@@ -388,23 +652,25 @@ tr:last-child td { border-bottom: 0; }
 
   function loadLive() {
     if (!state.data) return;
-    var syms = state.data.opportunities.map(yahooSym).join(",");
+    var all = state.data.opportunities.map(yahooSym).concat((state.data.watchlist || []).map(yahooSym));
+    var syms = all.filter(function (x, i) { return all.indexOf(x) === i; }).join(",");
     fetch("/api/quotes?symbols=" + encodeURIComponent(syms), { cache: "no-store" })
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(function (L) {
         state.live = L;
         setLiveBadge(true, L.updated);
-        renderTiles(state.data); renderCards(state.data);
+        renderTiles(state.data); renderCards(state.data); renderWatchlist(state.data);
       })
       .catch(function () { if (!state.live) setLiveBadge(false); });
   }
 
   setInterval(function () { if (document.visibilityState === "visible") loadLive(); }, 60000);
-  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") loadLive(); });
+  setInterval(function () { if (document.visibilityState === "visible") loadMovers(); }, 120000);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") { loadLive(); loadMovers(); } });
 
   fetch("/data.json", { cache: "no-store" })
     .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-    .then(function (d) { state.data = d; renderAll(); loadLive(); })
+    .then(function (d) { state.data = d; renderAll(); loadLive(); loadMovers(); })
     .catch(function () {
       var h = document.getElementById("headline");
       h.textContent = "No se pudo cargar la revisión del día";

@@ -719,5 +719,575 @@
         }
       ]
     }
-  ]
+  ],
+  "watchlist": [
+    {
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "next": {
+        "date": "2026-11-24",
+        "time": "después del cierre",
+        "confirmed": true,
+        "quarter": "3T fiscal 2027"
+      },
+      "expect": "El consenso espera una ganancia de US$6,63 por acción con ingresos de US$50.630 millones, casi el doble que hace un año. La cartera pendiente de servidores de IA llegó a un récord de US$95.000 millones y el mercado quiere ver cuánto de eso se convierte en ventas pese a la escasez de memoria.",
+      "sources": [
+        {
+          "name": "Earnings Whispers vía Finviz",
+          "url": "https://finviz.com/news/423394/dell-must-prove-its-95-billion-ai-backlog-can-convert-despite-memory-constraints"
+        },
+        {
+          "name": "If You Spent",
+          "url": "https://news.ifyouspent.com/en/news/thanksgiving-week-earnings-dell-workday-zoom-hp-deere-november-2026"
+        }
+      ],
+      "last": {
+        "date": "2026-08",
+        "text": "En el trimestre anterior facturó casi US$47.000 millones, un récord, y subió su previsión anual por tercera vez seguida."
+      }
+    },
+    {
+      "ticker": "ANF",
+      "name": "Abercrombie & Fitch",
+      "next": {
+        "date": null,
+        "window": "principios de marzo de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": [
+        {
+          "name": "Investing.com",
+          "url": "https://ca.investing.com/news/earnings/abercrombiefitch-earnings-beat-by-073-revenue-topped-estimates-4978157"
+        },
+        {
+          "name": "StockStory",
+          "url": "https://stockstory.org/us/stocks/nyse/anf/news/earnings/abercrombie-and-fitch-beats-q3-2026-sales-expectations-stock-jumps-126percent"
+        },
+        {
+          "name": "The Cerbat Gem",
+          "url": "https://www.thecerbatgem.com/2026/11/24/abercrombie-fitch-nyseanf-issues-fy-2026-earnings-guidance.html"
+        }
+      ],
+      "last": {
+        "date": "2026-11-24",
+        "text": "Reportó hoy antes de la apertura: ganó US$3,82 por acción contra unos US$3,08 esperados y facturó US$1.440 millones, 11% más que un año antes. Subió su guía anual a US$13,70–13,90 por acción y la acción llegó a subir 12,6% tras el anuncio."
+      }
+    },
+    {
+      "ticker": "MRVL",
+      "name": "Marvell Technology",
+      "next": {
+        "date": "2026-12-01",
+        "time": "después del cierre",
+        "confirmed": true,
+        "quarter": "3T fiscal 2027"
+      },
+      "expect": "La empresa guió ingresos de unos US$3.150 millones, más de 50% de crecimiento, y una ganancia de US$1,05 a US$1,15 por acción. Las opciones descuentan un movimiento de alrededor de ±17% después del reporte.",
+      "sources": [
+        {
+          "name": "Marvell (relación con inversores)",
+          "url": "https://investor.marvell.com/news-events/press-releases/detail/1041/marvell-technology-inc-announces-conference-call-to-review-third-quarter-of-fiscal-year-2027-financial-results"
+        },
+        {
+          "name": "Investor Signals",
+          "url": "https://www.investorsignals.com/research-articles?hideheader=true"
+        },
+        {
+          "name": "EarningsWatcher",
+          "url": "https://earnings-watcher.com/wiki/mrvl-earnings-december-2026"
+        }
+      ]
+    },
+    {
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "next": {
+        "date": "2026-12-17",
+        "time": "después del cierre",
+        "confirmed": true,
+        "quarter": "1T fiscal 2027"
+      },
+      "expect": "Micron guió ingresos de US$61.500 millones y una ganancia de US$38,15 por acción. En el trimestre anterior facturó US$54.200 millones, 379% más que un año antes, con un margen bruto de 87%.",
+      "sources": [
+        {
+          "name": "Quiver Quant",
+          "url": "https://www.quiverquant.com/news/Micron+Technology+Announces+Date+for+Fiscal+First+Quarter+2026+Earnings+Conference+Call"
+        },
+        {
+          "name": "MarketBeat",
+          "url": "https://www.marketbeat.com/instant-alerts/transcript-micron-technology-q4-earnings-call-highlights-2026-09-30/"
+        }
+      ]
+    },
+    {
+      "ticker": "NVDA",
+      "name": "Nvidia",
+      "next": {
+        "date": null,
+        "window": "≈ 24 de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T fiscal 2027"
+      },
+      "expect": "",
+      "sources": [
+        {
+          "name": "Nvidia (relación con inversores)",
+          "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx"
+        },
+        {
+          "name": "Stock Titan",
+          "url": "https://www.stocktitan.net/articles/nvidia-q3-fiscal-2027-earnings-revenue-outlook"
+        },
+        {
+          "name": "Wall Street Horizon",
+          "url": "https://www.wallstreethorizon.com/nvidia-earnings-calendar"
+        }
+      ],
+      "last": {
+        "date": "2026-11-17",
+        "text": "Facturó US$115.800 millones, 103% más que un año antes, y proyectó cerca de US$130.000 millones para el cuarto trimestre, que tiene una semana extra."
+      }
+    },
+    {
+      "ticker": "PANW",
+      "name": "Palo Alto Networks",
+      "next": {
+        "date": null,
+        "window": "mediados de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "2T fiscal 2027"
+      },
+      "expect": "",
+      "sources": [
+        {
+          "name": "Zacks",
+          "url": "https://www.zacks.com/stock/news/3032539/{https:/www.zackstrade.com/2019-1-dollar}"
+        },
+        {
+          "name": "24/7 Wall St.",
+          "url": "https://247wallst.com/cards/arora-is-pointing-at-next-gen-security-arr-the-metric-that-panw-quote-01m7r7t18crdmhbrp5cf6kwxkg"
+        }
+      ],
+      "last": {
+        "date": "2026-11-18",
+        "text": "Ganó US$1,05 por acción contra US$0,97 esperados y facturó US$3.445 millones (+39%). Subió su guía anual, pero la acción cayó porque el mercado esperaba más para el resto del año."
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "name": "Apple",
+      "next": {
+        "date": null,
+        "window": "≈ 28 de enero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "1T fiscal 2027"
+      },
+      "expect": "",
+      "sources": [
+        {
+          "name": "Wall Street Horizon",
+          "url": "https://www.wallstreethorizon.com/apple-earnings-calendar"
+        }
+      ]
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "next": {
+        "date": null,
+        "window": "fines de enero de 2027 (estimada; el año pasado fue el 28 de enero)",
+        "confirmed": false,
+        "quarter": "2T fiscal 2027"
+      },
+      "expect": "",
+      "sources": [
+        {
+          "name": "Finviz (fechas del año pasado)",
+          "url": "https://finviz.com/news/290329/what-lies-ahead-of-mag-7-earnings-etfs-in-focus"
+        }
+      ]
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "next": {
+        "date": null,
+        "window": "fines de enero de 2027 (estimada; el año pasado fue el 28 de enero)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": [
+        {
+          "name": "Finviz (fechas del año pasado)",
+          "url": "https://finviz.com/news/290329/what-lies-ahead-of-mag-7-earnings-etfs-in-focus"
+        }
+      ]
+    },
+    {
+      "ticker": "TSM",
+      "name": "TSMC",
+      "next": {
+        "date": null,
+        "window": "mediados de enero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "next": {
+        "date": null,
+        "window": "principios de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "AMD",
+      "name": "AMD",
+      "next": {
+        "date": null,
+        "window": "principios de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "next": {
+        "date": null,
+        "window": "principios de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "LLY",
+      "name": "Eli Lilly",
+      "next": {
+        "date": null,
+        "window": "principios de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "MSTR",
+      "name": "Strategy",
+      "next": {
+        "date": null,
+        "window": "febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "RIOT",
+      "name": "Riot Platforms",
+      "next": {
+        "date": null,
+        "window": "febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "HUT",
+      "name": "Hut 8",
+      "next": {
+        "date": null,
+        "window": "febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "NU",
+      "name": "Nu Holdings",
+      "next": {
+        "date": null,
+        "window": "fines de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "BRK.B",
+      "name": "Berkshire Hathaway",
+      "next": {
+        "date": null,
+        "window": "fines de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": [],
+      "yahoo": "BRK-B"
+    },
+    {
+      "ticker": "YPF",
+      "name": "YPF",
+      "next": {
+        "date": null,
+        "window": "principios de marzo de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T 2026"
+      },
+      "expect": "",
+      "sources": []
+    },
+    {
+      "ticker": "BTC",
+      "name": "Bitcoin",
+      "next": {
+        "date": null,
+        "window": "No presenta balances",
+        "confirmed": false,
+        "none": true
+      },
+      "expect": "",
+      "sources": [],
+      "yahoo": "BTC-USD"
+    }
+  ],
+  "movers": {
+    "updated": "2026-11-24T10:45:00-03:00",
+    "threshold": 15,
+    "note": "Movimientos de 15% o más en acciones de Wall Street de más de US$300 millones de capitalización. Hoy antes de la apertura no hubo ninguno: lo más fuerte fue Insmed (+14,6%) por la oferta de compra de Sanofi y Abercrombie & Fitch (+12,6%) tras su balance.",
+    "items": [
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "NVDA",
+        "name": "Nvidia",
+        "change": 31.48,
+        "price": "US$165,05",
+        "session": "cierre",
+        "reason": "El directorio restituyó por unanimidad a Jensen Huang como director ejecutivo, a días de su renuncia. Fue su mejor día desde 2003 y sumó cerca de US$952.000 millones de valor.",
+        "source": {
+          "name": "Investing.com",
+          "url": "https://es.investing.com/news/stock-market-news/nvidia-hoy-puede-el-rebote-del-31-sobrevivir-a-160-dolares-3941434"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "IREN",
+        "name": "IREN",
+        "change": 27.0,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo. Venía de perder cerca de 40% en el mes.",
+        "source": {
+          "name": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/23/stocks-moving-the-most-today-live-updates.html"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "ALAB",
+        "name": "Astera Labs",
+        "change": 23.16,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "CRWV",
+        "name": "CoreWeave",
+        "change": 22.32,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "SITM",
+        "name": "SiTime",
+        "change": 21.48,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "MXL",
+        "name": "MaxLinear",
+        "change": 21.38,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "DELL",
+        "name": "Dell Technologies",
+        "change": 20.46,
+        "price": "US$334,91",
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo. Además reporta su balance el martes 24 después del cierre.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "NBIS",
+        "name": "Nebius Group",
+        "change": 20.28,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "MU",
+        "name": "Micron Technology",
+        "change": 19.04,
+        "price": "US$707,70",
+        "session": "cierre",
+        "reason": "Las fabricantes de memoria subieron con fuerza junto con SK Hynix. Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "SMTC",
+        "name": "Semtech",
+        "change": 18.83,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "MTSI",
+        "name": "MACOM Technology",
+        "change": 18.67,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Closing Look (Substack)",
+          "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "MRVL",
+        "name": "Marvell Technology",
+        "change": 18.37,
+        "price": "US$144,74",
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Chartmill",
+          "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "LITE",
+        "name": "Lumentum",
+        "change": 18.2,
+        "price": "US$544,38",
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Chartmill",
+          "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "ARM",
+        "name": "Arm Holdings",
+        "change": 16.08,
+        "price": null,
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo. Hoy cae cerca de 4% antes de la apertura.",
+        "source": {
+          "name": "Morning Brief (Substack)",
+          "url": "https://currentlogic.substack.com/p/the-morning-brief-november-24-2026"
+        }
+      },
+      {
+        "date": "2026-11-23",
+        "label": "Lun 23/11",
+        "ticker": "COHR",
+        "name": "Coherent",
+        "change": 15.27,
+        "price": "US$215,81",
+        "session": "cierre",
+        "reason": "Rebote de todo el sector de inteligencia artificial después de que Nvidia restituyera a Jensen Huang como director ejecutivo.",
+        "source": {
+          "name": "Chartmill",
+          "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
+        }
+      }
+    ]
+  }
 }
