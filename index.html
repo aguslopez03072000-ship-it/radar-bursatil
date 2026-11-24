@@ -669,13 +669,16 @@ tr:last-child td { border-bottom: 0; }
       var pct = x.ext && (!x.bingx || Math.abs(x.ext.pct) >= Math.abs(x.bingx.pct)) ? x.ext.pct : x.bingx.pct;
       if (!items.some(function (i) { return i.symbol === x.symbol; })) items.push({ symbol: x.symbol, changePct: pct, tag: x.ext && x.ext.session === "pre" ? " (pre-apertura)" : x.ext ? " (después del cierre)" : " (BingX 24/7)" });
     });
+    // Bitcoin: aviso desde 10% en cualquier horario.
+    var btc = liveQuote("BTC-USD");
+    if (btc && typeof btc.changePct === "number" && Math.abs(btc.changePct) >= 10) items.unshift({ symbol: "BTC", changePct: btc.changePct, tag: " (bitcoin, en el día)" });
     var L = { items: items };
     if (!items.length) { box.className = "alert"; return; }
     var mine = watchSet();
     var top = L.items.slice(0, 4).map(function (m) { return m.symbol + " " + signed(m.changePct, 1) + m.tag; }).join(" · ");
     var mineHits = L.items.filter(function (m) { return mine[m.symbol]; });
     box.textContent = "";
-    box.appendChild(el("strong", null, L.items.length + (L.items.length === 1 ? " acción con un movimiento fuerte" : " acciones con movimientos fuertes") + " (15% en la rueda, 10% fuera de horario)"));
+    box.appendChild(el("strong", null, L.items.length === 1 ? "Un movimiento fuerte" : L.items.length + " movimientos fuertes"));
     box.appendChild(el("span", null, top + (mineHits.length ? " · En tu lista: " + mineHits.map(function (m) { return m.symbol; }).join(", ") : "")));
     var a = el("a", null, "Ver movimientos"); a.href = "#movimientos"; box.appendChild(a);
     box.className = "alert show";
@@ -733,6 +736,7 @@ tr:last-child td { border-bottom: 0; }
         state.live = L;
         setLiveBadge(true, L.updated);
         renderTiles(state.data); renderCards(state.data); renderWatchlist(state.data);
+        checkAlerts();
       })
       .catch(function () { if (!state.live) setLiveBadge(false); });
   }
