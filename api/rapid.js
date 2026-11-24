@@ -6,6 +6,14 @@
 // 4 minutos (velas de 1 minuto del perpetuo). Para no repetir el aviso, solo avisa cuando la variación
 // pasa a un escalón nuevo (8%, 16%, 24%...) respecto de lo que se veía en la revisión anterior.
 //
+// También avisa de los movimientos fuertes (los mismos que muestra la página), solo de acciones con perpetuo:
+//   - en la rueda normal, acciones de Wall Street que suben o bajan 15% o más en el día (listas de Yahoo);
+//   - fuera de la rueda (pre-apertura, después del cierre, noches y fines de semana), el perpetuo de las
+//     acciones vigiladas contra su último cierre normal, desde 10%;
+//   - bitcoin, 10% o más en 24 horas.
+// Para no repetirlos, avisa la primera vez que la variación llega a 15% (o 10%) y después cada 10 puntos más,
+// comparando contra lo que ya se veía antes en el día (o en las últimas dos horas, para los perpetuos).
+//
 // Variables de entorno en Vercel:
 //   NTFY_TOPIC         nombre secreto del canal de ntfy al que está suscripto el celular
 //   TELEGRAM_TOKEN     token del bot de Telegram (de BotFather)
@@ -28,7 +36,7 @@ const TICKERS = [
 ];
 const NAMES = { ANT: "Anthropic" };
 const CANDLE_MIN = 1;
-const REF_TTL = 30 * 60 * 1000;
+const REF_TTL = 10 * 60 * 1000;
 const refCache = {};
 const SYMBOL_OK = /^[A-Z0-9.\-]{1,10}$/;
 
@@ -56,12 +64,28 @@ async function refPrice(symbol) {
   return { price: px, name: m.shortName || m.longName || null };
 }
 
-// Los precios de referencia cambian poco: se guardan 30 minutos mientras la función siga activa.
+// Sesión de Wall Street según la hora de Nueva York (sin contemplar feriados: en un feriado el último
+// precio normal de Yahoo es el cierre anterior, así que la comparación igual es correcta).
+function nySession(ms) {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date(ms));
+  const get = function (t) { const p = parts.find(function (x) { return x.type === t; }); return p ? p.value : ""; };
+  const wd = get("weekday"), mins = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
+  if (wd === "Sat" || wd === "Sun") return "fin de semana";
+  if (mins >= 570 && mins < 960) return "rueda";
+  if (mins >= 240 && mins < 570) return "pre-apertura";
+  if (mins >= 960 && mins < 1200) return "después del cierre";
+  return "noche";
+}
+
+// Los precios de referencia cambian poco: se guardan 10 minutos mientras la función siga activa.
 async function cachedRef(symbol) {
   const c = refCache[symbol];
-  if (c && Date.now() - c.at < REF_TTL) return c.v;
+  const sess = nySession(Date.now());
+  // Si el precio se guardó durante la rueda y la rueda ya terminó, se vuelve a pedir para tener el cierre.
+  const stale = c && c.sess === "rueda" && sess !== "rueda";
+  if (c && !stale && Date.now() - c.at < REF_TTL) return c.v;
   const v = await refPrice(symbol);
-  refCache[symbol] = { at: Date.now(), v: v };
+  refCache[symbol] = { at: Date.now(), v: v, sess: sess };
   return v;
 }
 
@@ -155,6 +179,84 @@ async function notify(ch, title, message, high, click) {
   return errors;
 }
 
+// ---------- Movimientos fuertes (los de la página) ----------
+const STRONG_REGULAR = 15, STRONG_EXTENDED = 10, STRONG_STEP = 10, STRONG_LOOKBACK = 121;
+const movers = require("./movers");
+
+// Escalón de un movimiento fuerte: 0 debajo del umbral; 1 al llegar al umbral y uno más cada 10 puntos. Con signo.
+function strongLevel(pct, thr) {
+  const a = Math.abs(pct);
+  if (a < thr) return 0;
+  return (1 + Math.floor((a - thr) / STRONG_STEP)) * (pct < 0 ? -1 : 1);
+}
+
+// Aviso nuevo si el escalón actual supera a todos los que ya se vieron antes (misma dirección).
+function freshLevel(cur, prevs) {
+  if (!cur) return false;
+  for (const p of prevs) { if (Math.sign(p) === Math.sign(cur) && Math.abs(p) >= Math.abs(cur)) return false; }
+  return true;
+}
+
+// Perpetuo contra el último cierre normal, fuera de la rueda. Usa las velas de 1 minuto de las últimas dos horas.
+function evaluateStrongPerp(candles, ref, nowMs) {
+  if (!candles || candles.length < 2 || !ref) return null;
+  const last = candles[candles.length - 1];
+  if (nowMs - last.t > 5 * 60000) return null;
+  const pct = (last.c / ref - 1) * 100;
+  const L = strongLevel(pct, STRONG_EXTENDED);
+  const prevs = candles.slice(0, -1).map(function (k) { return strongLevel((k.c / ref - 1) * 100, STRONG_EXTENDED); });
+  return { pct: pct, price: last.c, ref: ref, level: L, alert: freshLevel(L, prevs) };
+}
+
+// Rueda normal: candidatas de las listas de Yahoo; para no repetir, se mira la variación de más temprano en el día.
+async function regularStrong(maps, nowMs) {
+  const lists = await Promise.all(movers.LISTS.map(function (id) { return movers.screener(id).catch(function () { return []; }); }));
+  const seen = {}, cands = [];
+  lists.forEach(function (qs) {
+    qs.forEach(function (q) {
+      const chg = movers.num(q.regularMarketChangePercent), price = movers.num(q.regularMarketPrice), cap = movers.num(q.marketCap);
+      if (chg === null || Math.abs(chg) < STRONG_REGULAR || seen[q.symbol]) return;
+      if (price !== null && price < movers.MIN_PRICE) return;
+      if (cap !== null && cap < movers.MIN_CAP) return;
+      if (!futures.isCommonStock(q.symbol)) return;
+      seen[q.symbol] = true;
+      const where = futures.futuresFor(maps, q.symbol, price);
+      if (!where) return; // Agus solo quiere avisos de acciones con perpetuo
+      cands.push({ ticker: q.symbol, name: q.shortName || q.longName || q.symbol, pct: chg, price: price, where: where });
+    });
+  });
+  const out = await pool(cands, 6, async function (c) {
+    const j = await getJson("https://query1.finance.yahoo.com/v8/finance/chart/" + encodeURIComponent(c.ticker) + "?range=1d&interval=1m");
+    const res = j && j.chart && j.chart.result && j.chart.result[0];
+    const prevClose = res && res.meta && res.meta.chartPreviousClose;
+    const ts = (res && res.timestamp) || [];
+    const closes = (res && res.indicators && res.indicators.quote && res.indicators.quote[0] && res.indicators.quote[0].close) || [];
+    const L = strongLevel(c.pct, STRONG_REGULAR);
+    const prevs = [];
+    if (prevClose) for (let i = 0; i < ts.length; i++) {
+      if (typeof closes[i] === "number" && ts[i] * 1000 < nowMs - 60000) prevs.push(strongLevel((closes[i] / prevClose - 1) * 100, STRONG_REGULAR));
+    }
+    return Object.assign(c, { kind: "fuerte", session: "en la rueda", level: L, alert: freshLevel(L, prevs) });
+  });
+  return out.filter(function (x) { return x && !x.error; });
+}
+
+// Bitcoin: 10% o más en 24 horas (velas de 15 minutos del perpetuo de BingX).
+async function bitcoinStrong() {
+  const j = await getJson("https://open-api.bingx.com/openApi/swap/v3/quote/klines?symbol=BTC-USDT&interval=15m&limit=106");
+  const c = normalize(((j && j.data) || []).map(function (k) {
+    if (Array.isArray(k)) return { t: +k[0], o: +k[1], c: +k[4] };
+    return { t: +(k.time != null ? k.time : k.openTime), o: +k.open, c: +k.close };
+  }));
+  if (c.length < 97) return null;
+  const at = function (i) { return (c[i].c / c[i - 96].c - 1) * 100; };
+  const n = c.length - 1;
+  const pct = at(n), L = strongLevel(pct, STRONG_EXTENDED);
+  const prevs = [];
+  for (let i = Math.max(96, n - 8); i < n; i++) prevs.push(strongLevel(at(i), STRONG_EXTENDED));
+  return { ticker: "BTC", name: "Bitcoin", kind: "fuerte", session: "en 24 horas", pct: pct, price: c[n].c, where: "Bitget y BingX", level: L, alert: freshLevel(L, prevs) };
+}
+
 module.exports = async function handler(req, res) {
   const q = req.query || {};
   res.setHeader("Cache-Control", "no-store");
@@ -185,6 +287,9 @@ module.exports = async function handler(req, res) {
   const extra = String(process.env.RAPID_EXTRA || "").split(",").map(function (s) { return s.trim().toUpperCase(); }).filter(function (s) { return SYMBOL_OK.test(s); });
   const tickers = Array.from(new Set(TICKERS.concat(extra)));
   const nowMs = Date.now();
+  const session = nySession(nowMs);
+  const outside = session !== "rueda";
+  const nCandles = outside ? STRONG_LOOKBACK : w + 3;
 
   const [maps, refs] = await Promise.all([futures.futuresMaps(), pool(tickers, 10, cachedRef)]);
 
@@ -196,39 +301,73 @@ module.exports = async function handler(req, res) {
     const bx = futures.match(maps.bingx, t, ref.price);
     const where = [bg ? "Bitget" : null, bx ? "BingX" : null].filter(Boolean).join(" y ");
     if (!where) { plan.push({ ticker: t, error: "Sin contrato encontrado" }); return; }
-    plan.push({ ticker: t, name: NAMES[t] || ref.name || t, where: where, bg: bg, bx: bx });
+    plan.push({ ticker: t, name: NAMES[t] || ref.name || t, where: where, bg: bg, bx: bx, ref: ref.price });
   });
+
+  const strongP = Promise.all([
+    outside ? Promise.resolve([]) : regularStrong(maps, nowMs).catch(function () { return []; }),
+    bitcoinStrong().catch(function () { return null; })
+  ]);
 
   const results = await pool(plan, 10, async function (p) {
     if (p.error) return p;
     let candles = null, src = null;
-    try { if (p.bx) { candles = await bingxCandles(p.bx.symbol, w + 3); src = "BingX " + p.bx.symbol; } } catch (e) { candles = null; }
-    if (!candles && p.bg) { candles = await bitgetCandles(p.bg.symbol, w + 3); src = "Bitget " + p.bg.symbol; }
+    try { if (p.bx) { candles = await bingxCandles(p.bx.symbol, nCandles); src = "BingX " + p.bx.symbol; } } catch (e) { candles = null; }
+    if (!candles && p.bg) { candles = await bitgetCandles(p.bg.symbol, nCandles); src = "Bitget " + p.bg.symbol; }
     const ev = evaluate(candles, min, w, nowMs);
-    return Object.assign({ ticker: p.ticker, name: p.name, where: p.where, source: src }, ev || { idle: true });
+    const out = Object.assign({ ticker: p.ticker, name: p.name, where: p.where, source: src }, ev || { idle: true });
+    if (outside) out.strong = evaluateStrongPerp(candles, p.ref, nowMs);
+    return out;
   });
 
+  const [regular, btc] = await strongP;
   const alerts = results.filter(function (r) { return r && r.alert; }).sort(function (a, b) { return Math.abs(b.pct) - Math.abs(a.pct); });
+  const label = { "pre-apertura": "antes de la apertura", "después del cierre": "después del cierre", "noche": "a la noche (perpetuo 24/7)", "fin de semana": "en el fin de semana (perpetuo 24/7)" }[session] || session;
+  const strong = regular.filter(function (x) { return x.alert; })
+    .concat(results.filter(function (r) { return r && r.strong && r.strong.alert; }).map(function (r) {
+      return { ticker: r.ticker, name: r.name, kind: "fuerte", session: label, pct: r.strong.pct, price: r.strong.price, ref: r.strong.ref, where: r.where, perp: true };
+    }))
+    .concat(btc && btc.alert ? [btc] : [])
+    .sort(function (a, b) { return Math.abs(b.pct) - Math.abs(a.pct); });
+
   let sent = false, sendError = null;
-  if (alerts.length && !dry) {
-    const title = alerts.length === 1
-      ? "Movimiento rápido: " + alerts[0].ticker + " " + fmtPct(alerts[0].pct) + " en " + windowMin + " min"
-      : alerts.length + " movimientos rápidos en " + windowMin + " min";
-    const body = alerts.slice(0, 8).map(function (a) {
-      return a.ticker + " (" + a.name + ") " + fmtPct(a.pct) + ": de " + fmtPx(a.from) + " a " + fmtPx(a.price) + ". Futuro en " + a.where + ".";
-    }).join("\n");
-    const errs = await notify(ch, title, body, alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }), site);
+  if ((alerts.length || strong.length) && !dry) {
+    const lines = [];
+    if (strong.length) {
+      lines.push("Movimientos fuertes:");
+      strong.slice(0, 8).forEach(function (a) {
+        let t = a.ticker + (a.name && a.name !== a.ticker ? " (" + a.name + ")" : "") + " " + fmtPct(a.pct) + " " + a.session + ", a " + fmtPx(a.price);
+        if (a.perp) t += " en el perpetuo contra el cierre de " + fmtPx(a.ref);
+        lines.push(t + ". Futuro en " + a.where + ".");
+      });
+    }
+    if (alerts.length) {
+      if (strong.length) lines.push("");
+      lines.push("Movimientos rápidos (" + windowMin + " min):");
+      alerts.slice(0, 8).forEach(function (a) {
+        lines.push(a.ticker + " (" + a.name + ") " + fmtPct(a.pct) + ": de " + fmtPx(a.from) + " a " + fmtPx(a.price) + ". Futuro en " + a.where + ".");
+      });
+    }
+    const n = alerts.length + strong.length;
+    const first = strong[0] || alerts[0];
+    const title = n === 1
+      ? (strong.length ? "Movimiento fuerte: " : "Movimiento rápido: ") + first.ticker + " " + fmtPct(first.pct) + (strong.length ? " " + first.session : " en " + windowMin + " min")
+      : n + " avisos del radar";
+    const high = alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }) || strong.length > 0;
+    const errs = await notify(ch, title, lines.join("\n"), high, site);
     sent = true;
     if (errs.length) sendError = errs.join("; ");
   }
 
   res.status(200).json({
     updated: new Date(nowMs).toISOString(),
+    session: session,
     min: min, windowMin: windowMin, dry: dry, topicSet: !!topic, telegramSet: !!(ch.tgToken && ch.tgChat),
     bingxOk: !!maps.bingx, bitgetOk: !!maps.bitget, bingxError: maps.bingxError, bitgetError: maps.bitgetError,
-    alerts: alerts, sent: sent, sendError: sendError,
+    alerts: alerts, strong: strong, sent: sent, sendError: sendError,
+    regularCandidates: regular, bitcoin: btc,
     items: results
   });
 };
 
-module.exports._test = { moveAt: moveAt, evaluate: evaluate, level: level };
+module.exports._test = { moveAt: moveAt, evaluate: evaluate, level: level, strongLevel: strongLevel, freshLevel: freshLevel, evaluateStrongPerp: evaluateStrongPerp, nySession: nySession };

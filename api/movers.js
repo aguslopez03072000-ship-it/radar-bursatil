@@ -81,3 +81,10 @@ module.exports = async function handler(req, res) {
     items: items.slice(0, 60)
   });
 };
+
+// Para que /api/rapid use las mismas listas de Yahoo.
+module.exports.screener = screener;
+module.exports.num = num;
+module.exports.LISTS = LISTS;
+module.exports.MIN_CAP = MIN_CAP;
+module.exports.MIN_PRICE = MIN_PRICE;
