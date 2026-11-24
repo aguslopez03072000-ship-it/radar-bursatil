@@ -176,10 +176,10 @@ const STRONG_REGULAR = 15, STRONG_EXTENDED = 10, STRONG_STEP = 10, STRONG_LOOKBA
 const movers = require("./movers");
 
 // Escalón de un movimiento fuerte: 0 debajo del umbral; 1 al llegar al umbral y uno más cada 10 puntos. Con signo.
-function strongLevel(pct, thr) {
+function strongLevel(pct, thr, step) {
   const a = Math.abs(pct);
   if (a < thr) return 0;
-  return (1 + Math.floor((a - thr) / STRONG_STEP)) * (pct < 0 ? -1 : 1);
+  return (1 + Math.floor((a - thr) / (step || STRONG_STEP))) * (pct < 0 ? -1 : 1);
 }
 
 // Aviso nuevo si el escalón actual supera a todos los que ya se vieron antes (misma dirección).
@@ -190,13 +190,14 @@ function freshLevel(cur, prevs) {
 }
 
 // Perpetuo contra el último cierre normal, fuera de la rueda. Usa las velas de 1 minuto de las últimas dos horas.
-function evaluateStrongPerp(candles, ref, nowMs) {
+function evaluateStrongPerp(candles, ref, nowMs, thr, step) {
   if (!candles || candles.length < 2 || !ref) return null;
+  thr = thr || STRONG_EXTENDED;
   const last = candles[candles.length - 1];
   if (nowMs - last.t > 5 * 60000) return null;
   const pct = (last.c / ref - 1) * 100;
-  const L = strongLevel(pct, STRONG_EXTENDED);
-  const prevs = candles.slice(0, -1).map(function (k) { return strongLevel((k.c / ref - 1) * 100, STRONG_EXTENDED); });
+  const L = strongLevel(pct, thr, step);
+  const prevs = candles.slice(0, -1).map(function (k) { return strongLevel((k.c / ref - 1) * 100, thr, step); });
   return { pct: pct, price: last.c, ref: ref, level: L, alert: freshLevel(L, prevs) };
 }
 
@@ -274,12 +275,16 @@ function fmtAR(ms) {
   return new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Buenos_Aires", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(ms));
 }
 
-async function reportReminders(site, nowMs) {
+async function loadWatchlist(site, nowMs) {
   if (!site) return [];
   const base = site.replace(/#.*$/, "").replace(/\/$/, "");
   const j = await getJson(base + "/watchlist.json?t=" + Math.floor(nowMs / 60000));
+  return (j && j.items) || [];
+}
+
+function reportReminders(items, nowMs) {
   const out = [];
-  ((j && j.items) || []).forEach(function (w) {
+  (items || []).forEach(function (w) {
     const n = w.next || {};
     if (!n.date || !n.confirmed) return;
     const hour = /^\d{1,2}:\d{2}$/.test(n.hour || "") ? n.hour : n.time === "antes de la apertura" ? "07:00" : n.time === "después del cierre" ? "16:05" : null;
@@ -289,6 +294,38 @@ async function reportReminders(site, nowMs) {
     const due = mins <= REMIND_BEFORE && mins > REMIND_BEFORE - REMIND_WINDOW;
     const key = w.ticker + "|" + n.date;
     out.push({ ticker: w.ticker, name: w.name, at: new Date(at).toISOString(), minutesLeft: Math.round(mins), due: due && !remindSent[key], hourNY: hour, exact: !!n.hour, time: n.time || null, quarter: n.quarter || null, expect: w.expect || "", key: key });
+  });
+  return out;
+}
+
+
+// ---------- Movimientos tras el reporte ----------
+// Desde que una empresa de la lista presenta su balance y durante la conferencia (unas 3 horas; si reporta antes
+// de la apertura, hasta las 9:30 de Nueva York), avisa cuando su perpetuo de BingX se mueve 7% o más contra el
+// último cierre normal, y después cada 7 puntos más (14%, 21%...).
+const EARN_THR = 7, EARN_STEP = 7, EARN_HOURS = 3;
+function normTicker(t) { return String(t || "").toUpperCase().replace(/[.\-]/g, ""); }
+function nyDate(ms) { return new Date(ms).toLocaleDateString("en-CA", { timeZone: "America/New_York" }); }
+
+function earningsWindows(items, nowMs) {
+  const today = nyDate(nowMs), out = {};
+  (items || []).forEach(function (w) {
+    const n = w.next || {}, key = normTicker(w.ticker);
+    let start = null, end = null;
+    if (n.date === today && n.confirmed) {
+      const hour = /^\d{1,2}:\d{2}$/.test(n.hour || "") ? n.hour : n.time === "antes de la apertura" ? "07:00" : n.time === "después del cierre" ? "16:05" : null;
+      if (hour) {
+        start = nyToUtc(today, hour) - 5 * 60000;
+        end = start + EARN_HOURS * 3600000 + 5 * 60000;
+        if (n.time === "antes de la apertura" || parseInt(hour, 10) < 9) end = Math.min(end, nyToUtc(today, "09:30"));
+      }
+    }
+    // Si la tarea ya pasó el resultado a "last", el reporte fue hoy: se vigila el resto de la rueda extendida.
+    if (!start && w.last && w.last.date === today) {
+      const pre = [nyToUtc(today, "04:00"), nyToUtc(today, "09:30")], post = [nyToUtc(today, "16:00"), nyToUtc(today, "20:00")];
+      if (nowMs >= pre[0] && nowMs < pre[1]) { start = pre[0]; end = pre[1]; } else { start = post[0]; end = post[1]; }
+    }
+    if (start && nowMs >= start && nowMs < end) out[key] = { start: new Date(start).toISOString(), end: new Date(end).toISOString(), name: w.name };
   });
   return out;
 }
@@ -342,7 +379,8 @@ module.exports = async function handler(req, res) {
   const outside = session !== "rueda";
   const nCandles = outside ? STRONG_LOOKBACK : w + 3;
 
-  const [maps, refs] = await Promise.all([futures.futuresMaps(), pool(tickers, 10, cachedRef)]);
+  const [maps, refs, wl] = await Promise.all([futures.futuresMaps(), pool(tickers, 10, cachedRef), loadWatchlist(site, nowMs).catch(function () { return null; })]);
+  const earnWin = outside ? earningsWindows(wl, nowMs) : {};
 
   const plan = [];
   tickers.forEach(function (t, i) {
@@ -365,13 +403,17 @@ module.exports = async function handler(req, res) {
     const src = "BingX " + p.bx.symbol;
     const ev = evaluate(candles, min, w, nowMs);
     const out = Object.assign({ ticker: p.ticker, name: p.name, where: p.where, source: src }, ev || { idle: true });
-    if (outside) out.strong = evaluateStrongPerp(candles, p.ref, nowMs);
+    if (outside && earnWin[normTicker(p.ticker)]) out.earn = evaluateStrongPerp(candles, p.ref, nowMs, EARN_THR, EARN_STEP);
+    else if (outside) out.strong = evaluateStrongPerp(candles, p.ref, nowMs);
     return out;
   });
 
   const [regular, btc] = await strongP;
   let reminders = [];
-  try { reminders = await reportReminders(site, nowMs); } catch (e) { reminders = [{ error: String(e && e.message || e) }]; }
+  try { reminders = wl ? reportReminders(wl, nowMs) : [{ error: "No pude leer watchlist.json" }]; } catch (e) { reminders = [{ error: String(e && e.message || e) }]; }
+  const earn = results.filter(function (r) { return r && r.earn && r.earn.alert; }).map(function (r) {
+    return { ticker: r.ticker, name: r.name, pct: r.earn.pct, price: r.earn.price, ref: r.earn.ref };
+  });
   const alerts = results.filter(function (r) { return r && r.alert; }).sort(function (a, b) { return Math.abs(b.pct) - Math.abs(a.pct); });
   const label = { "pre-apertura": "antes de la apertura", "después del cierre": "después del cierre", "noche": "a la noche (perpetuo 24/7)", "fin de semana": "en el fin de semana (perpetuo 24/7)" }[session] || session;
   const strong = regular.filter(function (x) { return x.alert; })
@@ -404,6 +446,15 @@ module.exports = async function handler(req, res) {
     Array.prototype.push.apply(errsAll, await notify(ch, "rapido", title, lines.join("\n"), alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }), site));
     sent = true;
   }
+  if (earn.length && !dry) {
+    const lines = earn.map(function (a) {
+      return a.ticker + " (" + a.name + ") " + fmtPct(a.pct) + " después de su reporte: el perpetuo de BingX está en " + fmtPx(a.price) + " contra el cierre de " + fmtPx(a.ref) + ".";
+    });
+    const f = earn[0];
+    const title = earn.length === 1 ? f.ticker + " " + fmtPct(f.pct) + " tras el reporte" : earn.length + " acciones se mueven tras su reporte";
+    Array.prototype.push.apply(errsAll, await notify(ch, "post", title, lines.join("\n"), true, site));
+    sent = true;
+  }
   for (const r of reminders) {
     if (!r.due || dry) continue;
     const when = (r.time ? r.time + ", " : "") + (r.exact ? "a las " : "alrededor de las ") + r.hourNY + " de Nueva York (" + fmtAR(Date.parse(r.at)) + " de Argentina)";
@@ -422,9 +473,9 @@ module.exports = async function handler(req, res) {
     min: min, windowMin: windowMin, dry: dry, topicSet: !!topic, telegramSet: !!(ch.tgToken && ch.tgChat),
     bingxOk: !!maps.bingx, bitgetOk: !!maps.bitget, bingxError: maps.bingxError, bitgetError: maps.bitgetError,
     alerts: alerts, strong: strong, sent: sent, sendError: sendError,
-    regularCandidates: regular, bitcoin: btc, reminders: reminders,
+    regularCandidates: regular, bitcoin: btc, reminders: reminders, earningsWindows: earnWin, earnings: earn,
     items: results
   });
 };
 
-module.exports._test = { nyToUtc: nyToUtc, reportReminders: reportReminders, moveAt: moveAt, evaluate: evaluate, level: level, strongLevel: strongLevel, freshLevel: freshLevel, evaluateStrongPerp: evaluateStrongPerp, nySession: nySession };
+module.exports._test = { earningsWindows: earningsWindows, nyToUtc: nyToUtc, reportReminders: reportReminders, moveAt: moveAt, evaluate: evaluate, level: level, strongLevel: strongLevel, freshLevel: freshLevel, evaluateStrongPerp: evaluateStrongPerp, nySession: nySession };

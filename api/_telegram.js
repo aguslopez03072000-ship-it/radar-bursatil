@@ -10,6 +10,7 @@ const HEADERS = {
   radar: "🗂️ RADAR",
   error: "⚠️ RADAR: ALGO FALLÓ",
   previa: "⏰ REPORTA EN 1 HORA",
+  post: "📣 MOVIMIENTO TRAS EL REPORTE",
   prueba: "✅ PRUEBA"
 };
 
