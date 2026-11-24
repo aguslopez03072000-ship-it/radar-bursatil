@@ -276,6 +276,21 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // ?check=A,B,C: dice en qué exchange tiene perpetuo cada acción, sin revisar movimientos.
+  if (q.check) {
+    const syms = String(q.check).split(",").map(function (s) { return s.trim().toUpperCase(); }).filter(function (s) { return SYMBOL_OK.test(s); }).slice(0, 60);
+    const [mp, rf] = await Promise.all([futures.futuresMaps(), pool(syms, 10, cachedRef)]);
+    const out = {};
+    syms.forEach(function (t, i) {
+      const r = rf[i];
+      if (!r || r.error) { out[t] = { error: "Sin precio de la acción" }; return; }
+      const bx = futures.match(mp.bingx, t, r.price), bg = futures.match(mp.bitget, t, r.price);
+      out[t] = { price: r.price, bingx: bx ? bx.symbol + " " + bx.price : null, bitget: bg ? bg.symbol + " " + bg.price : null };
+    });
+    res.status(200).json({ updated: new Date().toISOString(), bingxOk: !!mp.bingx, bitgetOk: !!mp.bitget, check: out });
+    return;
+  }
+
   const extra = String(process.env.RAPID_EXTRA || "").split(",").map(function (s) { return s.trim().toUpperCase(); }).filter(function (s) { return SYMBOL_OK.test(s); });
   const tickers = Array.from(new Set(TICKERS.concat(extra)));
   const nowMs = Date.now();
