@@ -227,5 +227,6 @@
         "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
       }
     }
-  ]
+  ],
+  "thresholdExtended": 10
 }
