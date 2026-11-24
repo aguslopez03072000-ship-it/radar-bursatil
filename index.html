@@ -443,11 +443,8 @@ tr:last-child td { border-bottom: 0; }
       tr.appendChild(el("td", "num", h.label || h.date));
       var m = el("td"); m.appendChild(el("span", "pill mood-" + h.mood, moodText(h.mood).replace("Día ", ""))); tr.appendChild(m);
       tr.appendChild(el("td", null, h.headline));
-      var p = el("td");
-      (h.picks || []).forEach(function (k) {
-        var s = el("span", "tk " + (k.status || ""), k.ticker + (k.price && k.price !== "—" ? " · " + k.price : ""));
-        p.appendChild(s);
-      });
+      // Las marcadas van como texto simple (Agus pidió sacar los carteles de colores).
+      var p = el("td", null, (h.picks || []).map(function (k) { return k.ticker; }).join(", "));
       tr.appendChild(p); tb.appendChild(tr);
     });
   }
