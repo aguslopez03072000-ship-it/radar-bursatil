@@ -144,6 +144,11 @@ tr:last-child td { border-bottom: 0; }
 .mvlist .pct { font-family: var(--font-num); white-space: nowrap; }
 .mvlist td.why { color: var(--muted); font-size: 0.88rem; min-width: 240px; }
 .empty { color: var(--muted); font-size: 0.92rem; padding: 10px 0; }
+.mv .src2 { font-size: 0.76rem; color: var(--muted); }
+.mv.ext { border-left-color: var(--warn); }
+.extrow { font-size: 0.84rem; background: var(--warn-soft); border-radius: 8px; padding: 6px 10px; }
+.extrow.big { background: var(--down-soft); }
+.extrow.bigup { background: var(--up-soft); }
 
 .wl { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
 .wcard { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; align-content: start; }
@@ -208,6 +213,9 @@ tr:last-child td { border-bottom: 0; }
     </div>
     <div class="subhead" id="mv-live-head">Ahora en Wall Street <span id="mv-live-time" class="sub"></span></div>
     <div class="movers-live" id="mv-live"><p class="empty">Buscando movimientos en vivo…</p></div>
+    <div class="subhead">Fuera de horario y futuros 24/7 <span id="ext-time" class="sub"></span></div>
+    <p class="sub" id="ext-note">Compara la pre-apertura, el después del cierre y los contratos perpetuos de BingX contra el último cierre normal de cada acción.</p>
+    <div class="movers-live" id="ext-live"><p class="empty">Buscando precios fuera de horario…</p></div>
     <div class="subhead">Últimos días, con la explicación</div>
     <p class="sub" id="mv-note"></p>
     <div class="mvlist"><table><thead><tr><th>Día</th><th>Acción</th><th>Variación</th><th>Por qué</th></tr></thead><tbody id="mv-body"></tbody></table></div>
@@ -242,7 +250,7 @@ tr:last-child td { border-bottom: 0; }
     <div class="hist"><table><thead><tr><th>Día</th><th>Clima</th><th>Lectura</th><th>Marcadas</th></tr></thead><tbody id="histbody"></tbody></table></div>
   </section>
 
-  <p class="disclaimer" id="disclaimer">La revisión y las oportunidades las arma Claude cada día hábil antes de la apertura, a partir de noticias y datos públicos. Las cotizaciones marcadas como “en vivo” se refrescan cada minuto desde Yahoo Finance, DolarApi y ArgentinaDatos, y pueden tener algunos minutos de demora. Las fechas de reporte marcadas como estimadas surgen del calendario habitual de cada empresa y se confirman cuando la empresa las anuncia. No es asesoramiento financiero: es una lista de ideas para que investigues y decidas vos. Los precios son aproximados y pueden haber cambiado; revisalos siempre en tu bróker antes de operar. Invertí solo dinero que no vayas a necesitar en el corto plazo y diversificá. Claude es un producto de Anthropic, por eso esta página no evalúa la acción de Anthropic.</p>
+  <p class="disclaimer" id="disclaimer">La revisión y las oportunidades las arma Claude cada día hábil antes de la apertura, a partir de noticias y datos públicos. Las cotizaciones marcadas como “en vivo” se refrescan cada minuto desde Yahoo Finance, DolarApi y ArgentinaDatos, y pueden tener algunos minutos de demora. Los precios fuera de horario salen de Yahoo Finance y los futuros 24/7 de los contratos perpetuos de BingX, que pueden despegarse del precio real cuando hay poco volumen. Las fechas de reporte marcadas como estimadas surgen del calendario habitual de cada empresa y se confirman cuando la empresa las anuncia. No es asesoramiento financiero: es una lista de ideas para que investigues y decidas vos. Los precios son aproximados y pueden haber cambiado; revisalos siempre en tu bróker antes de operar. Invertí solo dinero que no vayas a necesitar en el corto plazo y diversificá. Claude es un producto de Anthropic, por eso esta página no evalúa la acción de Anthropic.</p>
 </main>
 
 <script>
@@ -513,6 +521,8 @@ tr:last-child td { border-bottom: 0; }
       } else {
         c.appendChild(el("span", "sub", "Cotización en vivo no disponible en este momento."));
       }
+      var xl = extLine(yahooSym(w));
+      if (xl && !(w.next && w.next.none)) c.appendChild(xl);
       if (w.expect) { var pe = el("p"); pe.appendChild(el("span", "lbl", "Qué espera el mercado")); pe.appendChild(document.createTextNode(w.expect)); c.appendChild(pe); }
       if (w.last && w.last.text) { var pl = el("p"); pl.appendChild(el("span", "lbl", recent ? "Lo que reportó" : "Último reporte")); pl.appendChild(document.createTextNode(w.last.text)); c.appendChild(pl); }
       if (w.sources && w.sources.length) {
@@ -581,6 +591,62 @@ tr:last-child td { border-bottom: 0; }
     });
   }
 
+  // ---------- Fuera de horario y BingX ----------
+  var SESS = { pre: "Pre-apertura", post: "Después del cierre", closed: "Mercado cerrado", regular: "Rueda abierta" };
+  function extFor(sym) {
+    var X = state.ext; if (!X || !X.items) return null;
+    for (var i = 0; i < X.items.length; i++) if (X.items[i].symbol === sym) return X.items[i];
+    return null;
+  }
+  function extLine(sym) {
+    var x = extFor(sym); if (!x || (!x.ext && !x.bingx) || x.maxAbs < 3) return null;
+    var parts = [];
+    if (x.ext) parts.push((x.ext.session === "pre" ? "Pre-apertura " : "Después del cierre ") + money(x.ext.price, x.currency) + " (" + signed(x.ext.pct) + ")");
+    if (x.bingx && (x.session !== "regular")) parts.push("BingX 24/7 " + money(x.bingx.price, "USD") + " (" + signed(x.bingx.pct) + ")");
+    if (!parts.length) return null;
+    var big = x.maxAbs >= 15;
+    var up = (x.ext ? x.ext.pct : x.bingx.pct) > 0;
+    return el("div", "extrow" + (big ? (up ? " bigup" : " big") : ""), parts.join(" · ") + " contra el último cierre");
+  }
+  function renderExtended() {
+    var box = document.getElementById("ext-live"); box.textContent = "";
+    var X = state.ext, tEl = document.getElementById("ext-time");
+    if (!X) { tEl.textContent = ""; box.appendChild(el("p", "empty", "Los precios fuera de horario no están disponibles ahora.")); return; }
+    tEl.textContent = "· " + (SESS[X.marketSession] || "") + " · actualizado " + hhmm(X.updated);
+    var mine = watchSet();
+    var list = X.alerts && X.alerts.length ? X.alerts : (X.items || []).filter(function (x) { return x.maxAbs > 0 && x.session !== "regular"; }).slice(0, 6);
+    if (X.marketSession === "regular" && !(X.alerts && X.alerts.length)) {
+      box.appendChild(el("p", "empty", "Con la rueda abierta, los movimientos se ven arriba. Esta parte se activa antes de la apertura, después del cierre y los fines de semana."));
+      return;
+    }
+    if (!(X.alerts && X.alerts.length)) box.appendChild(el("p", "empty", "Ninguna se mueve 15% o más fuera de horario. Los movimientos más grandes ahora:"));
+    if (!list.length) return;
+    list.forEach(function (x) {
+      var pct = x.ext && (!x.bingx || Math.abs(x.ext.pct) >= Math.abs(x.bingx.pct)) ? x.ext.pct : x.bingx ? x.bingx.pct : 0;
+      var c = el("div", "mv ext" + (pct < 0 ? " neg" : ""));
+      var top = el("div", "top");
+      var tk = el("span", "ticker", x.symbol); tk.style.fontSize = "1rem"; top.appendChild(tk);
+      top.appendChild(el("span", "pct " + (pct > 0 ? "good" : "bad"), (pct > 0 ? "▲ " : "▼ ") + signed(pct, 2)));
+      c.appendChild(top);
+      if (x.name) c.appendChild(el("span", "nm", x.name));
+      c.appendChild(el("span", "sub", "Último cierre " + money(x.ref, x.currency)));
+      if (x.ext) c.appendChild(el("span", "src2", (x.ext.session === "pre" ? "Pre-apertura " : "Después del cierre ") + money(x.ext.price, x.currency) + " · " + signed(x.ext.pct)));
+      if (x.bingx) c.appendChild(el("span", "src2", "BingX " + x.bingx.symbol + " " + money(x.bingx.price, "USD") + " · " + signed(x.bingx.pct)));
+      if (mine[x.symbol]) c.appendChild(el("span", "mine", "En tu lista"));
+      box.appendChild(c);
+    });
+    if (!X.bingxOk) box.appendChild(el("p", "empty", "BingX no respondió en esta consulta; se muestran solo los precios de Yahoo."));
+  }
+  function loadExtended() {
+    if (!state.data) return;
+    var all = (state.data.watchlist || []).map(yahooSym).concat(state.data.opportunities.map(yahooSym)).filter(function (s) { return !/-USD$/.test(s); });
+    var syms = all.filter(function (x, i) { return all.indexOf(x) === i; }).join(",");
+    fetch("/api/extended?min=15&symbols=" + encodeURIComponent(syms), { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (X) { state.ext = X; renderExtended(); renderWatchlist(state.data); checkAlerts(); })
+      .catch(function () { state.ext = null; renderExtended(); });
+  }
+
   // Avisos: banner en la página y notificación del navegador para movimientos nuevos.
   function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
   function canNotify() { return typeof Notification !== "undefined" && Notification.permission === "granted"; }
@@ -596,10 +662,17 @@ tr:last-child td { border-bottom: 0; }
   });
 
   function checkAlerts() {
-    var L = state.movers, box = document.getElementById("alert");
-    if (!L || !L.ok || !L.items.length) { box.className = "alert"; return; }
+    var box = document.getElementById("alert");
+    var items = [];
+    if (state.movers && state.movers.ok) state.movers.items.forEach(function (m) { items.push({ symbol: m.symbol, changePct: m.changePct, tag: "" }); });
+    if (state.ext && state.ext.alerts) state.ext.alerts.forEach(function (x) {
+      var pct = x.ext && (!x.bingx || Math.abs(x.ext.pct) >= Math.abs(x.bingx.pct)) ? x.ext.pct : x.bingx.pct;
+      if (!items.some(function (i) { return i.symbol === x.symbol; })) items.push({ symbol: x.symbol, changePct: pct, tag: x.ext && x.ext.session === "pre" ? " (pre-apertura)" : x.ext ? " (después del cierre)" : " (BingX 24/7)" });
+    });
+    var L = { items: items };
+    if (!items.length) { box.className = "alert"; return; }
     var mine = watchSet();
-    var top = L.items.slice(0, 4).map(function (m) { return m.symbol + " " + signed(m.changePct, 1); }).join(" · ");
+    var top = L.items.slice(0, 4).map(function (m) { return m.symbol + " " + signed(m.changePct, 1) + m.tag; }).join(" · ");
     var mineHits = L.items.filter(function (m) { return mine[m.symbol]; });
     box.textContent = "";
     box.appendChild(el("strong", null, L.items.length + (L.items.length === 1 ? " acción se mueve" : " acciones se mueven") + " 15% o más hoy"));
@@ -614,7 +687,7 @@ tr:last-child td { border-bottom: 0; }
     if (fresh.length && canNotify()) {
       try {
         new Notification("Radar bursátil: movimientos de 15% o más", {
-          body: fresh.slice(0, 5).map(function (m) { return m.symbol + " " + signed(m.changePct, 1); }).join(" · "),
+          body: fresh.slice(0, 5).map(function (m) { return m.symbol + " " + signed(m.changePct, 1) + m.tag; }).join(" · "),
           icon: "/icon-192.png", tag: "radar-movers"
         });
       } catch (e) {}
@@ -665,8 +738,8 @@ tr:last-child td { border-bottom: 0; }
   }
 
   setInterval(function () { if (document.visibilityState === "visible") loadLive(); }, 60000);
-  setInterval(function () { if (document.visibilityState === "visible") loadMovers(); }, 120000);
-  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") { loadLive(); loadMovers(); } });
+  setInterval(function () { if (document.visibilityState === "visible") { loadMovers(); loadExtended(); } }, 120000);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") { loadLive(); loadMovers(); loadExtended(); } });
 
   fetch("/data.json", { cache: "no-store" })
     .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
@@ -677,7 +750,7 @@ tr:last-child td { border-bottom: 0; }
       return Promise.all([getJson("/watchlist.json"), getJson("/movers.json")]).then(function (x) {
         d.watchlist = (x[0] && x[0].items) || d.watchlist || [];
         d.movers = x[1] || d.movers || {};
-        renderAll(); loadLive(); loadMovers();
+        renderAll(); loadLive(); loadMovers(); loadExtended();
       });
     })
     .catch(function () {
