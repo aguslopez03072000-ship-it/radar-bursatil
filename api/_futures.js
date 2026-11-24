@@ -73,6 +73,9 @@ function looseRe(t) {
   return new RegExp("^(NC[A-Z]{2})?" + t + "[A-Z]{1,2}(X|US|ON)?(\\d)?(USD)?$");
 }
 
+// Contratos que el exchange nombra con el nombre de la empresa en lugar del ticker.
+const ALIASES = { TSM: ["TSMC"], ANT: ["ANTHROPIC", "ANTH"], BRKB: ["BRK"], GOOGL: ["GOOG", "GOOGLE"] };
+
 function match(map, symbol, refPrice) {
   if (!map || !refPrice) return null;
   const t = String(symbol).toUpperCase().replace(/[.\-]/g, "");
@@ -81,6 +84,10 @@ function match(map, symbol, refPrice) {
   const all = Object.keys(map);
   const strict = [t, t + "X", t + "US", t + "ON"].filter(function (k) { return map[k]; })
     .concat(all.filter(function (k) { return k.length > t.length + 2 && re.test(k); }));
+  (ALIASES[t] || []).forEach(function (n) {
+    const ar = candidateRe(n);
+    all.forEach(function (k) { if (k === n || ar.test(k)) strict.push(k); });
+  });
   const hit = pick(map, strict, refPrice, 0.5, 2);
   if (hit || t.length < 3) return hit;
   // Con el criterio flexible se exige un precio mucho más parecido, para no confundirlo con otra acción.
