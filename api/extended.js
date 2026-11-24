@@ -5,6 +5,7 @@
 //   - el precio del contrato perpetuo de BingX que sigue a esa acción y opera 24/7.
 // Además de los símbolos pedidos revisa una lista fija de acciones grandes y muy operadas.
 
+const futures = require("./_futures");
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
 const SYMBOL_OK = /^[A-Z0-9.\-]{1,12}$/;
 const POPULAR = ["AAPL", "MSFT", "AMZN", "GOOGL", "META", "NVDA", "TSLA", "AVGO", "AMD", "NFLX", "ORCL", "INTC", "QCOM", "MU", "ARM", "TSM", "ASML", "PLTR", "COIN", "MSTR", "HOOD", "SMCI", "DELL", "CRWD", "PANW", "SHOP", "UBER", "BABA", "PDD", "MRNA", "LLY", "NVO", "UNH", "JPM", "XOM", "MELI", "NU", "GGAL", "YPF", "VIST", "BMA", "PAM", "CRWV", "NBIS", "IREN", "RIOT", "HUT", "MARA"];
@@ -55,35 +56,6 @@ async function yahooExt(symbol) {
   return { symbol: symbol, name: m.shortName || m.longName || null, currency: m.currency || "USD", session: session, regular: regular, prevClose: prevClose, ref: ref, ext: ext };
 }
 
-async function bingxTickers() {
-  const url = "https://open-api.bingx.com/openApi/swap/v2/quote/ticker?timestamp=" + Date.now();
-  const j = await getJson(url);
-  if (!j || !Array.isArray(j.data)) throw new Error((j && j.msg) || "Respuesta sin datos");
-  const map = {};
-  j.data.forEach(function (t) {
-    if (!t || !t.symbol) return;
-    const base = String(t.symbol).toUpperCase().replace(/-USDT$|-USDC$|-USD$/, "");
-    const px = parseFloat(t.lastPrice);
-    if (isFinite(px) && px > 0) map[base] = { symbol: t.symbol, price: px, change24h: parseFloat(t.priceChangePercent), time: t.closeTime ? new Date(Number(t.closeTime)).toISOString() : null };
-  });
-  return map;
-}
-
-// Busca el perpetuo de BingX de una acción. Los nombres varían (NVDA, NVDAX, NVDAUS, NVDAON...),
-// así que se acepta solo si su precio es coherente con el de la acción, para no confundirla con una cripto de igual sigla.
-function matchBingx(map, symbol, refPrice) {
-  if (!map || !refPrice) return null;
-  const t = symbol.replace(/[.\-]/g, "");
-  const cands = [t, t + "X", t + "US", t + "ON", "NCSK" + t];
-  for (const c of cands) {
-    const hit = map[c];
-    if (!hit) continue;
-    const ratio = hit.price / refPrice;
-    if (ratio > 0.5 && ratio < 2) return hit;
-  }
-  return null;
-}
-
 async function pool(items, size, fn) {
   const out = new Array(items.length);
   let i = 0;
@@ -100,7 +72,7 @@ module.exports = async function handler(req, res) {
 
   const [quotes, bx] = await Promise.all([
     pool(symbols, 12, yahooExt),
-    bingxTickers().then(function (m) { return { map: m }; }, function (e) { return { error: String(e && e.message || e) }; })
+    futures.futuresMaps()
   ]);
 
   let marketSession = null;
@@ -108,11 +80,11 @@ module.exports = async function handler(req, res) {
   quotes.forEach(function (q) {
     if (!q || q.error) return;
     if (!marketSession && q.session) marketSession = q.session;
-    const b = matchBingx(bx.map, q.symbol, q.regular || q.prevClose);
+    const b = futures.match(bx.bingx, q.symbol, q.regular || q.prevClose);
     let bingx = null;
     if (b && q.ref) bingx = { symbol: b.symbol, price: b.price, pct: (b.price / q.ref - 1) * 100, time: b.time };
     const moves = [q.ext ? Math.abs(q.ext.pct) : 0, bingx ? Math.abs(bingx.pct) : 0];
-    items.push({ symbol: q.symbol, name: q.name, currency: q.currency, session: q.session, ref: q.ref, ext: q.ext, bingx: bingx, maxAbs: Math.max.apply(null, moves) });
+    items.push({ symbol: q.symbol, name: q.name, currency: q.currency, session: q.session, ref: q.ref, ext: q.ext, bingx: bingx, futures: futures.futuresFor(bx, q.symbol, q.regular || q.prevClose), maxAbs: Math.max.apply(null, moves) });
   });
   items.sort(function (a, b) { return b.maxAbs - a.maxAbs; });
 
@@ -121,8 +93,10 @@ module.exports = async function handler(req, res) {
     updated: new Date().toISOString(),
     min: min,
     marketSession: marketSession,
-    bingxOk: !bx.error,
-    bingxError: bx.error || null,
+    bingxOk: !!bx.bingx,
+    bingxError: bx.bingxError || null,
+    bitgetOk: !!bx.bitget,
+    bitgetError: bx.bitgetError || null,
     checked: items.length,
     alerts: items.filter(function (x) { return x.maxAbs >= min; }),
     items: items

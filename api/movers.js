@@ -3,6 +3,7 @@
 // Usa las listas predefinidas de Yahoo Finance (mayores subas y mayores bajas del día)
 // y devuelve las acciones que se mueven al menos `min` por ciento, en cualquier dirección.
 
+const futures = require("./_futures");
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
 const HOSTS = ["https://query1.finance.yahoo.com", "https://query2.finance.yahoo.com"];
 const LISTS = ["day_gainers", "day_losers", "small_cap_gainers"];
@@ -33,6 +34,7 @@ function num(x) { return typeof x === "number" ? x : (x && typeof x.raw === "num
 
 module.exports = async function handler(req, res) {
   const min = Math.max(5, Math.min(100, parseFloat((req.query && req.query.min) || "15") || 15));
+  const mapsP = futures.futuresMaps();
   const results = await Promise.all(LISTS.map(function (id) {
     return screener(id).then(function (q) { return { id: id, quotes: q }; }, function (e) { return { id: id, error: String(e && e.message || e) }; });
   }));
@@ -50,6 +52,7 @@ module.exports = async function handler(req, res) {
       if (price !== null && price < MIN_PRICE) return;
       if (cap !== null && cap < MIN_CAP) return;
       if (seen[q.symbol]) return;
+      if (!futures.isCommonStock(q.symbol)) return; // preferidas, warrants, etc.
       seen[q.symbol] = true;
       items.push({
         symbol: q.symbol,
@@ -64,6 +67,8 @@ module.exports = async function handler(req, res) {
     });
   });
   items.sort(function (a, b) { return Math.abs(b.changePct) - Math.abs(a.changePct); });
+  const maps = await mapsP;
+  items.forEach(function (it) { it.futures = futures.futuresFor(maps, it.symbol, it.price); });
 
   res.setHeader("Cache-Control", "s-maxage=120, stale-while-revalidate=600");
   res.status(200).json({
@@ -71,6 +76,8 @@ module.exports = async function handler(req, res) {
     min: min,
     ok: errors.length < LISTS.length,
     errors: errors,
+    futuresOk: !!(maps.bingx || maps.bitget),
+    futuresErrors: [maps.bingxError && "BingX: " + maps.bingxError, maps.bitgetError && "Bitget: " + maps.bitgetError].filter(Boolean),
     items: items.slice(0, 60)
   });
 };

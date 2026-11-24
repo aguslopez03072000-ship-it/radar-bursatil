@@ -553,7 +553,7 @@ tr:last-child td { border-bottom: 0; }
       tr.appendChild(el("td", "num", m.label || m.date));
       var tdA = el("td"); var tk = el("span", "tk", m.ticker); tdA.appendChild(tk);
       if (mine[m.ticker]) tdA.appendChild(el("span", "mine", "En tu lista"));
-      tdA.appendChild(el("div", "sub", m.name + (m.session && m.session !== "cierre" ? " · " + m.session : "")));
+      tdA.appendChild(el("div", "sub", m.name + (m.session && m.session !== "cierre" ? " · " + m.session : "") + (m.futures ? " · futuro en " + m.futures : "")));
       tr.appendChild(tdA);
       var tdP = el("td", "pct " + (m.change > 0 ? "good" : "bad"), (m.change > 0 ? "▲ " : "▼ ") + signed(m.change, 2));
       if (m.price) { tdP.appendChild(el("div", "sub", m.price)); }
@@ -586,6 +586,7 @@ tr:last-child td { border-bottom: 0; }
       c.appendChild(el("span", "nm", m.name));
       var meta = el("span", "sub", money(m.price, m.currency) + (m.marketCap ? " · cap. US$" + nf(1).format(m.marketCap / 1e9) + " mil M" : ""));
       c.appendChild(meta);
+      if (m.futures) c.appendChild(el("span", "sub", "Futuro en " + m.futures));
       if (mine[m.symbol]) c.appendChild(el("span", "mine", "En tu lista"));
       box.appendChild(c);
     });
@@ -664,8 +665,10 @@ tr:last-child td { border-bottom: 0; }
   function checkAlerts() {
     var box = document.getElementById("alert");
     var items = [];
-    if (state.movers && state.movers.ok) state.movers.items.forEach(function (m) { items.push({ symbol: m.symbol, changePct: m.changePct, tag: "" }); });
+    // Agus solo quiere avisos de acciones con futuro perpetuo en Bitget o BingX.
+    if (state.movers && state.movers.ok) state.movers.items.forEach(function (m) { if (m.futures) items.push({ symbol: m.symbol, changePct: m.changePct, tag: " (" + m.futures + ")" }); });
     if (state.ext && state.ext.alerts) state.ext.alerts.forEach(function (x) {
+      if (!x.futures) return;
       var pct = x.ext && (!x.bingx || Math.abs(x.ext.pct) >= Math.abs(x.bingx.pct)) ? x.ext.pct : x.bingx.pct;
       if (!items.some(function (i) { return i.symbol === x.symbol; })) items.push({ symbol: x.symbol, changePct: pct, tag: x.ext && x.ext.session === "pre" ? " (pre-apertura)" : x.ext ? " (después del cierre)" : " (BingX 24/7)" });
     });
