@@ -9,6 +9,7 @@ const HEADERS = {
   bitcoin: "₿ BITCOIN",
   radar: "🗂️ RADAR",
   error: "⚠️ RADAR: ALGO FALLÓ",
+  previa: "⏰ REPORTA EN 1 HORA",
   prueba: "✅ PRUEBA"
 };
 

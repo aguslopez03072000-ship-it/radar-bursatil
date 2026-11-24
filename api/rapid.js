@@ -249,6 +249,50 @@ async function bitcoinStrong() {
   return { ticker: "BTC", name: "Bitcoin", kind: "fuerte", session: "en 24 horas", pct: pct, price: c[n].c, where: "BingX", level: L, alert: freshLevel(L, prevs) };
 }
 
+
+// ---------- Aviso una hora antes de cada reporte de la lista ----------
+// Lee watchlist.json de la propia página. Si el reporte tiene hora confirmada ("hour", hora de Nueva York) usa esa;
+// si no, toma 7:00 para "antes de la apertura" y 16:05 para "después del cierre". Sin horario no avisa
+// (la tarea de las 9:20 ya avisa las que reportan ese día).
+const REMIND_BEFORE = 60, REMIND_WINDOW = 3; // minutos
+const remindSent = {}; // evita repetir el aviso mientras la función sigue activa
+
+// Milisegundos UTC de una fecha y hora de Nueva York (contempla el horario de verano).
+function nyToUtc(dateIso, hhmm) {
+  const [y, m, d] = dateIso.split("-").map(Number), [h, mi] = hhmm.split(":").map(Number);
+  let guess = Date.UTC(y, m - 1, d, h + 5, mi);
+  for (let i = 0; i < 2; i++) {
+    const parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date(guess));
+    const gh = parseInt(parts.find(function (x) { return x.type === "hour"; }).value, 10) % 24;
+    const gm = parseInt(parts.find(function (x) { return x.type === "minute"; }).value, 10);
+    guess += ((h * 60 + mi) - (gh * 60 + gm)) * 60000;
+  }
+  return guess;
+}
+
+function fmtAR(ms) {
+  return new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Buenos_Aires", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(ms));
+}
+
+async function reportReminders(site, nowMs) {
+  if (!site) return [];
+  const base = site.replace(/#.*$/, "").replace(/\/$/, "");
+  const j = await getJson(base + "/watchlist.json?t=" + Math.floor(nowMs / 60000));
+  const out = [];
+  ((j && j.items) || []).forEach(function (w) {
+    const n = w.next || {};
+    if (!n.date || !n.confirmed) return;
+    const hour = /^\d{1,2}:\d{2}$/.test(n.hour || "") ? n.hour : n.time === "antes de la apertura" ? "07:00" : n.time === "después del cierre" ? "16:05" : null;
+    if (!hour) return;
+    const at = nyToUtc(n.date, hour);
+    const mins = (at - nowMs) / 60000;
+    const due = mins <= REMIND_BEFORE && mins > REMIND_BEFORE - REMIND_WINDOW;
+    const key = w.ticker + "|" + n.date;
+    out.push({ ticker: w.ticker, name: w.name, at: new Date(at).toISOString(), minutesLeft: Math.round(mins), due: due && !remindSent[key], hourNY: hour, exact: !!n.hour, time: n.time || null, quarter: n.quarter || null, expect: w.expect || "", key: key });
+  });
+  return out;
+}
+
 module.exports = async function handler(req, res) {
   const q = req.query || {};
   res.setHeader("Cache-Control", "no-store");
@@ -326,6 +370,8 @@ module.exports = async function handler(req, res) {
   });
 
   const [regular, btc] = await strongP;
+  let reminders = [];
+  try { reminders = await reportReminders(site, nowMs); } catch (e) { reminders = [{ error: String(e && e.message || e) }]; }
   const alerts = results.filter(function (r) { return r && r.alert; }).sort(function (a, b) { return Math.abs(b.pct) - Math.abs(a.pct); });
   const label = { "pre-apertura": "antes de la apertura", "después del cierre": "después del cierre", "noche": "a la noche (perpetuo 24/7)", "fin de semana": "en el fin de semana (perpetuo 24/7)" }[session] || session;
   const strong = regular.filter(function (x) { return x.alert; })
@@ -358,6 +404,16 @@ module.exports = async function handler(req, res) {
     Array.prototype.push.apply(errsAll, await notify(ch, "rapido", title, lines.join("\n"), alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }), site));
     sent = true;
   }
+  for (const r of reminders) {
+    if (!r.due || dry) continue;
+    const when = (r.time ? r.time + ", " : "") + (r.exact ? "a las " : "alrededor de las ") + r.hourNY + " de Nueva York (" + fmtAR(Date.parse(r.at)) + " de Argentina)";
+    let body = r.name + " presenta su balance" + (r.quarter ? " del " + r.quarter : "") + " hoy " + when + ".";
+    if (r.expect) body += "\n\nQué espera el mercado: " + (r.expect.length > 600 ? r.expect.slice(0, 600) + "…" : r.expect);
+    const errs = await notify(ch, "previa", r.ticker + " reporta en 1 hora", body, false, site);
+    if (!errs.length) remindSent[r.key] = true;
+    Array.prototype.push.apply(errsAll, errs);
+    sent = true;
+  }
   if (errsAll.length) sendError = errsAll.join("; ");
 
   res.status(200).json({
@@ -366,9 +422,9 @@ module.exports = async function handler(req, res) {
     min: min, windowMin: windowMin, dry: dry, topicSet: !!topic, telegramSet: !!(ch.tgToken && ch.tgChat),
     bingxOk: !!maps.bingx, bitgetOk: !!maps.bitget, bingxError: maps.bingxError, bitgetError: maps.bitgetError,
     alerts: alerts, strong: strong, sent: sent, sendError: sendError,
-    regularCandidates: regular, bitcoin: btc,
+    regularCandidates: regular, bitcoin: btc, reminders: reminders,
     items: results
   });
 };
 
-module.exports._test = { moveAt: moveAt, evaluate: evaluate, level: level, strongLevel: strongLevel, freshLevel: freshLevel, evaluateStrongPerp: evaluateStrongPerp, nySession: nySession };
+module.exports._test = { nyToUtc: nyToUtc, reportReminders: reportReminders, moveAt: moveAt, evaluate: evaluate, level: level, strongLevel: strongLevel, freshLevel: freshLevel, evaluateStrongPerp: evaluateStrongPerp, nySession: nySession };
