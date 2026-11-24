@@ -1,0 +1,22 @@
+# Cuando una tarea de Claude agrega un aviso a outbox.json, lo reenvía a Telegram a través de /api/notify.
+name: Avisos a Telegram
+on:
+  push:
+    branches: [main]
+    paths: [outbox.json]
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reenviar avisos nuevos
+        env:
+          COMMITS: ${{ join(github.event.commits.*.id, ' ') }}
+        run: |
+          for sha in $COMMITS; do
+            for i in 1 2 3; do
+              code=$(curl -s -o resp.json -w '%{http_code}' "https://radar-bursatil.vercel.app/api/notify?sha=$sha")
+              echo "$sha intento $i: $code $(cat resp.json)"
+              [ "$code" != "503" ] && break
+              sleep 20
+            done
+          done

@@ -23,6 +23,7 @@
 //   RAPID_EXTRA  tickers extra separados por coma (opcional)
 
 const futures = require("./_futures");
+const tg = require("./_telegram");
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
 
 // Acciones con perpetuo confirmado en Bitget o BingX (noviembre de 2026).
@@ -150,16 +151,6 @@ async function ntfy(topic, title, message, high, click) {
   if (!r.ok) throw new Error("ntfy HTTP " + r.status);
 }
 
-async function telegram(token, chatId, title, message, click) {
-  const text = title + "\n\n" + message + (click ? "\n\n" + click : "");
-  const r = await fetch("https://api.telegram.org/bot" + token + "/sendMessage", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: chatId, text: text, disable_web_page_preview: true })
-  });
-  if (!r.ok) throw new Error("Telegram HTTP " + r.status);
-}
-
 // Chats que le escribieron al bot (para averiguar el TELEGRAM_CHAT_ID).
 async function telegramChats(token) {
   const j = await getJson("https://api.telegram.org/bot" + token + "/getUpdates");
@@ -172,10 +163,11 @@ async function telegramChats(token) {
 }
 
 // Manda por todos los canales configurados; devuelve los errores (vacío si salió todo bien).
-async function notify(ch, title, message, high, click) {
+// "kind" define el encabezado en Telegram (⚡ rápido, 📊 fuerte...), para distinguir los avisos.
+async function notify(ch, kind, title, message, high, click) {
   const errors = [];
   if (ch.topic) { try { await ntfy(ch.topic, title, message, high, click); } catch (e) { errors.push(String(e && e.message || e)); } }
-  if (ch.tgToken && ch.tgChat) { try { await telegram(ch.tgToken, ch.tgChat, title, message, click); } catch (e) { errors.push(String(e && e.message || e)); } }
+  if (ch.tgToken && ch.tgChat) { try { await tg.send(ch.tgToken, ch.tgChat, kind, title, message, click); } catch (e) { errors.push(String(e && e.message || e)); } }
   return errors;
 }
 
@@ -279,7 +271,7 @@ module.exports = async function handler(req, res) {
       return;
     }
     if (!hasChannel) { res.status(400).json({ error: "Falta NTFY_TOPIC o TELEGRAM_TOKEN y TELEGRAM_CHAT_ID en Vercel" }); return; }
-    const errs = await notify(ch, "Radar bursátil: prueba", "Los avisos de movimientos rápidos están funcionando.", false, site);
+    const errs = await notify(ch, "prueba", "Radar bursátil", "Los avisos están funcionando.", false, site);
     res.status(200).json({ ok: !errs.length, sent: "prueba", ntfy: !!ch.topic, telegram: !!(ch.tgToken && ch.tgChat), errors: errs });
     return;
   }
@@ -331,33 +323,29 @@ module.exports = async function handler(req, res) {
     .sort(function (a, b) { return Math.abs(b.pct) - Math.abs(a.pct); });
 
   let sent = false, sendError = null;
-  if ((alerts.length || strong.length) && !dry) {
-    const lines = [];
-    if (strong.length) {
-      lines.push("Movimientos fuertes:");
-      strong.slice(0, 8).forEach(function (a) {
-        let t = a.ticker + (a.name && a.name !== a.ticker ? " (" + a.name + ")" : "") + " " + fmtPct(a.pct) + " " + a.session + ", a " + fmtPx(a.price);
-        if (a.perp) t += " en el perpetuo contra el cierre de " + fmtPx(a.ref);
-        lines.push(t + ". Futuro en " + a.where + ".");
-      });
-    }
-    if (alerts.length) {
-      if (strong.length) lines.push("");
-      lines.push("Movimientos rápidos (" + windowMin + " min):");
-      alerts.slice(0, 8).forEach(function (a) {
-        lines.push(a.ticker + " (" + a.name + ") " + fmtPct(a.pct) + ": de " + fmtPx(a.from) + " a " + fmtPx(a.price) + ". Futuro en " + a.where + ".");
-      });
-    }
-    const n = alerts.length + strong.length;
-    const first = strong[0] || alerts[0];
-    const title = n === 1
-      ? (strong.length ? "Movimiento fuerte: " : "Movimiento rápido: ") + first.ticker + " " + fmtPct(first.pct) + (strong.length ? " " + first.session : " en " + windowMin + " min")
-      : n + " avisos del radar";
-    const high = alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }) || strong.length > 0;
-    const errs = await notify(ch, title, lines.join("\n"), high, site);
+  const errsAll = [];
+  // Los movimientos fuertes y los rápidos van en mensajes separados, cada uno con su encabezado.
+  if (strong.length && !dry) {
+    const lines = strong.slice(0, 8).map(function (a) {
+      let t = a.ticker + (a.name && a.name !== a.ticker ? " (" + a.name + ")" : "") + " " + fmtPct(a.pct) + " " + a.session + ", a " + fmtPx(a.price);
+      if (a.perp) t += " en el perpetuo contra el cierre de " + fmtPx(a.ref);
+      return t + ". Futuro en " + a.where + ".";
+    });
+    const f = strong[0];
+    const title = strong.length === 1 ? f.ticker + " " + fmtPct(f.pct) + " " + f.session : strong.length + " acciones con movimientos fuertes";
+    Array.prototype.push.apply(errsAll, await notify(ch, f.ticker === "BTC" && strong.length === 1 ? "bitcoin" : "fuerte", title, lines.join("\n"), true, site));
     sent = true;
-    if (errs.length) sendError = errs.join("; ");
   }
+  if (alerts.length && !dry) {
+    const lines = alerts.slice(0, 8).map(function (a) {
+      return a.ticker + " (" + a.name + ") " + fmtPct(a.pct) + " en " + windowMin + " min: de " + fmtPx(a.from) + " a " + fmtPx(a.price) + ". Futuro en " + a.where + ".";
+    });
+    const f = alerts[0];
+    const title = alerts.length === 1 ? f.ticker + " " + fmtPct(f.pct) + " en " + windowMin + " minutos" : alerts.length + " acciones con movimientos rápidos";
+    Array.prototype.push.apply(errsAll, await notify(ch, "rapido", title, lines.join("\n"), alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }), site));
+    sent = true;
+  }
+  if (errsAll.length) sendError = errsAll.join("; ");
 
   res.status(200).json({
     updated: new Date(nowMs).toISOString(),

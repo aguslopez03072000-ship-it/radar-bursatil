@@ -209,7 +209,7 @@ tr:last-child td { border-bottom: 0; }
   <section id="movimientos" aria-labelledby="h-mov">
     <div class="section-head">
       <h2 id="h-mov">Movimientos de 15% o más</h2>
-      <div class="filters"><button type="button" class="btn ghost" id="notif-btn">Activar avisos en este dispositivo</button></div>
+      <p>Los avisos llegan por Telegram</p>
     </div>
     <div class="subhead" id="mv-live-head">Ahora en Wall Street <span id="mv-live-time" class="sub"></span></div>
     <div class="movers-live" id="mv-live"><p class="empty">Buscando movimientos en vivo…</p></div>
@@ -648,19 +648,9 @@ tr:last-child td { border-bottom: 0; }
       .catch(function () { state.ext = null; renderExtended(); });
   }
 
-  // Avisos: banner en la página y notificación del navegador para movimientos nuevos.
-  function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
-  function canNotify() { return typeof Notification !== "undefined" && Notification.permission === "granted"; }
-  function updateNotifBtn() {
-    var b = document.getElementById("notif-btn");
-    if (typeof Notification === "undefined") { b.style.display = "none"; return; }
-    if (Notification.permission === "granted") { b.textContent = "Avisos activados"; b.disabled = true; }
-    else if (Notification.permission === "denied") { b.textContent = "Avisos bloqueados en el navegador"; b.disabled = true; }
-  }
-  document.getElementById("notif-btn").addEventListener("click", function () {
-    if (typeof Notification === "undefined") return;
-    try { Notification.requestPermission().then(updateNotifBtn); } catch (e) { updateNotifBtn(); }
-  });
+  // Avisos: solo el cartel dentro de la página. Agus pidió que las notificaciones lleguen únicamente por Telegram,
+  // así que la página ya no manda notificaciones del navegador.
+  function updateNotifBtn() {}
 
   function checkAlerts() {
     var box = document.getElementById("alert");
@@ -685,21 +675,6 @@ tr:last-child td { border-bottom: 0; }
     box.appendChild(el("span", null, top + (mineHits.length ? " · En tu lista: " + mineHits.map(function (m) { return m.symbol; }).join(", ") : "")));
     var a = el("a", null, "Ver movimientos"); a.href = "#movimientos"; box.appendChild(a);
     box.className = "alert show";
-
-    var day = todayAR().toISOString().slice(0, 10);
-    var seen = store("radar-avisados") || {};
-    if (seen.day !== day) seen = { day: day, s: {} };
-    var fresh = L.items.filter(function (m) { return !seen.s[m.symbol]; });
-    if (fresh.length && canNotify()) {
-      try {
-        new Notification("Radar bursátil: movimientos fuertes", {
-          body: fresh.slice(0, 5).map(function (m) { return m.symbol + " " + signed(m.changePct, 1) + m.tag; }).join(" · "),
-          icon: "/icon-192.png", tag: "radar-movers"
-        });
-      } catch (e) {}
-    }
-    fresh.forEach(function (m) { seen.s[m.symbol] = true; });
-    store("radar-avisados", seen);
   }
 
   function loadMovers() {
