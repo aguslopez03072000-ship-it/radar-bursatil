@@ -63,17 +63,33 @@ async function futuresMaps() {
 
 // Los nombres de los contratos varían (NVDA, NVDAX, NVDAUS, NVDAON...), así que se acepta
 // un contrato solo si su precio es coherente con el de la acción, para no confundirlo con una cripto de igual sigla.
+// BingX nombra sus contratos de acciones de varias formas (NVDA, NVDAX, NVDAUS, NCSKNVDA2USD...).
+function candidateRe(t) {
+  return new RegExp("^(NC[A-Z]{2})?" + t + "(X|US|ON)?(\\d)?(USD)?$");
+}
+
 function match(map, symbol, refPrice) {
   if (!map || !refPrice) return null;
   const t = String(symbol).toUpperCase().replace(/[.\-]/g, "");
-  const cands = [t, t + "X", t + "US", t + "ON", "NCSK" + t];
-  for (const c of cands) {
+  if (!/^[A-Z0-9]{1,8}$/.test(t)) return null;
+  const re = candidateRe(t);
+  const keys = [t, t + "X", t + "US", t + "ON"].filter(function (k) { return map[k]; })
+    .concat(Object.keys(map).filter(function (k) { return k.length > t.length + 2 && re.test(k); }));
+  for (const c of keys) {
     const hit = map[c];
-    if (!hit) continue;
     const ratio = hit.price / refPrice;
     if (ratio > 0.5 && ratio < 2) return hit;
   }
   return null;
+}
+
+// Para revisar desde el navegador cómo se llaman los contratos: nombres que contienen ciertos tickers.
+function sample(map, tickers) {
+  if (!map) return null;
+  const keys = Object.keys(map);
+  const out = { total: keys.length };
+  tickers.forEach(function (t) { out[t] = keys.filter(function (k) { return k.indexOf(t) !== -1; }).slice(0, 8); });
+  return out;
 }
 
 // Acciones preferidas, warrants, units y derechos: no son la acción común y no tienen perpetuo.
@@ -92,4 +108,4 @@ function futuresFor(maps, symbol, refPrice) {
   return where.length ? where.join(" y ") : null;
 }
 
-module.exports = { futuresMaps: futuresMaps, match: match, futuresFor: futuresFor, isCommonStock: isCommonStock };
+module.exports = { futuresMaps: futuresMaps, match: match, sample: sample, futuresFor: futuresFor, isCommonStock: isCommonStock };

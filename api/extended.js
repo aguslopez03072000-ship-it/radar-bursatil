@@ -96,6 +96,7 @@ module.exports = async function handler(req, res) {
     bingxOk: !!bx.bingx,
     bingxError: bx.bingxError || null,
     bitgetOk: !!bx.bitget,
+    futuresNames: { bingx: futures.sample(bx.bingx, ["NVDA", "TSLA", "MU"]), bitget: futures.sample(bx.bitget, ["NVDA", "TSLA", "MU"]) },
     bitgetError: bx.bitgetError || null,
     checked: items.length,
     alerts: items.filter(function (x) { return x.maxAbs >= min; }),
