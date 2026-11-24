@@ -67,18 +67,32 @@ async function futuresMaps() {
 function candidateRe(t) {
   return new RegExp("^(NC[A-Z]{2})?" + t + "(X|US|ON)?(\\d)?(USD)?$");
 }
+// Segundo intento, más flexible: el exchange a veces usa el nombre corto de la empresa en lugar del ticker
+// (BingX llama "TSMC" al contrato de TSM). Admite hasta dos letras más después del ticker.
+function looseRe(t) {
+  return new RegExp("^(NC[A-Z]{2})?" + t + "[A-Z]{1,2}(X|US|ON)?(\\d)?(USD)?$");
+}
 
 function match(map, symbol, refPrice) {
   if (!map || !refPrice) return null;
   const t = String(symbol).toUpperCase().replace(/[.\-]/g, "");
   if (!/^[A-Z0-9]{1,8}$/.test(t)) return null;
   const re = candidateRe(t);
-  const keys = [t, t + "X", t + "US", t + "ON"].filter(function (k) { return map[k]; })
-    .concat(Object.keys(map).filter(function (k) { return k.length > t.length + 2 && re.test(k); }));
+  const all = Object.keys(map);
+  const strict = [t, t + "X", t + "US", t + "ON"].filter(function (k) { return map[k]; })
+    .concat(all.filter(function (k) { return k.length > t.length + 2 && re.test(k); }));
+  const hit = pick(map, strict, refPrice, 0.5, 2);
+  if (hit || t.length < 3) return hit;
+  // Con el criterio flexible se exige un precio mucho más parecido, para no confundirlo con otra acción.
+  const lre = looseRe(t);
+  return pick(map, all.filter(function (k) { return lre.test(k); }), refPrice, 0.85, 1.15);
+}
+
+function pick(map, keys, refPrice, lo, hi) {
   for (const c of keys) {
     const hit = map[c];
     const ratio = hit.price / refPrice;
-    if (ratio > 0.5 && ratio < 2) return hit;
+    if (ratio > lo && ratio < hi) return hit;
   }
   return null;
 }
