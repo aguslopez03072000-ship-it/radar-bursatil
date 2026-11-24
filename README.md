@@ -8,4 +8,4 @@ Revisión diaria del mercado argentino y de los CEDEARs, con cotizaciones en viv
 - `manifest.webmanifest` e íconos: permiten instalar la página como app desde Chrome.
 
 No es asesoramiento financiero.
-- `api/rapid.js`: avisos de movimientos rápidos (5% o más en 15 minutos) en los futuros perpetuos de acciones de Bitget y BingX. La llama cron-job.org cada 5 minutos y manda la notificación al celular por ntfy. Necesita la variable `NTFY_TOPIC` en Vercel (y opcionalmente `RAPID_KEY`). `/api/rapid?dry=1` muestra el resultado sin avisar y `/api/rapid?test=1` manda un aviso de prueba.
+- `api/rapid.js`: avisos de movimientos rápidos (8% o más en 4 minutos) en los futuros perpetuos de acciones de Bitget y BingX. La llama cron-job.org cada minuto y manda la notificación al celular por ntfy. Necesita la variable `NTFY_TOPIC` en Vercel (y opcionalmente `RAPID_KEY`). `/api/rapid?dry=1` muestra el resultado sin avisar y `/api/rapid?test=1` manda un aviso de prueba.

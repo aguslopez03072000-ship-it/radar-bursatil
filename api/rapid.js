@@ -2,9 +2,9 @@
 // GET /api/rapid            revisa y, si hay algo nuevo, manda la notificación por ntfy
 // GET /api/rapid?dry=1      revisa y devuelve el resultado sin mandar nada (para probar desde el navegador)
 // GET /api/rapid?test=1     manda una notificación de prueba
-// La llama cron-job.org cada 5 minutos. Un movimiento rápido es una variación de 5% o más en los últimos
-// 15 minutos (velas de 5 minutos del perpetuo). Para no repetir el aviso, solo avisa cuando la variación
-// pasa a un escalón nuevo (5%, 10%, 15%...) respecto de lo que se veía en la revisión anterior.
+// La llama cron-job.org cada minuto. Un movimiento rápido es una variación de 8% o más en los últimos
+// 4 minutos (velas de 1 minuto del perpetuo). Para no repetir el aviso, solo avisa cuando la variación
+// pasa a un escalón nuevo (8%, 16%, 24%...) respecto de lo que se veía en la revisión anterior.
 //
 // Variables de entorno en Vercel:
 //   NTFY_TOPIC   nombre secreto del canal de ntfy al que está suscripto el celular (obligatoria)
@@ -22,7 +22,9 @@ const TICKERS = [
   "PLD", "FRHC", "CCJ", "GLXY", "ONON", "ANT", "ADI"
 ];
 const NAMES = { ANT: "Anthropic" };
-const CANDLE_MIN = 5;
+const CANDLE_MIN = 1;
+const REF_TTL = 30 * 60 * 1000;
+const refCache = {};
 const SYMBOL_OK = /^[A-Z0-9.\-]{1,10}$/;
 
 async function getJson(url) {
@@ -49,9 +51,18 @@ async function refPrice(symbol) {
   return { price: px, name: m.shortName || m.longName || null };
 }
 
-// Velas de 5 minutos, de la más vieja a la más nueva: [{t, o, c}]
+// Los precios de referencia cambian poco: se guardan 30 minutos mientras la función siga activa.
+async function cachedRef(symbol) {
+  const c = refCache[symbol];
+  if (c && Date.now() - c.at < REF_TTL) return c.v;
+  const v = await refPrice(symbol);
+  refCache[symbol] = { at: Date.now(), v: v };
+  return v;
+}
+
+// Velas de 1 minuto, de la más vieja a la más nueva: [{t, o, c}]
 async function bingxCandles(symbol, n) {
-  const j = await getJson("https://open-api.bingx.com/openApi/swap/v3/quote/klines?symbol=" + encodeURIComponent(symbol) + "&interval=5m&limit=" + n);
+  const j = await getJson("https://open-api.bingx.com/openApi/swap/v3/quote/klines?symbol=" + encodeURIComponent(symbol) + "&interval=1m&limit=" + n);
   if (!j || !Array.isArray(j.data)) throw new Error((j && j.msg) || "Sin velas");
   return normalize(j.data.map(function (k) {
     if (Array.isArray(k)) return { t: +k[0], o: +k[1], c: +k[4] };
@@ -60,7 +71,7 @@ async function bingxCandles(symbol, n) {
 }
 
 async function bitgetCandles(symbol, n) {
-  const j = await getJson("https://api.bitget.com/api/v2/mix/market/candles?symbol=" + encodeURIComponent(symbol) + "&productType=usdt-futures&granularity=5m&limit=" + n);
+  const j = await getJson("https://api.bitget.com/api/v2/mix/market/candles?symbol=" + encodeURIComponent(symbol) + "&productType=usdt-futures&granularity=1m&limit=" + n);
   if (!j || !Array.isArray(j.data)) throw new Error((j && j.msg) || "Sin velas");
   return normalize(j.data.map(function (k) { return { t: +k[0], o: +k[1], c: +k[4] }; }));
 }
@@ -88,7 +99,7 @@ function level(pct, min) { return Math.floor(Math.abs(pct) / min) * (pct < 0 ? -
 function evaluate(candles, min, w, nowMs) {
   if (!candles || candles.length < w + 1) return null;
   const last = candles[candles.length - 1];
-  if (nowMs - last.t > 3 * CANDLE_MIN * 60000) return null; // el contrato no está operando
+  if (nowMs - last.t > 5 * 60000) return null; // el contrato no está operando
   const cur = moveAt(candles, candles.length - 1, w);
   const prev = moveAt(candles, candles.length - 2, w);
   if (!cur) return null;
@@ -118,8 +129,8 @@ module.exports = async function handler(req, res) {
   const host = req.headers && (req.headers["x-forwarded-host"] || req.headers.host);
   const site = host ? "https://" + host + "/#movimientos" : null;
   const dry = q.dry === "1" || !topic;
-  const min = Math.max(1, Math.min(50, parseFloat(q.min || "5") || 5));
-  const windowMin = Math.max(10, Math.min(60, parseInt(q.window || "15", 10) || 15));
+  const min = Math.max(1, Math.min(50, parseFloat(q.min || "8") || 8));
+  const windowMin = Math.max(2, Math.min(60, parseInt(q.window || "4", 10) || 4));
   const w = Math.round(windowMin / CANDLE_MIN);
 
   if (q.test === "1") {
@@ -133,7 +144,7 @@ module.exports = async function handler(req, res) {
   const tickers = Array.from(new Set(TICKERS.concat(extra)));
   const nowMs = Date.now();
 
-  const [maps, refs] = await Promise.all([futures.futuresMaps(), pool(tickers, 10, refPrice)]);
+  const [maps, refs] = await Promise.all([futures.futuresMaps(), pool(tickers, 10, cachedRef)]);
 
   const plan = [];
   tickers.forEach(function (t, i) {
