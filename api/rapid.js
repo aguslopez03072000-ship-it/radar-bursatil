@@ -1,4 +1,4 @@
-// Avisos de movimientos rápidos en los futuros perpetuos de acciones (Bitget y BingX), para el Radar bursátil.
+// Avisos de movimientos rápidos en los futuros perpetuos de acciones de BingX, para el Radar bursátil.
 // GET /api/rapid            revisa y, si hay algo nuevo, manda la notificación por ntfy
 // GET /api/rapid?dry=1      revisa y devuelve el resultado sin mandar nada (para probar desde el navegador)
 // GET /api/rapid?test=1     manda una notificación de prueba
@@ -26,14 +26,14 @@ const futures = require("./_futures");
 const tg = require("./_telegram");
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
 
-// Acciones con perpetuo confirmado en Bitget o BingX (noviembre de 2026).
+// Acciones con perpetuo confirmado en BingX (noviembre de 2026).
 const TICKERS = [
-  "TSLA", "AAPL", "GOOGL", "AMZN", "META", "MSTR", "COIN", "HOOD", "IBM", "INTC", "APP", "ORCL", "PLTR", "RIOT", "GME",
-  "NVDA", "MRVL", "ARM", "BABA", "ASML", "CRCL", "DFDV", "GE", "MCD",
+  "TSLA", "AAPL", "GOOGL", "AMZN", "META", "MSTR", "COIN", "HOOD", "INTC", "APP", "ORCL", "PLTR", "RIOT", "GME",
+  "NVDA", "MRVL", "ARM", "BABA", "ASML", "CRCL", "GE", "MCD",
   "MSFT", "AVGO", "MU", "SNDK", "COST", "MDLZ", "CTAS", "GH", "COF", "KMB", "FISV", "ENPH", "ALNY", "ULTA", "GM", "MSCI",
   "PLD", "FRHC", "CCJ", "GLXY", "ONON", "ANT", "ADI",
   // Lista de seguimiento y oportunidades: se vigilan solo si tienen perpetuo (si no, quedan como "Sin contrato encontrado").
-  "DELL", "ANF", "PANW", "TSM", "AMD", "LLY", "HUT", "NU", "BRK-B", "YPF", "MELI", "TS", "PAM"
+  "DELL", "ANF", "PANW", "TSM", "AMD", "LLY", "HUT", "NU", "BRK-B", "YPF", "MELI"
 ];
 const NAMES = { ANT: "Anthropic" };
 const CANDLE_MIN = 1;
@@ -212,8 +212,8 @@ async function regularStrong(maps, nowMs) {
       if (cap !== null && cap < movers.MIN_CAP) return;
       if (!futures.isCommonStock(q.symbol)) return;
       seen[q.symbol] = true;
-      const where = futures.futuresFor(maps, q.symbol, price);
-      if (!where) return; // Agus solo quiere avisos de acciones con perpetuo
+      if (!futures.match(maps.bingx, q.symbol, price)) return; // Agus solo quiere avisos de acciones con perpetuo en BingX
+      const where = "BingX";
       cands.push({ ticker: q.symbol, name: q.shortName || q.longName || q.symbol, pct: chg, price: price, where: where });
     });
   });
@@ -246,7 +246,7 @@ async function bitcoinStrong() {
   const pct = at(n), L = strongLevel(pct, STRONG_EXTENDED);
   const prevs = [];
   for (let i = Math.max(96, n - 8); i < n; i++) prevs.push(strongLevel(at(i), STRONG_EXTENDED));
-  return { ticker: "BTC", name: "Bitcoin", kind: "fuerte", session: "en 24 horas", pct: pct, price: c[n].c, where: "Bitget y BingX", level: L, alert: freshLevel(L, prevs) };
+  return { ticker: "BTC", name: "Bitcoin", kind: "fuerte", session: "en 24 horas", pct: pct, price: c[n].c, where: "BingX", level: L, alert: freshLevel(L, prevs) };
 }
 
 module.exports = async function handler(req, res) {
@@ -304,11 +304,10 @@ module.exports = async function handler(req, res) {
   tickers.forEach(function (t, i) {
     const ref = refs[i];
     if (!ref || ref.error) { plan.push({ ticker: t, error: "Sin precio de la acción" }); return; }
-    const bg = futures.match(maps.bitget, t, ref.price);
+    // Agus solo opera en BingX: se vigilan únicamente las acciones con perpetuo en BingX.
     const bx = futures.match(maps.bingx, t, ref.price);
-    const where = [bg ? "Bitget" : null, bx ? "BingX" : null].filter(Boolean).join(" y ");
-    if (!where) { plan.push({ ticker: t, error: "Sin contrato encontrado" }); return; }
-    plan.push({ ticker: t, name: NAMES[t] || ref.name || t, where: where, bg: bg, bx: bx, ref: ref.price });
+    if (!bx) { plan.push({ ticker: t, error: maps.bingx ? "Sin perpetuo en BingX" : "BingX no respondió" }); return; }
+    plan.push({ ticker: t, name: NAMES[t] || ref.name || t, where: "BingX", bx: bx, ref: ref.price });
   });
 
   const strongP = Promise.all([
@@ -318,9 +317,8 @@ module.exports = async function handler(req, res) {
 
   const results = await pool(plan, 10, async function (p) {
     if (p.error) return p;
-    let candles = null, src = null;
-    try { if (p.bx) { candles = await bingxCandles(p.bx.symbol, nCandles); src = "BingX " + p.bx.symbol; } } catch (e) { candles = null; }
-    if (!candles && p.bg) { candles = await bitgetCandles(p.bg.symbol, nCandles); src = "Bitget " + p.bg.symbol; }
+    const candles = await bingxCandles(p.bx.symbol, nCandles);
+    const src = "BingX " + p.bx.symbol;
     const ev = evaluate(candles, min, w, nowMs);
     const out = Object.assign({ ticker: p.ticker, name: p.name, where: p.where, source: src }, ev || { idle: true });
     if (outside) out.strong = evaluateStrongPerp(candles, p.ref, nowMs);
