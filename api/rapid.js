@@ -33,8 +33,7 @@ const TICKERS = [
   "MSFT", "AVGO", "MU", "SNDK", "COST", "MDLZ", "CTAS", "GH", "COF", "KMB", "FISV", "ENPH", "ALNY", "ULTA", "GM", "MSCI",
   "PLD", "FRHC", "CCJ", "GLXY", "ONON", "ANT", "ADI",
   // Lista de seguimiento y oportunidades: se vigilan solo si tienen perpetuo (si no, quedan como "Sin contrato encontrado").
-  "DELL", "ANF", "PANW", "TSM", "AMD", "LLY", "HUT", "NU", "BRK-B", "YPF", "MELI", "TS", "PAM",
-  "COGT", "AMTM", "KSS", "DKS", "DY", "ALAB", "SITM", "MXL", "MTSI", "LITE", "COHR", "IREN", "CRWV", "NBIS", "SMTC", "HPE", "AXTI"
+  "DELL", "ANF", "PANW", "TSM", "AMD", "LLY", "HUT", "NU", "BRK-B", "YPF", "MELI", "TS", "PAM"
 ];
 const NAMES = { ANT: "Anthropic" };
 const CANDLE_MIN = 1;

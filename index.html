@@ -208,7 +208,7 @@ tr:last-child td { border-bottom: 0; }
 
   <section id="movimientos" aria-labelledby="h-mov">
     <div class="section-head">
-      <h2 id="h-mov">Movimientos de 15% o más</h2>
+      <h2 id="h-mov">Movimientos de 15% o más (con perpetuo en BingX)</h2>
       <p>Los avisos llegan por Telegram</p>
     </div>
     <div class="subhead" id="mv-live-head">Ahora en Wall Street <span id="mv-live-time" class="sub"></span></div>
@@ -542,12 +542,15 @@ tr:last-child td { border-bottom: 0; }
     return set;
   }
 
+  // Agus solo opera en BingX: la página muestra únicamente acciones con perpetuo en BingX.
+  function onBingx(f) { return !!f && /BingX/.test(f); }
+
   function renderMoversHistory(d) {
     var M = d.movers || {}, tb = document.getElementById("mv-body"); tb.textContent = "";
     document.getElementById("mv-note").textContent = M.note || "";
     var mine = watchSet();
-    var items = (M.items || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : Math.abs(b.change) - Math.abs(a.change); });
-    if (!items.length) { var tr0 = el("tr"); var td0 = el("td", "empty", "Sin movimientos de 15% o más en los últimos días."); td0.colSpan = 4; tr0.appendChild(td0); tb.appendChild(tr0); return; }
+    var items = (M.items || []).filter(function (m) { return m.ticker === "BTC" || onBingx(m.futures); }).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : Math.abs(b.change) - Math.abs(a.change); });
+    if (!items.length) { var tr0 = el("tr"); var td0 = el("td", "empty", "Sin movimientos de 15% o más de acciones con perpetuo en BingX en los últimos días."); td0.colSpan = 4; tr0.appendChild(td0); tb.appendChild(tr0); return; }
     items.forEach(function (m) {
       var tr = el("tr");
       tr.appendChild(el("td", "num", m.label || m.date));
@@ -576,8 +579,9 @@ tr:last-child td { border-bottom: 0; }
     }
     tEl.textContent = "· actualizado " + hhmm(L.updated);
     var mine = watchSet();
-    if (!L.items.length) { box.appendChild(el("p", "empty", "Por ahora ninguna acción se mueve 15% o más en la rueda.")); return; }
-    L.items.forEach(function (m) {
+    var liveItems = L.items.filter(function (m) { return onBingx(m.futures); });
+    if (!liveItems.length) { box.appendChild(el("p", "empty", "Por ahora ninguna acción con perpetuo en BingX se mueve 15% o más en la rueda.")); return; }
+    liveItems.forEach(function (m) {
       var c = el("div", "mv" + (m.changePct < 0 ? " neg" : ""));
       var top = el("div", "top");
       var tk = el("span", "ticker", m.symbol); tk.style.fontSize = "1rem"; top.appendChild(tk);
@@ -615,12 +619,13 @@ tr:last-child td { border-bottom: 0; }
     if (!X) { tEl.textContent = ""; box.appendChild(el("p", "empty", "Los precios fuera de horario no están disponibles ahora.")); return; }
     tEl.textContent = "· " + (SESS[X.marketSession] || "") + " · actualizado " + hhmm(X.updated);
     var mine = watchSet();
-    var list = X.alerts && X.alerts.length ? X.alerts : (X.items || []).filter(function (x) { return x.maxAbs > 0 && x.session !== "regular"; }).slice(0, 6);
-    if (X.marketSession === "regular" && !(X.alerts && X.alerts.length)) {
+    var alertsBx = (X.alerts || []).filter(function (x) { return onBingx(x.futures); });
+    var list = alertsBx.length ? alertsBx : (X.items || []).filter(function (x) { return x.maxAbs > 0 && x.session !== "regular" && onBingx(x.futures); }).slice(0, 6);
+    if (X.marketSession === "regular" && !alertsBx.length) {
       box.appendChild(el("p", "empty", "Con la rueda abierta, los movimientos se ven arriba. Esta parte se activa antes de la apertura, después del cierre y los fines de semana."));
       return;
     }
-    if (!(X.alerts && X.alerts.length)) box.appendChild(el("p", "empty", "Ninguna se mueve 10% o más fuera de horario. Los movimientos más grandes ahora:"));
+    if (!alertsBx.length) box.appendChild(el("p", "empty", "Ninguna con perpetuo en BingX se mueve 10% o más fuera de horario. Los movimientos más grandes ahora:"));
     if (!list.length) return;
     list.forEach(function (x) {
       var pct = x.ext && (!x.bingx || Math.abs(x.ext.pct) >= Math.abs(x.bingx.pct)) ? x.ext.pct : x.bingx ? x.bingx.pct : 0;
@@ -656,9 +661,9 @@ tr:last-child td { border-bottom: 0; }
     var box = document.getElementById("alert");
     var items = [];
     // Agus solo quiere avisos de acciones con futuro perpetuo en Bitget o BingX.
-    if (state.movers && state.movers.ok) state.movers.items.forEach(function (m) { if (m.futures) items.push({ symbol: m.symbol, changePct: m.changePct, tag: " (" + m.futures + ")" }); });
+    if (state.movers && state.movers.ok) state.movers.items.forEach(function (m) { if (onBingx(m.futures)) items.push({ symbol: m.symbol, changePct: m.changePct, tag: " (" + m.futures + ")" }); });
     if (state.ext && state.ext.alerts) state.ext.alerts.forEach(function (x) {
-      if (!x.futures) return;
+      if (!onBingx(x.futures)) return;
       var pct = x.ext && (!x.bingx || Math.abs(x.ext.pct) >= Math.abs(x.bingx.pct)) ? x.ext.pct : x.bingx.pct;
       if (!items.some(function (i) { return i.symbol === x.symbol; })) items.push({ symbol: x.symbol, changePct: pct, tag: x.ext && x.ext.session === "pre" ? " (pre-apertura)" : x.ext ? " (después del cierre)" : " (BingX 24/7)" });
     });
