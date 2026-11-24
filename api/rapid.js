@@ -22,7 +22,9 @@ const TICKERS = [
   "TSLA", "AAPL", "GOOGL", "AMZN", "META", "MSTR", "COIN", "HOOD", "IBM", "INTC", "APP", "ORCL", "PLTR", "RIOT", "GME",
   "NVDA", "MRVL", "ARM", "BABA", "ASML", "CRCL", "DFDV", "GE", "MCD",
   "MSFT", "AVGO", "MU", "SNDK", "COST", "MDLZ", "CTAS", "GH", "COF", "KMB", "FISV", "ENPH", "ALNY", "ULTA", "GM", "MSCI",
-  "PLD", "FRHC", "CCJ", "GLXY", "ONON", "ANT", "ADI"
+  "PLD", "FRHC", "CCJ", "GLXY", "ONON", "ANT", "ADI",
+  // Lista de seguimiento y oportunidades: se vigilan solo si tienen perpetuo (si no, quedan como "Sin contrato encontrado").
+  "DELL", "ANF", "PANW", "TSM", "AMD", "LLY", "HUT", "NU", "BRK-B", "YPF", "MELI", "TS", "PAM"
 ];
 const NAMES = { ANT: "Anthropic" };
 const CANDLE_MIN = 1;
