@@ -1,8 +1,22 @@
 {
-  "updated": "2026-11-24T10:45:00-03:00",
+  "updated": "2026-11-24T11:25:00-03:00",
   "threshold": 15,
-  "note": "Movimientos de 15% o más en acciones de Wall Street de más de US$300 millones de capitalización. Hoy antes de la apertura no hubo ninguno: lo más fuerte fue Insmed (+14,6%) por la oferta de compra de Sanofi y Abercrombie & Fitch (+12,6%) tras su balance.",
+  "note": "Hoy antes de la apertura Dick's Sporting Goods sube 16% tras un balance mejor que lo esperado. Cerca del umbral quedaron Insmed (alrededor de +15%) por la oferta de compra de Sanofi y Hewlett Packard Enterprise (-12%), mientras Nvidia cede cerca de 5% después del salto del lunes.",
   "items": [
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "DKS",
+      "name": "Dick's Sporting Goods",
+      "change": 16.0,
+      "price": null,
+      "session": "pre-apertura",
+      "reason": "Su balance del tercer trimestre superó lo esperado: ganó US$1,94 por acción ajustada contra US$1,40 previstos, y subió su guía anual de ganancias e ingresos.",
+      "source": {
+        "name": "CP24 (Associated Press)",
+        "url": "https://www.cp24.com/news/money/2026/11/24/tech-stocks-wane-a-day-after-a-huang-rally-as-anthropic-tumbles-below-its-initial-offering-price/"
+      }
+    },
     {
       "date": "2026-11-23",
       "label": "Lun 23/11",
