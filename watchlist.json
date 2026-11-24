@@ -1,29 +1,37 @@
 {
-  "updated": "2026-11-24T10:45:00-03:00",
+  "updated": "2026-11-24T18:45:00-03:00",
   "items": [
     {
       "ticker": "DELL",
       "name": "Dell Technologies",
       "next": {
-        "date": "2026-11-24",
-        "time": "después del cierre",
-        "confirmed": true,
-        "quarter": "3T fiscal 2027"
+        "date": null,
+        "window": "fines de febrero de 2027 (estimada)",
+        "confirmed": false,
+        "quarter": "4T fiscal 2027"
       },
-      "expect": "El consenso espera una ganancia de US$6,63 por acción con ingresos de US$50.630 millones, casi el doble que hace un año. La cartera pendiente de servidores de IA llegó a un récord de US$95.000 millones y el mercado quiere ver cuánto de eso se convierte en ventas pese a la escasez de memoria.",
+      "expect": "",
       "sources": [
         {
-          "name": "Earnings Whispers vía Finviz",
-          "url": "https://finviz.com/news/423394/dell-must-prove-its-95-billion-ai-backlog-can-convert-despite-memory-constraints"
+          "name": "Dell vía Business Wire",
+          "url": "https://www.financialcontent.com/article/bizwire-2026-11-24-dell-technologies-delivers-third-quarter-fiscal-2027-financial-results"
         },
         {
-          "name": "If You Spent",
-          "url": "https://news.ifyouspent.com/en/news/thanksgiving-week-earnings-dell-workday-zoom-hp-deere-november-2026"
+          "name": "Finimize",
+          "url": "https://finimize.com/content/dell-raised-its-forecast-again-as-ai-server-orders-piled-up"
+        },
+        {
+          "name": "GuruFocus vía Yahoo Finance (consenso)",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/dell-stock-jumps-20-just-163045211.html"
+        },
+        {
+          "name": "TradingKey",
+          "url": "https://www.tradingkey.com/news/market-movers/262320518-market-movers-dell-20261124"
         }
       ],
       "last": {
-        "date": "2026-08",
-        "text": "En el trimestre anterior facturó casi US$47.000 millones, un récord, y subió su previsión anual por tercera vez seguida."
+        "date": "2026-11-24",
+        "text": "Reportó el martes 24 después del cierre: ganó US$9,45 por acción (ajustado) contra US$6,62 esperados y facturó US$54.900 millones (+103%) contra US$49.320 millones esperados. Vendió US$22.000 millones en servidores de IA, recibió pedidos por US$60.200 millones y su cartera pendiente llegó a un récord de US$132.300 millones. Para el cuarto trimestre guió ingresos de US$56.300 millones y US$8,40 por acción, subió su previsión anual a US$202.000 millones (el mercado esperaba unos US$194.500 millones) y US$29,68 por acción, y aprobó recompras por otros US$25.000 millones. En la rueda la acción había caído cerca de 11% (venía de subir 20% el lunes); la reacción después del cierre todavía no estaba publicada en esta corrida."
       }
     },
     {

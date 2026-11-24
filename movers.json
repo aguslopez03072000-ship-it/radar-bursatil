@@ -1,21 +1,21 @@
 {
-  "updated": "2026-11-24T17:30:00-03:00",
+  "updated": "2026-11-24T18:45:00-03:00",
   "threshold": 15,
-  "note": "Solo se muestran acciones con futuro perpetuo en BingX. Hoy en la rueda suben Abercrombie & Fitch (+25%) tras su balance y caen tecnológicas como Analog Devices, Semtech y Hewlett Packard Enterprise (alrededor de -17%).",
+  "note": "Solo se muestran acciones con futuro perpetuo en BingX. En la rueda del martes subió Abercrombie & Fitch (+22%) por su balance y cayeron Semtech, Hewlett Packard Enterprise, Analog Devices (alrededor de -17%) y AXT; las cifras son de las 17 de Argentina porque no se pudo confirmar el cierre exacto. Dell cayó cerca de 11% en la rueda y después del cierre presentó un balance muy por encima de lo esperado.",
   "items": [
     {
       "date": "2026-11-24",
       "label": "Mar 24/11",
       "ticker": "ANF",
       "name": "Abercrombie & Fitch",
-      "change": 25.13,
-      "price": "US$175,74",
+      "change": 22.1,
+      "price": null,
       "session": "intradiario",
       "reason": "Reportó antes de la apertura: ganó US$3,82 por acción contra unos US$3,08 esperados, facturó US$1.440 millones (+11%) y subió su guía anual a US$13,70–13,90 por acción.",
       "futures": "BingX",
       "source": {
-        "name": "Business Upturn",
-        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+        "name": "StockTitan",
+        "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
       }
     },
     {
@@ -23,14 +23,14 @@
       "label": "Mar 24/11",
       "ticker": "ADI",
       "name": "Analog Devices",
-      "change": -17.48,
-      "price": "US$312,55",
+      "change": -16.94,
+      "price": null,
       "session": "intradiario",
       "reason": "Pese a un cuarto trimestre récord (ingresos de US$4.370 millones), guió para el próximo trimestre una ganancia de US$3,82 por acción, por debajo de los US$3,89 que esperaba el mercado, y venía de subir más de 10% el lunes.",
       "futures": "Bitget y BingX",
       "source": {
-        "name": "Investing.com",
-        "url": "https://www.investing.com/news/stock-market-news/why-is-analog-devices-stock-tumbling-today-93CH-5047890"
+        "name": "StockTitan",
+        "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
       }
     },
     {
@@ -38,14 +38,14 @@
       "label": "Mar 24/11",
       "ticker": "SMTC",
       "name": "Semtech",
-      "change": -17.29,
-      "price": "US$86,11",
+      "change": -17.62,
+      "price": null,
       "session": "intradiario",
       "reason": "Superó lo esperado (US$1,17 por acción contra US$1,13 e ingresos de US$423 millones, +58%) y dio una guía por encima del consenso, pero la acción cayó en la venta general de semiconductores tras subir 18,8% el lunes.",
       "futures": "BingX",
       "source": {
-        "name": "Business Upturn",
-        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+        "name": "StockTitan",
+        "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
       }
     },
     {
@@ -53,14 +53,14 @@
       "label": "Mar 24/11",
       "ticker": "HPE",
       "name": "Hewlett Packard Enterprise",
-      "change": -17.1,
-      "price": "US$39,81",
+      "change": -17.46,
+      "price": "US$39,64",
       "session": "intradiario",
       "reason": "Aunque superó lo esperado y elevó su previsión de crecimiento de ingresos para 2027 a 27–35%, avisó que el margen de su negocio de nube e IA bajaría a cerca de 14% por la escasez de componentes y sistemas de IA menos rentables.",
       "futures": "Bitget y BingX",
       "source": {
-        "name": "StockAnalysis",
-        "url": "https://stockanalysis.com/news/hpe-stock-falls-margin-outlook/"
+        "name": "StockTitan",
+        "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-24-2026"
       }
     },
     {

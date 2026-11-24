@@ -6,6 +6,20 @@
       "kind": "prueba",
       "title": "Avisos de las tareas de Claude",
       "text": "Si te llegó esto, los avisos de las tareas programadas ya llegan por Telegram."
+    },
+    {
+      "id": "movimientos-2026-11-24-1820",
+      "at": "2026-11-24T18:45:00-03:00",
+      "kind": "motivo",
+      "title": "Por qué se movieron",
+      "text": "ANF +22% en la rueda: balance muy por encima de lo esperado (US$3,82 por acción contra US$3,08) y suba de la guía anual.\nSMTC -18% en la rueda: superó lo esperado, pero cayó en la venta general de semiconductores tras subir 19% el lunes.\nHPE -17% en la rueda: superó lo esperado, pero avisó que bajará el margen de su negocio de nube e IA por la escasez de componentes.\nADI -17% en la rueda: guió para el próximo trimestre una ganancia por debajo de lo que esperaba el mercado, después de subir 9% el lunes.\nAXTI -14 a -16% en la rueda: venta general de tecnológicas y chips, sin noticia propia.\nCifras de las 17 de Argentina; no se pudo confirmar el cierre exacto."
+    },
+    {
+      "id": "reportes-2026-11-24-1820",
+      "at": "2026-11-24T18:45:00-03:00",
+      "kind": "reporte",
+      "title": "DELL reportó (en tu lista)",
+      "text": "DELL reportó: ganó US$9,45 por acción contra US$6,62 esperados y facturó US$54.900 millones (+103%) contra US$49.300 millones esperados. Cartera pendiente de IA récord de US$132.300 millones, suba de la previsión anual a US$202.000 millones y recompras por otros US$25.000 millones. En la rueda había caído cerca de 11%; la reacción después del cierre todavía no estaba publicada.\nANF (reportó a la mañana): ganó US$3,82 por acción contra US$3,08 esperados, subió su guía y la acción subió cerca de 22% en la rueda."
     }
   ]
 }
