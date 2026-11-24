@@ -7,7 +7,10 @@
 // pasa a un escalón nuevo (8%, 16%, 24%...) respecto de lo que se veía en la revisión anterior.
 //
 // Variables de entorno en Vercel:
-//   NTFY_TOPIC   nombre secreto del canal de ntfy al que está suscripto el celular (obligatoria)
+//   NTFY_TOPIC         nombre secreto del canal de ntfy al que está suscripto el celular
+//   TELEGRAM_TOKEN     token del bot de Telegram (de BotFather)
+//   TELEGRAM_CHAT_ID   chat al que manda el bot; si falta, ?test=1 lo busca y lo muestra
+//   (hace falta al menos uno de los dos canales)
 //   RAPID_KEY    si se define, la ruta exige ?key=<RAPID_KEY>
 //   RAPID_EXTRA  tickers extra separados por coma (opcional)
 
@@ -121,6 +124,35 @@ async function ntfy(topic, title, message, high, click) {
   if (!r.ok) throw new Error("ntfy HTTP " + r.status);
 }
 
+async function telegram(token, chatId, title, message, click) {
+  const text = title + "\n\n" + message + (click ? "\n\n" + click : "");
+  const r = await fetch("https://api.telegram.org/bot" + token + "/sendMessage", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: text, disable_web_page_preview: true })
+  });
+  if (!r.ok) throw new Error("Telegram HTTP " + r.status);
+}
+
+// Chats que le escribieron al bot (para averiguar el TELEGRAM_CHAT_ID).
+async function telegramChats(token) {
+  const j = await getJson("https://api.telegram.org/bot" + token + "/getUpdates");
+  const seen = {};
+  ((j && j.result) || []).forEach(function (u) {
+    const c = (u.message || u.edited_message || u.channel_post || {}).chat;
+    if (c && c.id != null) seen[c.id] = { chatId: c.id, name: [c.first_name, c.last_name].filter(Boolean).join(" ") || c.title || c.username || null };
+  });
+  return Object.keys(seen).map(function (k) { return seen[k]; });
+}
+
+// Manda por todos los canales configurados; devuelve los errores (vacío si salió todo bien).
+async function notify(ch, title, message, high, click) {
+  const errors = [];
+  if (ch.topic) { try { await ntfy(ch.topic, title, message, high, click); } catch (e) { errors.push(String(e && e.message || e)); } }
+  if (ch.tgToken && ch.tgChat) { try { await telegram(ch.tgToken, ch.tgChat, title, message, click); } catch (e) { errors.push(String(e && e.message || e)); } }
+  return errors;
+}
+
 module.exports = async function handler(req, res) {
   const q = req.query || {};
   res.setHeader("Cache-Control", "no-store");
@@ -128,15 +160,23 @@ module.exports = async function handler(req, res) {
   const topic = process.env.NTFY_TOPIC || "";
   const host = req.headers && (req.headers["x-forwarded-host"] || req.headers.host);
   const site = host ? "https://" + host + "/#movimientos" : null;
-  const dry = q.dry === "1" || !topic;
+  const ch = { topic: topic, tgToken: process.env.TELEGRAM_TOKEN || "", tgChat: process.env.TELEGRAM_CHAT_ID || "" };
+  const hasChannel = !!(ch.topic || (ch.tgToken && ch.tgChat));
+  const dry = q.dry === "1" || !hasChannel;
   const min = Math.max(1, Math.min(50, parseFloat(q.min || "8") || 8));
   const windowMin = Math.max(2, Math.min(60, parseInt(q.window || "4", 10) || 4));
   const w = Math.round(windowMin / CANDLE_MIN);
 
   if (q.test === "1") {
-    if (!topic) { res.status(400).json({ error: "Falta NTFY_TOPIC en Vercel" }); return; }
-    await ntfy(topic, "Radar bursátil: prueba", "Los avisos de movimientos rápidos están funcionando.", false, site);
-    res.status(200).json({ ok: true, sent: "prueba" });
+    if (ch.tgToken && !ch.tgChat) {
+      let chats = [];
+      try { chats = await telegramChats(ch.tgToken); } catch (e) { res.status(200).json({ error: "No pude leer el bot de Telegram: " + String(e && e.message || e) }); return; }
+      res.status(200).json({ telegram: chats.length ? "Copiá el chatId en la variable TELEGRAM_CHAT_ID de Vercel y hacé Redeploy" : "Mandale un mensaje cualquiera a tu bot en Telegram y volvé a abrir esta dirección", chats: chats });
+      return;
+    }
+    if (!hasChannel) { res.status(400).json({ error: "Falta NTFY_TOPIC o TELEGRAM_TOKEN y TELEGRAM_CHAT_ID en Vercel" }); return; }
+    const errs = await notify(ch, "Radar bursátil: prueba", "Los avisos de movimientos rápidos están funcionando.", false, site);
+    res.status(200).json({ ok: !errs.length, sent: "prueba", ntfy: !!ch.topic, telegram: !!(ch.tgToken && ch.tgChat), errors: errs });
     return;
   }
 
@@ -175,13 +215,14 @@ module.exports = async function handler(req, res) {
     const body = alerts.slice(0, 8).map(function (a) {
       return a.ticker + " (" + a.name + ") " + fmtPct(a.pct) + ": de " + fmtPx(a.from) + " a " + fmtPx(a.price) + ". Futuro en " + a.where + ".";
     }).join("\n");
-    try { await ntfy(topic, title, body, alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }), site); sent = true; }
-    catch (e) { sendError = String(e && e.message || e); }
+    const errs = await notify(ch, title, body, alerts.some(function (a) { return Math.abs(a.pct) >= 2 * min; }), site);
+    sent = true;
+    if (errs.length) sendError = errs.join("; ");
   }
 
   res.status(200).json({
     updated: new Date(nowMs).toISOString(),
-    min: min, windowMin: windowMin, dry: dry, topicSet: !!topic,
+    min: min, windowMin: windowMin, dry: dry, topicSet: !!topic, telegramSet: !!(ch.tgToken && ch.tgChat),
     bingxOk: !!maps.bingx, bitgetOk: !!maps.bitget, bingxError: maps.bingxError, bitgetError: maps.bitgetError,
     alerts: alerts, sent: sent, sendError: sendError,
     items: results
