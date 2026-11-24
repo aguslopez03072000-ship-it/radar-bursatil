@@ -216,7 +216,7 @@ tr:last-child td { border-bottom: 0; }
     <div class="subhead">Fuera de horario y futuros 24/7: desde 10% <span id="ext-time" class="sub"></span></div>
     <p class="sub" id="ext-note">Compara la pre-apertura, el después del cierre y los contratos perpetuos de BingX contra el último cierre normal de cada acción. Acá el aviso salta desde 10%.</p>
     <div class="movers-live" id="ext-live"><p class="empty">Buscando precios fuera de horario…</p></div>
-    <div class="subhead">Últimos días, con la explicación</div>
+    <div class="subhead">Esta semana, con la explicación</div>
     <p class="sub" id="mv-note"></p>
     <div class="mvlist"><table><thead><tr><th>Día</th><th>Acción</th><th>Variación</th><th>Por qué</th></tr></thead><tbody id="mv-body"></tbody></table></div>
   </section>
@@ -545,12 +545,22 @@ tr:last-child td { border-bottom: 0; }
   // Agus solo opera en BingX: la página muestra únicamente acciones con perpetuo en BingX.
   function onBingx(f) { return !!f && /BingX/.test(f); }
 
+  // La tabla se reinicia cada lunes (hora de Argentina): muestra la semana en curso y, de lunes a viernes,
+  // también el fin de semana anterior, porque los movimientos de BingX del sábado y domingo anticipan la apertura del lunes.
+  function weekStartISO() {
+    var t = todayAR(), dow = t.getDay(); // 0 domingo ... 6 sábado
+    var monday = new Date(t); monday.setDate(t.getDate() - ((dow + 6) % 7));
+    if (dow >= 1 && dow <= 5) monday.setDate(monday.getDate() - 2);
+    return monday.getFullYear() + "-" + String(monday.getMonth() + 1).padStart(2, "0") + "-" + String(monday.getDate()).padStart(2, "0");
+  }
+
   function renderMoversHistory(d) {
     var M = d.movers || {}, tb = document.getElementById("mv-body"); tb.textContent = "";
     document.getElementById("mv-note").textContent = M.note || "";
     var mine = watchSet();
-    var items = (M.items || []).filter(function (m) { return m.ticker === "BTC" || onBingx(m.futures); }).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : Math.abs(b.change) - Math.abs(a.change); });
-    if (!items.length) { var tr0 = el("tr"); var td0 = el("td", "empty", "Sin movimientos de 15% o más de acciones con perpetuo en BingX en los últimos días."); td0.colSpan = 4; tr0.appendChild(td0); tb.appendChild(tr0); return; }
+    var since = weekStartISO();
+    var items = (M.items || []).filter(function (m) { return (m.date || "") >= since && (m.ticker === "BTC" || onBingx(m.futures)); }).slice().sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : Math.abs(b.change) - Math.abs(a.change); });
+    if (!items.length) { var tr0 = el("tr"); var td0 = el("td", "empty", "Esta semana todavía no hubo movimientos de 15% o más de acciones con perpetuo en BingX."); td0.colSpan = 4; tr0.appendChild(td0); tb.appendChild(tr0); return; }
     items.forEach(function (m) {
       var tr = el("tr");
       tr.appendChild(el("td", "num", m.label || m.date));
@@ -574,7 +584,7 @@ tr:last-child td { border-bottom: 0; }
     var tEl = document.getElementById("mv-live-time");
     if (!L || !L.ok) {
       tEl.textContent = "";
-      box.appendChild(el("p", "empty", "La lista en vivo no está disponible ahora; abajo tenés los movimientos de los últimos días."));
+      box.appendChild(el("p", "empty", "La lista en vivo no está disponible ahora; abajo tenés los movimientos de esta semana."));
       return;
     }
     tEl.textContent = "· actualizado " + hhmm(L.updated);
