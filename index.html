@@ -187,17 +187,34 @@ tr:last-child td { border-bottom: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .card { transition: transform .15s ease; }
 }
+/* Menú de tres rayitas para saltar entre secciones */
+.menu-btn { position: fixed; top: calc(12px + env(safe-area-inset-top)); right: 12px; z-index: 50; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); display: grid; place-items: center; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+.menu-btn span, .menu-btn span::before, .menu-btn span::after { display: block; width: 20px; height: 2px; background: currentColor; border-radius: 2px; position: relative; content: ""; }
+.menu-btn span::before { position: absolute; top: -6px; } .menu-btn span::after { position: absolute; top: 6px; }
+.menu-panel { position: fixed; top: calc(62px + env(safe-area-inset-top)); right: 12px; z-index: 50; min-width: 230px; max-width: calc(100vw - 24px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 6px; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+.menu-panel.open { display: grid; }
+.menu-panel a { padding: 12px 14px; border-radius: 8px; text-decoration: none; color: var(--ink); font-size: 1rem; }
+.menu-panel a:hover, .menu-panel a:focus { background: var(--accent-soft); outline: none; }
+section, header.top { scroll-margin-top: 16px; }
+header.top .meta { padding-right: 56px; }
 </style>
 </head>
 <body>
+<button type="button" class="menu-btn" id="menu-btn" aria-label="Abrir el menú de secciones" aria-expanded="false" aria-controls="menu-panel"><span></span></button>
+<nav class="menu-panel" id="menu-panel" aria-label="Secciones">
+  <a href="#top">Inicio</a>
+  <a href="#termometro">Termómetro del mercado</a>
+  <a href="#movimientos">Movimientos de 15% o más</a>
+  <a href="#reportes">Reportes de tu lista</a>
+  <a href="#oportunidades">Oportunidades</a>
+  <a href="#agenda-sec">Qué mirar en los próximos días</a>
+  <a href="#historial">Historial de revisiones</a>
+</nav>
 <main class="wrap" id="app">
   <header class="top" id="top">
     <div class="meta"><span class="brand">Radar bursátil · Agus</span><span id="mood" class="pill">Cargando</span><span id="live" class="pill live-off">Cotizaciones: conectando…</span><span id="session"></span></div>
     <h1 id="headline">Cargando la revisión del día…</h1>
     <p class="summary" id="summary"></p>
-    <nav class="jump" aria-label="Secciones">
-      <a href="#termometro">Termómetro</a><a href="#movimientos">Movimientos ±15%</a><a href="#reportes">Reportes de tu lista</a><a href="#oportunidades">Oportunidades</a><a href="#historial">Historial</a>
-    </nav>
     <div class="alert" id="alert" role="status"></div>
   </header>
 
@@ -246,7 +263,7 @@ tr:last-child td { border-bottom: 0; }
   </section>
 
   <section id="historial" aria-labelledby="h-hist">
-    <div class="section-head"><h2 id="h-hist">Historial de revisiones</h2><p>Lo que marcó el radar cada día de esta semana y a qué precio</p></div>
+    <div class="section-head"><h2 id="h-hist">Historial de revisiones</h2><p>Lo que marcó el radar cada día de esta semana</p></div>
     <div class="hist"><table><thead><tr><th>Día</th><th>Clima</th><th>Lectura</th><th>Marcadas</th></tr></thead><tbody id="histbody"></tbody></table></div>
   </section>
 
@@ -759,6 +776,16 @@ tr:last-child td { border-bottom: 0; }
       s.textContent = "Recargá la página en unos segundos. Si el problema sigue, avisale a Claude para que revise la actualización.";
       s.className = "summary error";
     });
+})();
+</script>
+<script>
+(function () {
+  var btn = document.getElementById("menu-btn"), panel = document.getElementById("menu-panel");
+  function setOpen(o) { panel.classList.toggle("open", o); btn.setAttribute("aria-expanded", o ? "true" : "false"); btn.setAttribute("aria-label", o ? "Cerrar el menú de secciones" : "Abrir el menú de secciones"); }
+  btn.addEventListener("click", function (e) { e.stopPropagation(); setOpen(!panel.classList.contains("open")); });
+  panel.addEventListener("click", function (e) { if (e.target.tagName === "A") setOpen(false); });
+  document.addEventListener("click", function (e) { if (!panel.contains(e.target) && e.target !== btn) setOpen(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
 })();
 </script>
 </body>
