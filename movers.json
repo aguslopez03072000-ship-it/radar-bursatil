@@ -1,8 +1,158 @@
 {
-  "updated": "2026-11-24T11:25:00-03:00",
+  "updated": "2026-11-24T15:45:00-03:00",
   "threshold": 15,
-  "note": "Hoy antes de la apertura Dick's Sporting Goods sube 16% tras un balance mejor que lo esperado. Cerca del umbral quedaron Insmed (alrededor de +15%) por la oferta de compra de Sanofi y Hewlett Packard Enterprise (-12%), mientras Nvidia cede cerca de 5% después del salto del lunes.",
+  "note": "En la rueda de hoy diez acciones se mueven 15% o más: suben minoristas como Abercrombie & Fitch (+25%), Kohl's y Dick's tras sus balances, y caen tecnológicas como Analog Devices (-17%, con futuro en BingX), Hewlett Packard Enterprise y Semtech. Nvidia cede cerca de 7% a 9% y Anthropic alrededor de 8%, debajo de su precio de salida de US$83, sin llegar al umbral.",
   "items": [
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "ANF",
+      "name": "Abercrombie & Fitch",
+      "change": 25.13,
+      "price": "US$175,74",
+      "session": "intradiario",
+      "reason": "Reportó antes de la apertura: ganó US$3,82 por acción contra unos US$3,08 esperados, facturó US$1.440 millones (+11%) y subió su guía anual a US$13,70–13,90 por acción.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "COGT",
+      "name": "Cogent Biosciences",
+      "change": 21.17,
+      "price": "US$34,06",
+      "session": "intradiario",
+      "reason": "La FDA aprobó Ekitna (bezuclastinib) junto con sunitinib para el tumor del estroma gastrointestinal avanzado, la primera opción nueva en más de 20 años para esos pacientes.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "AMTM",
+      "name": "Amentum",
+      "change": 19.23,
+      "price": "US$24,62",
+      "session": "intradiario",
+      "reason": "Presentó el balance de su año fiscal 2026 con ganancia ajustada de US$2,51 por acción (+13%), anunció su primera recompra de acciones por US$500 millones y dio una guía de ingresos de US$13.800 a 14.050 millones para 2027.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "KSS",
+      "name": "Kohl's",
+      "change": 18.94,
+      "price": "US$25,21",
+      "session": "intradiario",
+      "reason": "Su balance del tercer trimestre mostró una ganancia de US$2,15 por acción con ventas de US$3.450 millones (+1,3%) y subió su guía anual de ganancias a US$4,30–4,50 por acción.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "DKS",
+      "name": "Dick's Sporting Goods",
+      "change": 16.26,
+      "price": "US$155,41",
+      "session": "intradiario",
+      "reason": "Su balance del tercer trimestre superó lo esperado (US$1,94 por acción ajustada contra US$1,40) y subió su guía anual. Además, el día favoreció a las minoristas antes de la temporada de compras.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "ADI",
+      "name": "Analog Devices",
+      "change": -17.48,
+      "price": "US$312,55",
+      "session": "intradiario",
+      "reason": "Pese a un cuarto trimestre récord (ingresos de US$4.370 millones), guió para el próximo trimestre una ganancia de US$3,82 por acción, por debajo de los US$3,89 que esperaba el mercado, y venía de subir más de 10% el lunes.",
+      "futures": "BingX",
+      "source": {
+        "name": "Investing.com",
+        "url": "https://www.investing.com/news/stock-market-news/why-is-analog-devices-stock-tumbling-today-93CH-5047890"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "SMTC",
+      "name": "Semtech",
+      "change": -17.29,
+      "price": "US$86,11",
+      "session": "intradiario",
+      "reason": "Superó lo esperado (US$1,17 por acción contra US$1,13 e ingresos de US$423 millones, +58%) y dio una guía por encima del consenso, pero la acción cayó en la venta general de semiconductores tras subir 18,8% el lunes.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "change": -17.1,
+      "price": "US$39,81",
+      "session": "intradiario",
+      "reason": "Aunque superó lo esperado y elevó su previsión de crecimiento de ingresos para 2027 a 27–35%, avisó que el margen de su negocio de nube e IA bajaría a cerca de 14% por la escasez de componentes y sistemas de IA menos rentables.",
+      "futures": null,
+      "source": {
+        "name": "StockAnalysis",
+        "url": "https://stockanalysis.com/news/hpe-stock-falls-margin-outlook/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "DY",
+      "name": "Dycom Industries",
+      "change": -16.23,
+      "price": "US$182,92",
+      "session": "intradiario",
+      "reason": "Presentó un tercer trimestre récord (ingresos de US$2.060 millones, +41,6%) y subió su guía anual, pero preocupa una moderación de la fibra óptica hogareña en 2028 y la caída del margen de su segmento de comunicaciones.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
+    {
+      "date": "2026-11-24",
+      "label": "Mar 24/11",
+      "ticker": "AXTI",
+      "name": "AXT Inc",
+      "change": -16.05,
+      "price": "US$31,92",
+      "session": "intradiario",
+      "reason": "Cayó en la venta generalizada de tecnológicas y semiconductores del martes, sin una noticia propia.",
+      "futures": null,
+      "source": {
+        "name": "Business Upturn",
+        "url": "https://businessupturn.com/usa/money/us-markets/midday-movers-retailers-surge-while-tech-stocks-slide-tuesday-24-november-2026/"
+      }
+    },
     {
       "date": "2026-11-24",
       "label": "Mar 24/11",
@@ -15,7 +165,8 @@
       "source": {
         "name": "CP24 (Associated Press)",
         "url": "https://www.cp24.com/news/money/2026/11/24/tech-stocks-wane-a-day-after-a-huang-rally-as-anthropic-tumbles-below-its-initial-offering-price/"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -29,7 +180,8 @@
       "source": {
         "name": "Investing.com",
         "url": "https://es.investing.com/news/stock-market-news/nvidia-hoy-puede-el-rebote-del-31-sobrevivir-a-160-dolares-3941434"
-      }
+      },
+      "futures": "Bitget y BingX"
     },
     {
       "date": "2026-11-23",
@@ -43,7 +195,8 @@
       "source": {
         "name": "CNBC",
         "url": "https://www.cnbc.com/2026/11/23/stocks-moving-the-most-today-live-updates.html"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -57,7 +210,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -71,7 +225,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -85,7 +240,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -99,7 +255,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -113,7 +270,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -127,7 +285,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -141,7 +300,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": "BingX"
     },
     {
       "date": "2026-11-23",
@@ -155,7 +315,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -169,7 +330,8 @@
       "source": {
         "name": "Closing Look (Substack)",
         "url": "https://cappnotes.substack.com/p/closing-look-monday-november-23-2026"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -183,7 +345,8 @@
       "source": {
         "name": "Chartmill",
         "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
-      }
+      },
+      "futures": "Bitget"
     },
     {
       "date": "2026-11-23",
@@ -197,7 +360,8 @@
       "source": {
         "name": "Chartmill",
         "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
-      }
+      },
+      "futures": null
     },
     {
       "date": "2026-11-23",
@@ -211,7 +375,8 @@
       "source": {
         "name": "Morning Brief (Substack)",
         "url": "https://currentlogic.substack.com/p/the-morning-brief-november-24-2026"
-      }
+      },
+      "futures": "Bitget y BingX"
     },
     {
       "date": "2026-11-23",
@@ -225,7 +390,8 @@
       "source": {
         "name": "Chartmill",
         "url": "https://www.chartmill.com/news/IP/Chartmill-59068-SP-500-Top-Movers-for-Nov-23-2026-Gainers-and-Losers"
-      }
+      },
+      "futures": null
     }
   ],
   "thresholdExtended": 10
