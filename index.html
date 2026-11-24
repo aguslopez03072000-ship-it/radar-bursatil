@@ -246,7 +246,7 @@ tr:last-child td { border-bottom: 0; }
   </section>
 
   <section id="historial" aria-labelledby="h-hist">
-    <div class="section-head"><h2 id="h-hist">Historial de revisiones</h2><p>Lo que marcó el radar cada día y a qué precio</p></div>
+    <div class="section-head"><h2 id="h-hist">Historial de revisiones</h2><p>Lo que marcó el radar cada día de esta semana y a qué precio</p></div>
     <div class="hist"><table><thead><tr><th>Día</th><th>Clima</th><th>Lectura</th><th>Marcadas</th></tr></thead><tbody id="histbody"></tbody></table></div>
   </section>
 
@@ -433,7 +433,12 @@ tr:last-child td { border-bottom: 0; }
 
   function renderHistory(d) {
     var tb = document.getElementById("histbody"); tb.textContent = "";
-    (d.history || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).forEach(function (h) {
+    // Se reinicia cada lunes (hora de Argentina): solo se muestran las revisiones de la semana en curso.
+    var t = todayAR(), mon = new Date(t); mon.setDate(t.getDate() - ((t.getDay() + 6) % 7));
+    var since = mon.getFullYear() + "-" + String(mon.getMonth() + 1).padStart(2, "0") + "-" + String(mon.getDate()).padStart(2, "0");
+    var rows = (d.history || []).filter(function (h) { return (h.date || "") >= since; });
+    if (!rows.length) { var tr0 = el("tr"); var td0 = el("td", "empty", "Todavía no hay revisiones esta semana: la primera sale el lunes a las 8:40."); td0.colSpan = 4; tr0.appendChild(td0); tb.appendChild(tr0); return; }
+    rows.sort(function (a, b) { return a.date < b.date ? 1 : -1; }).forEach(function (h) {
       var tr = el("tr");
       tr.appendChild(el("td", "num", h.label || h.date));
       var m = el("td"); m.appendChild(el("span", "pill mood-" + h.mood, moodText(h.mood).replace("Día ", ""))); tr.appendChild(m);
