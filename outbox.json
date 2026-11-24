@@ -1,1 +1,11 @@
-{"messages": []}
+{
+  "messages": [
+    {
+      "id": "prueba-2026-11-24T17:08:07-03:00",
+      "at": "2026-11-24T17:08:07-03:00",
+      "kind": "prueba",
+      "title": "Avisos de las tareas de Claude",
+      "text": "Si te llegó esto, los avisos de las tareas programadas ya llegan por Telegram."
+    }
+  ]
+}
