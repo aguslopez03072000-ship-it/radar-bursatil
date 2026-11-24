@@ -321,9 +321,15 @@ function earningsWindows(items, nowMs) {
       }
     }
     // Si la tarea ya pasó el resultado a "last", el reporte fue hoy: se vigila el resto de la rueda extendida.
+    // Para saber si fue antes de la apertura o después del cierre usa "last.time" o, si falta, el texto del resultado.
     if (!start && w.last && w.last.date === today) {
-      const pre = [nyToUtc(today, "04:00"), nyToUtc(today, "09:30")], post = [nyToUtc(today, "16:00"), nyToUtc(today, "20:00")];
-      if (nowMs >= pre[0] && nowMs < pre[1]) { start = pre[0]; end = pre[1]; } else { start = post[0]; end = post[1]; }
+      const lt = w.last.time || (/antes de la apertura/i.test(w.last.text || "") ? "antes de la apertura" : /después del cierre/i.test(w.last.text || "") ? "después del cierre" : null);
+      const lh = /^\d{1,2}:\d{2}$/.test(w.last.hour || "") ? w.last.hour : lt === "antes de la apertura" ? "07:00" : lt === "después del cierre" ? "16:05" : null;
+      if (lh) {
+        start = nyToUtc(today, lh) - 5 * 60000;
+        end = start + EARN_HOURS * 3600000 + 5 * 60000;
+        if (lt === "antes de la apertura" || parseInt(lh, 10) < 9) end = Math.min(end, nyToUtc(today, "09:30"));
+      }
     }
     if (start && nowMs >= start && nowMs < end) out[key] = { start: new Date(start).toISOString(), end: new Date(end).toISOString(), name: w.name };
   });
