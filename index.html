@@ -500,6 +500,16 @@ header.top .meta { padding-right: 56px; }
     var list = (d.watchlist || []).slice().sort(function (a, b) { return wlOrder(a) - wlOrder(b); });
     if (!list.length) { box.appendChild(el("p", "empty", "Todavía no hay acciones cargadas en tu lista.")); return; }
     var t = todayAR();
+    // Las que ya reportaron se ocultan pasadas unas 24 horas del reporte (desde las 19 h del día siguiente,
+    // hora de Argentina) y vuelven a aparecer cuando confirman la fecha del próximo reporte.
+    var hourAR = parseInt(new Date().toLocaleString("en-US", { timeZone: "America/Argentina/Buenos_Aires", hour: "2-digit", hour12: false }), 10) % 24;
+    list = list.filter(function (w) {
+      var ld = parseDay(w.last && w.last.date), nd = parseDay(w.next && w.next.date);
+      if (!ld || (nd && daysBetween(t, nd) >= 0)) return true;
+      var ago = daysBetween(ld, t);
+      return ago < 1 || (ago === 1 && hourAR < 19);
+    });
+    if (!list.length) { box.appendChild(el("p", "empty", "Ninguna acción de tu lista tiene un reporte cerca por ahora.")); return; }
     list.forEach(function (w) {
       var c = el("article", "wcard"); c.id = "rep-" + w.ticker.toLowerCase().replace(/[^a-z0-9]/g, "");
       var r1 = el("div", "row1");
