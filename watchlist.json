@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T20:40:00-03:00",
+  "updated": "2026-11-25T09:40:00-03:00",
   "items": [
     {
       "ticker": "DELL",
@@ -74,9 +74,10 @@
         "date": "2026-12-01",
         "time": "después del cierre",
         "confirmed": true,
-        "quarter": "3T fiscal 2027"
+        "quarter": "3T fiscal 2027",
+        "hour": "16:30"
       },
-      "expect": "La empresa guió ingresos de unos US$3.150 millones, más de 50% de crecimiento, y una ganancia de US$1,05 a US$1,15 por acción. Las opciones descuentan un movimiento de alrededor de ±17% después del reporte.",
+      "expect": "La empresa guió ingresos de unos US$3.150 millones, más de 50% de crecimiento, y una ganancia de US$1,05 a US$1,15 por acción. Las opciones descuentan un movimiento de alrededor de ±17% después del reporte. La empresa no publicó la hora del comunicado: la hora cargada es la de la conferencia telefónica (13:30 de California, 16:30 de Nueva York), que se hace después de publicar los resultados.",
       "sources": [
         {
           "name": "Marvell (relación con inversores)",
