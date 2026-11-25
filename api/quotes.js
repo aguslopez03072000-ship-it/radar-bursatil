@@ -24,6 +24,15 @@ async function yahoo(symbol) {
   const ts = res.timestamp || [];
   const pairs = [];
   (q.close || []).forEach(function (c, i) { if (typeof c === "number") pairs.push([ts[i], c]); });
+  // Yahoo a veces todavía no trae la vela del día (o la trae con cierre vacío). Si la última vela es de un día
+  // anterior al de la última cotización, se agrega el precio actual como vela de hoy; así el "cierre anterior"
+  // es el de la rueda previa y no el de dos ruedas atrás.
+  const off = typeof m.gmtoffset === "number" ? m.gmtoffset : 0;
+  const dayOf = function (t) { return new Date((t + off) * 1000).toISOString().slice(0, 10); };
+  if (typeof m.regularMarketPrice === "number" && m.regularMarketTime && pairs.length && pairs[pairs.length - 1][0] &&
+      dayOf(pairs[pairs.length - 1][0]) < dayOf(m.regularMarketTime)) {
+    pairs.push([m.regularMarketTime, m.regularMarketPrice]);
+  }
   const closes = pairs.map(function (p) { return p[1]; });
   const highs = (q.high || []).filter(function (x) { return typeof x === "number"; });
   const lows = (q.low || []).filter(function (x) { return typeof x === "number"; });
