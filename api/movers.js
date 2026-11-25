@@ -32,6 +32,10 @@ async function screener(id) {
 
 function num(x) { return typeof x === "number" ? x : (x && typeof x.raw === "number" ? x.raw : null); }
 
+// Fecha en Nueva York (AAAA-MM-DD). Antes de la apertura, Yahoo sigue mostrando la variación de la rueda anterior:
+// esas acciones se descartan para que la lista en vivo muestre solo los movimientos de hoy.
+function nyDate(ms) { return new Date(ms).toLocaleDateString("en-CA", { timeZone: "America/New_York" }); }
+
 module.exports = async function handler(req, res) {
   const min = Math.max(5, Math.min(100, parseFloat((req.query && req.query.min) || "15") || 15));
   const mapsP = futures.futuresMaps();
@@ -39,6 +43,7 @@ module.exports = async function handler(req, res) {
     return screener(id).then(function (q) { return { id: id, quotes: q }; }, function (e) { return { id: id, error: String(e && e.message || e) }; });
   }));
 
+  const today = nyDate(Date.now());
   const seen = {};
   const items = [];
   const errors = [];
@@ -52,6 +57,8 @@ module.exports = async function handler(req, res) {
       if (price !== null && price < MIN_PRICE) return;
       if (cap !== null && cap < MIN_CAP) return;
       if (seen[q.symbol]) return;
+      const t = num(q.regularMarketTime);
+      if (t && nyDate(t * 1000) !== today) return; // variación de una rueda anterior
       if (!futures.isCommonStock(q.symbol)) return; // preferidas, warrants, etc.
       seen[q.symbol] = true;
       items.push({
