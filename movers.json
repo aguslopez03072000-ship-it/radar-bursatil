@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-25T15:50:00-03:00",
+  "updated": "2026-11-25T18:50:00-03:00",
   "threshold": 15,
-  "note": "Miércoles en plena rueda (datos de las 13 de Argentina), con fuerte baja de los semiconductores: ninguna acción con perpetuo en BingX se mueve 15% o más. Lo más fuerte es Ambarella (-19%), Nutanix (-18,5%), Pharming (-17,4%) y GoodRx (-17,2%), sin perpetuo confirmado en BingX; entre las que sí tienen, Micron cae cerca de 11%, Nvidia y AMD cerca de 8–9% y Coherent y Lumentum cerca de 10%.",
+  "note": "Miércoles al cierre: Wall Street recuperó casi toda la fuerte baja de la mañana (Nasdaq -0,6%, S&P 500 -0,2%) y ninguna acción con perpetuo en BingX se movió 15% o más en la rueda ni 10% después del cierre; Nvidia y Micron terminaron cerca de -4% y Sandisk -5%, tras caer 8 a 11% a la mañana. Lo más fuerte fue Ambarella (-21%), GoodRx (-19%), Nutanix (-18%) y Pharming (-18%), sin perpetuo confirmado en BingX.",
   "items": [
     {
       "date": "2026-11-24",
