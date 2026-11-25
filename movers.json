@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-25T09:40:00-03:00",
+  "updated": "2026-11-25T15:50:00-03:00",
   "threshold": 15,
-  "note": "Miércoles antes de la apertura: ninguna acción con perpetuo en BingX se mueve 10% o más. Lo más fuerte es Ambarella (-37%), Urban Outfitters (-15%) y Nutanix (-12%), que no tienen perpetuo confirmado en BingX; Dell cae cerca de 7,5% y Workday cerca de 10% en una baja general de tecnológicas. El martes cerraron en baja Analog Devices (-17,4%) y Hewlett Packard Enterprise (-16,3%), y Abercrombie & Fitch subió 22%.",
+  "note": "Miércoles en plena rueda (datos de las 13 de Argentina), con fuerte baja de los semiconductores: ninguna acción con perpetuo en BingX se mueve 15% o más. Lo más fuerte es Ambarella (-19%), Nutanix (-18,5%), Pharming (-17,4%) y GoodRx (-17,2%), sin perpetuo confirmado en BingX; entre las que sí tienen, Micron cae cerca de 11%, Nvidia y AMD cerca de 8–9% y Coherent y Lumentum cerca de 10%.",
   "items": [
     {
       "date": "2026-11-24",
