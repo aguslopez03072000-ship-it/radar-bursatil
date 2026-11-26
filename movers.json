@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-25T20:35:00-03:00",
+  "updated": "2026-11-26T09:35:00-03:00",
   "threshold": 15,
-  "note": "Miércoles: Wall Street recuperó casi toda la fuerte baja de la mañana y ninguna acción con perpetuo en BingX se movió 15% o más en la rueda; después del cierre, según las noticias disponibles a las 20:20, tampoco hubo movimientos de 10% o más (no se pudieron consultar las listas de stockanalysis ni los precios de BingX). Lo más fuerte de la rueda fue Ambarella (-21%), GoodRx (-19%), Nutanix (-18%) y Pharming (-18%), sin perpetuo confirmado en BingX.",
+  "note": "Jueves de Acción de Gracias: Wall Street no abre hoy (mañana opera con cierre anticipado a las 13 de Nueva York), así que no hay pre-apertura ni rueda. Según las noticias del cierre del miércoles y de la noche, ninguna acción con perpetuo en BingX se movió 10% o más después del cierre ni de madrugada (Nvidia cerró -3,9% y S&P puso su calificación de deuda en revisión negativa); no se pudieron consultar los precios de BingX ni las listas de stockanalysis.",
   "items": [
     {
       "date": "2026-11-24",
