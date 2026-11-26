@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-26T09:35:00-03:00",
+  "updated": "2026-11-26T18:30:00-03:00",
   "threshold": 15,
-  "note": "Jueves de Acción de Gracias: Wall Street no abre hoy (mañana opera con cierre anticipado a las 13 de Nueva York), así que no hay pre-apertura ni rueda. Según las noticias del cierre del miércoles y de la noche, ninguna acción con perpetuo en BingX se movió 10% o más después del cierre ni de madrugada (Nvidia cerró -3,9% y S&P puso su calificación de deuda en revisión negativa); no se pudieron consultar los precios de BingX ni las listas de stockanalysis.",
+  "note": "Jueves de Acción de Gracias: Wall Street estuvo cerrado todo el día, así que no hubo rueda, cierre ni operaciones después del cierre (mañana viernes opera con cierre anticipado a las 13 de Nueva York). Las noticias del día no muestran ninguna acción con perpetuo en BingX moviéndose 10% o más, pero en esta corrida no se pudieron consultar los precios de BingX 24/7.",
   "items": [
     {
       "date": "2026-11-24",
