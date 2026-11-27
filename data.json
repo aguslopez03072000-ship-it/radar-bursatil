@@ -1,21 +1,21 @@
 {
-  "updated": "2026-11-26T08:41:00-03:00",
-  "session": "Jueves 26 de noviembre de 2026 · antes de la apertura. Wall Street cerrado por Acción de Gracias (BYMA opera normal). Merval, riesgo país, dólares, Wall Street, VIX y acciones son cierres del miércoles 25; petróleo, bitcoin y futuros, de esta mañana",
-  "mood": "neutral",
-  "headline": "Wall Street recuperó casi toda la caída del miércoles y el riesgo país bajó a 1.067; hoy Nueva York no opera por Acción de Gracias y los futuros suben",
-  "summary": "El miércoles fue una montaña rusa: el Nasdaq llegó a caer 4,6% y el S&P 500 3,2% por la venta de tecnología y los nuevos aranceles, pero terminaron con bajas de solo 0,62% y 0,25%, mientras el Dow Jones subió 0,33%. La inflación PCE de octubre dio 3,8% anual en la general, como se esperaba, pero la subyacente marcó 3,3% contra 3,2% previsto, lo que mantiene casi asegurada una suba de tasas de la Reserva Federal en diciembre. En Buenos Aires el riesgo país tocó 1.131 puntos durante la rueda y después bajó 2,5% hasta 1.067 con el rebote de los bonos; el MSCI Merval subió 0,5% hasta 81.643 puntos y los ADR rebotaron hasta 6%, aunque YPF terminó en baja, y el dólar oficial del Banco Nación cerró en $1.630, otro récord nominal, mientras el contado con liquidación bajó a $1.780. Esta mañana el clima mejora: el detalle de los aranceles contra 14 socios comerciales resultó menos duro de lo temido porque no se suman a los de julio, las bolsas de Asia suben y los futuros del Nasdaq ganan entre 0,5% y 1,1%; el petróleo sigue firme por un ataque a una refinería saudita y el bitcoin volvió arriba de US$60.000. Hoy Wall Street está cerrado y mañana opera media jornada, así que en BYMA los CEDEAR van a tener poco volumen y precios menos representativos. Para buscar oportunidades la lectura sigue siendo prudente: el riesgo país acumula una suba de 35,6% en noviembre y la economía entró técnicamente en recesión, así que conviene priorizar empresas con caja y negocios estables, comprar en partes y evitar órdenes a precio de mercado en días de poca liquidez.",
+  "updated": "2026-11-27T08:43:48-03:00",
+  "session": "Viernes 27 de noviembre de 2026 · antes de la apertura. Wall Street opera media jornada (cierra a las 15:00 de Argentina) tras el feriado de Acción de Gracias. Merval, riesgo país y dólares son cierres del jueves 26; S&P 500, Nasdaq y acciones de EE.UU., cierres del miércoles 25; futuros, VIX, petróleo y bitcoin, de esta mañana",
+  "mood": "positivo",
+  "headline": "El Merval subió 3,3% sin Wall Street y esta mañana los futuros del Nasdaq ganan más de 2% por el rebote de las tecnológicas, en una media jornada",
+  "summary": "Con Nueva York cerrado por Acción de Gracias, el jueves el MSCI Merval subió 3,3% hasta 84.357 puntos y encadenó tres subas seguidas, empujado por las energéticas: YPF ganó 5,7%, Transener 5,5%, Edenor 5% y TGS 4,6%, mientras los bonos en dólares subieron hasta 3%. El riesgo país quedó en 1.067 puntos porque sin Wall Street no se recalcula, pero acumula una suba cercana a 40% en noviembre y, según un análisis citado por Infobae, casi la mitad de ese nivel se explica por la incertidumbre de las elecciones de 2027. En el frente cambiario hubo calma: el oficial del Banco Nación bajó $5 a $1.625, el MEP cerró en $1.665 y el contado con liquidación rondó los $1.768. Esta mañana el clima externo es claramente mejor: los futuros del Nasdaq 100 suben entre 2,3% y 2,8% y los del S&P 500 alrededor de 1,7%–2%, con Nvidia arriba de 4% antes de la apertura; el VIX baja a 24,75, el petróleo sigue firme (Brent cerca de US$96,6) antes de la reunión de la OPEP+ del domingo y el bitcoin rebota hacia US$61.600. Como noticia del día, aunque no la evaluamos porque Claude es un producto de Anthropic, Reuters menciona la caída de Anthropic debajo de su precio de salida a la bolsa entre los factores que movieron a las tecnológicas. Ojo: hoy es media rueda con poco volumen, algo que suele exagerar los movimientos, y la Reserva Federal sigue con sesgo de subir tasas en diciembre. Para buscar oportunidades, el rebote ayuda, pero conviene seguir comprando en partes, priorizar empresas con caja y negocios estables, y usar órdenes con precio límite.",
   "indicators": [
     {
       "id": "merval",
       "label": "MSCI Merval",
-      "value": "81.643",
+      "value": "84.357",
       "unit": "pts",
-      "change": 0.5,
+      "change": 3.3,
       "invert": false,
-      "note": "cierre del miércoles 25; llegó a caer 4,5% durante la rueda, debajo de 78.000 puntos, y medido en dólares subió 1,4%. Otras fuentes informan subas de entre 0,6% y 0,9%",
+      "note": "cierre del jueves 26 en pesos, tercera suba seguida, con Wall Street cerrado; un cable de EFE lo da en 84.282,90 (+3,23%). Lideraron YPF (+5,7%), Transener (+5,5%), Edenor (+5%) y TGS (+4,6%)",
       "source": {
-        "name": "Telesol (riesgo país, Merval y ADR, 25/11)",
-        "url": "https://www.telesoldiario.com/economia/el-riesgo-pais-bajo-a-1067-puntos-tras-tocar-un-pico-intradiario"
+        "name": "Diario El Zonda (Merval, 26/11)",
+        "url": "https://www.diarioelzondasj.com.ar/economia/el-merval-subio-33-y-encadena-su-tercer-avance-seguido"
       }
     },
     {
@@ -23,25 +23,25 @@
       "label": "Riesgo país",
       "value": "1.067",
       "unit": "pb",
-      "change": -2.5,
+      "change": 0.0,
       "invert": true,
-      "note": "cierre del miércoles 25, tras tocar un máximo de 1.131 durante la rueda; aun así acumula una suba de 35,6% en noviembre",
+      "note": "sin cambios el jueves 26 porque Wall Street no operó; durante la rueda local los bonos subieron hasta 3%. Acumula una suba cercana a 40% en noviembre y el miércoles había tocado 1.131",
       "source": {
-        "name": "Noticias Argentinas (riesgo país, 25/11)",
-        "url": "https://noticiasargentinas.com/economia/el-riesgo-pais-de-la-argentina-cerro-en-1-067-puntos-basicos-tras-un-rebote-de-los-bonos_a6b0755b0790b0872f31aff07"
+        "name": "Diario Río Negro (riesgo país, 26/11)",
+        "url": "https://www.rionegro.com.ar/economia/el-riesgo-pais-se-mantiene-en-1-067-puntos-y-el-dolar-blue-sigue-por-encima-de-los-1-700-4815796/"
       }
     },
     {
       "id": "ccl",
       "label": "Dólar CCL",
-      "value": "$1.780",
+      "value": "$1.768",
       "unit": "ARS",
-      "change": -0.8,
+      "change": -0.7,
       "invert": true,
-      "note": "cierre del miércoles 25 ($1.780,05, variación contra $1.794,05 del martes) · MEP $1.677,29 · mayorista $1.604 · oficial Banco Nación $1.630, nuevo récord nominal",
+      "note": "cierre del jueves 26 ($1.767,9 según Cadena 3; Ámbito informa $1.836,68, así que verificá en tu bróker) · MEP $1.665,46 · mayorista $1.601 · oficial Banco Nación $1.625 (−$5)",
       "source": {
-        "name": "Ámbito (dólar, cierre 25/11)",
-        "url": "https://www.ambito.com/finanzas/dolar-hoy-cuanto-cerro-este-miercoles-25-noviembre-n6349303"
+        "name": "Cadena 3 / Ámbito (dólar, cierre 26/11)",
+        "url": "https://www.cadena3.com/noticia/politica-y-economia/dolar-hoy-dolar-blue-hoy-a-cuanto-cerro-este-jueves-26-de-noviembre_616928"
       }
     },
     {
@@ -51,10 +51,10 @@
       "unit": "pts",
       "change": -0.25,
       "invert": false,
-      "note": "cierre del miércoles 25, tras caer hasta 3,2% durante la rueda; el Dow Jones subió 0,33% a 50.182,95. Hoy no opera por Acción de Gracias y los futuros suben entre 0,4% y 0,7%",
+      "note": "último cierre, del miércoles 25 (el jueves no operó). Esta mañana los futuros suben entre 1,7% y 2% (E-mini en 7.321,25 según Yahoo); hoy media jornada hasta las 15:00 de Argentina",
       "source": {
-        "name": "AP vía WUSA9 (cierre de Wall Street, 25/11)",
-        "url": "https://www.wusa9.com/article/syndication/associatedpress/how-major-us-stock-indexes-fared-wednesday-11252026/616-d1793541-428a-4817-8311-f566330b9a76"
+        "name": "Yahoo Finance (futuros, 27/11)",
+        "url": "https://finance.yahoo.com/markets/live/stock-market-today-firday-november-27-dow-sp-500-nasdaq-black-friday-holiday-091152065.html"
       }
     },
     {
@@ -64,49 +64,49 @@
       "unit": "pts",
       "change": -0.62,
       "invert": false,
-      "note": "cierre del miércoles 25, tras caer hasta 4,6% durante la rueda, con Nvidia −3,9%; esta mañana los futuros del Nasdaq 100 suben entre 0,5% y 1,1%",
+      "note": "último cierre, del miércoles 25. Esta mañana los futuros del Nasdaq 100 suben entre 2,3% y 2,8% (hasta 26.829 puntos según Forbes), con Nvidia arriba de 4% antes de la apertura",
       "source": {
-        "name": "AP vía WUSA9 (cierre de Wall Street, 25/11)",
-        "url": "https://www.wusa9.com/article/syndication/associatedpress/how-major-us-stock-indexes-fared-wednesday-11252026/616-d1793541-428a-4817-8311-f566330b9a76"
+        "name": "Forbes (futuros y tecnológicas, 27/11)",
+        "url": "https://www.forbes.com/sites/siladityaray/2026/11/27/stock-futures-surge-as-battered-ai-shares-rebound-ahead-of-shorterned-friday-trading/"
       }
     },
     {
       "id": "vix",
       "label": "VIX (volatilidad)",
-      "value": "27,98",
+      "value": "24,75",
       "unit": "pts",
-      "change": 6.16,
+      "change": -7.65,
       "invert": true,
-      "note": "cierre del miércoles 25, desde 26,36 el martes; otras fuentes lo dan entre 28,03 y 28,29. Sigue lejos de la zona tranquila de 20",
+      "note": "cotización de esta mañana según el tablero de Yahoo Finance, desde 27,98 del miércoles; baja con el rebote de los futuros pero sigue arriba de la zona tranquila de 20",
       "source": {
-        "name": "VistaP Global (cierre 25/11)",
-        "url": "https://vistapglobal.com/stocks-close-mixed-on-wednesday-november-25-2026-as-hot-pce-inflation-new-tariff-plans-and-an-ai-sell-off-test-wall-street-amd-eprx-googl-modd-nvda-ser-spcx-vix/"
+        "name": "Yahoo Finance (Wall St futures, 27/11)",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-surge-investors-073405748.html"
       }
     },
     {
       "id": "wti",
       "label": "Petróleo WTI",
-      "value": "US$83,68",
+      "value": "US$85,8",
       "unit": "por barril",
-      "change": 2.0,
+      "change": 2.5,
       "invert": false,
-      "note": "cierre del miércoles 25; Brent US$94,61 (+3,5%). Subió por un ataque de los hutíes a la refinería saudita de Ras Tanura; esta mañana el WTI opera entre US$83,4 y US$84,0 y el domingo 29 se reúne la OPEP+",
+      "note": "mañana del viernes 27 (US$85,78; la variación es contra el cierre de US$83,68 del miércoles); Brent US$96,61. Sostiene la suba por el ataque reclamado por los hutíes sobre Ras Tanura y el riesgo en Ormuz; el domingo 29 se reúne la OPEP+ y se espera que mantenga la producción",
       "source": {
-        "name": "Kotak Neo (petróleo, 26/11)",
-        "url": "https://www.kotakneo.com/news/commodities/brent-crude-oil-prices-middle-east-tensions-opec-meeting-2026/"
+        "name": "Wisevoter (petróleo, 27/11)",
+        "url": "https://wisevoter.com/world/2026/11/27/brent-rises-ahead-of-opec-meeting"
       }
     },
     {
       "id": "btc",
       "label": "Bitcoin",
-      "value": "≈ US$60.600",
+      "value": "≈ US$61.600",
       "unit": "USD",
-      "change": 3.0,
+      "change": 1.1,
       "invert": false,
-      "note": "mañana del jueves 26 (US$60.581,68 a las 3:07 de Argentina); la variación es de las últimas 24 horas. El miércoles había caído debajo de US$58.000 y noviembre suma casi US$4.940 millones de salidas de los fondos cotizados",
+      "note": "mañana del viernes 27 (US$61.579 según CoinGecko); la variación es de las últimas 24 horas. Rebotó cerca de 8% desde el mínimo de US$57.300 del miércoles, pero el índice de miedo y codicia sigue en 'miedo extremo'",
       "source": {
-        "name": "The Crypto Times (bitcoin, 26/11)",
-        "url": "https://www.cryptotimes.io/2026/11/26/bitcoin-price-holds-60k-as-264m-in-btc-liquidations-hit-shorts-harder/"
+        "name": "FinFly.news con datos de CoinGecko (27/11)",
+        "url": "https://finfly.news/en/crypto/crypto-prices-2026-11-27"
       }
     }
   ],
@@ -120,11 +120,11 @@
       "status": "candidata",
       "risk": "bajo",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$579,32 (cierre 25/11, +0,37%)",
+      "price": "≈ US$579,32 (último cierre, 25/11, +0,37%; Wall Street no operó el 26)",
       "discount": "≈ 3% debajo de su máximo de 52 semanas (US$596,92); rango anual US$464,01–596,92",
-      "thesis": "Sigue siendo la opción defensiva de la lista y el miércoles lo volvió a mostrar: subió 0,37% en un día en que el Nasdaq llegó a caer 4,6% y cerró en baja, y ya suma dos ruedas positivas mientras la tecnología sufre. Su negocio está en seguros, ferrocarriles, energía y consumo, con poca exposición a los chips y a la inteligencia artificial, que es donde se concentra la venta. Cotiza a unas 16 veces sus ganancias según Yahoo Finance, por debajo del S&P 500, y sube cerca de 15% en el año; UBS tiene un precio objetivo de US$628, unos 8% arriba. Además el CEDEAR sigue al contado con liquidación, que funciona como cobertura si el peso se debilita.",
-      "risks": "Si la tecnología rebota fuerte se va a quedar atrás. Está cerca de sus máximos, así que el margen de descuento es chico. El contado con liquidación bajó a $1.780 el miércoles; si sigue bajando, achica la ganancia en pesos.",
-      "watch": "Hoy el CEDEAR opera con Nueva York cerrado: mejor esperar a la media jornada del viernes para tener precio de referencia.",
+      "thesis": "Sigue siendo la opción defensiva de la lista: el miércoles subió 0,37% en un día en que el Nasdaq llegó a caer 4,6%, y su negocio de seguros, ferrocarriles, energía y consumo tiene poca exposición a los chips y a la inteligencia artificial, que es donde se concentran los vaivenes. Cotiza a unas 16 veces sus ganancias según Yahoo Finance, por debajo del S&P 500, y sube cerca de 15% en el año; UBS tiene un precio objetivo de US$628, unos 8% arriba del último cierre. Además el CEDEAR sigue al contado con liquidación, que funciona como cobertura si el peso se debilita.",
+      "risks": "Con los futuros del Nasdaq subiendo más de 2%, en días de rebote tecnológico suele quedarse atrás. Está cerca de sus máximos, así que el margen de descuento es chico. El contado con liquidación bajó a la zona de $1.768; si sigue bajando, achica la ganancia en pesos.",
+      "watch": "La media jornada de hoy; si en el rebote tecnológico el mercado sale de las defensivas.",
       "sources": [
         {
           "name": "Yahoo Finance, BRK-B",
@@ -148,11 +148,11 @@
       "status": "candidata",
       "risk": "medio",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$489,93 (cierre 25/11, −1,25%)",
-      "discount": "Llegó a caer más de 3% el miércoles y recuperó buena parte en la tarde",
-      "thesis": "Microsoft cayó 1,25% el miércoles, pero había llegado a perder más de 3% durante la rueda y la recuperación de la tarde muestra que hay compradores cuando la tecnología se castiga. Su negocio de software para empresas y nube cobra por suscripción y depende menos de la importación de hardware, el blanco de los aranceles; además, el detalle conocido esta mañana indica que los nuevos aranceles no se suman a los de julio. Criteria la mantiene en su cartera recomendada de CEDEAR y expertos citados por iProfesional recomiendan priorizar empresas con mucha caja y resultados sólidos. Con los futuros del Nasdaq subiendo hoy, la idea es comprar en partes y aprovechar días de baja.",
-      "risks": "La inflación subyacente de 3,3% deja casi segura una suba de tasas en diciembre, algo que castiga a las acciones de crecimiento. Si la venta de tecnología se generaliza, ninguna grande queda a salvo.",
-      "watch": "La media jornada del viernes; si la venta de chips se contagia al software.",
+      "price": "≈ US$489,93 (último cierre, 25/11, −1,25%; Wall Street no operó el 26)",
+      "discount": "≈ 12% debajo de su máximo de 52 semanas (US$559,15); cayó 7% en el último mes (StockAnalysis y 24/7 Wall St.)",
+      "thesis": "Microsoft cayó cerca de 7% en el último mes junto con el resto de la tecnología y quedó unos 12% debajo de su máximo de 52 semanas de US$559,15, pero, según 24/7 Wall St., ninguno de los analistas que la siguen recomienda vender. StockAnalysis informa que 58 analistas tienen una recomendación promedio de 'compra fuerte' y un precio objetivo promedio de US$637, unos 30% arriba del último cierre. Su negocio de software para empresas y nube cobra por suscripción y depende menos de la importación de hardware, el blanco de los aranceles, y Criteria la mantiene en su cartera recomendada de CEDEAR. Esta mañana las grandes tecnológicas suben antes de la apertura, pero en una media jornada con poco volumen conviene comprar en partes.",
+      "risks": "La Reserva Federal sigue con sesgo de subir tasas en diciembre, algo que castiga a las acciones de crecimiento. Si la venta de tecnología vuelve después del rebote, ninguna grande queda a salvo.",
+      "watch": "Si el rebote de los futuros se sostiene durante la media jornada; el dato de empleo del viernes 4/12.",
       "sources": [
         {
           "name": "Morningstar, MSFT",
@@ -169,6 +169,14 @@
         {
           "name": "iProfesional (qué invertir en noviembre)",
           "url": "https://www.iprofesional.com/finanzas/468868-en-que-acciones-y-bonos-invertir-en-noviembre-en-medio-de-la-volatilidad-local-y-global"
+        },
+        {
+          "name": "StockAnalysis, MSFT",
+          "url": "https://stockanalysis.com/stocks/msft/"
+        },
+        {
+          "name": "24/7 Wall St. (Microsoft, 24/11)",
+          "url": "https://247wallst.com/investing/2026/11/24/microsoft-is-down-7-in-a-month-but-not-one-analyst-says-sell-wall-street-sees-630/"
         }
       ]
     },
@@ -180,11 +188,11 @@
       "status": "candidata",
       "risk": "medio",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$273,10 (cierre 25/11, −2,13%)",
+      "price": "≈ US$273,10 (último cierre, 25/11, −2,13%; Wall Street no operó el 26)",
       "discount": "Devolvió 2,13% el miércoles; sigue arriba de los US$265,29 del viernes 20",
-      "thesis": "Alphabet cayó 2,13% el miércoles junto con el resto de las empresas ligadas a la inteligencia artificial, pero sigue arriba del piso de US$265 del viernes pasado. Sus ingresos vienen de la publicidad, YouTube y la nube, menos dependientes del ritmo de compras de procesadores que los fabricantes de chips. Es la mayor posición de la cartera de CEDEAR de Criteria (17%) y expertos citados por Rosario Finanzas e iProfesional la eligen entre las tecnológicas con caja y resultados sólidos. La mantenemos como candidata para comprar en partes: la zona de US$265–270 es la referencia para sumar.",
+      "thesis": "Alphabet cayó 2,13% el miércoles junto con el resto de las empresas ligadas a la inteligencia artificial, pero sigue arriba del piso de US$265 del viernes 20. Sus ingresos vienen de la publicidad, YouTube y la nube, menos dependientes del ritmo de compras de procesadores que los fabricantes de chips. Según MarketBeat, 55 analistas tienen un precio objetivo promedio de US$412,51 (el más bajo, US$300), con 50 recomendaciones de compra y ninguna de venta; además es la mayor posición de la cartera de CEDEAR de Criteria (17%). Esta mañana las grandes tecnológicas suben antes de la apertura; la zona de US$265–270 sigue siendo la referencia para sumar en partes.",
       "risks": "Sigue expuesta a la volatilidad de la tecnología, a los juicios por competencia en Estados Unidos y a la suba de tasas que el mercado espera para diciembre.",
-      "watch": "Si defiende la zona de US$265–270; el rebote de los futuros del Nasdaq de esta mañana.",
+      "watch": "Si el rebote de los futuros se sostiene en la media jornada; si defiende la zona de US$265–270.",
       "sources": [
         {
           "name": "Yahoo Finance, GOOGL",
@@ -201,6 +209,10 @@
         {
           "name": "Rosario Finanzas, cartera de noviembre",
           "url": "https://rosariofinanzas.ar/noticias/cartera-de-noviembre-que-bonos-acciones-y-cedears-recomiendan-los-expertos"
+        },
+        {
+          "name": "MarketBeat, objetivos de GOOGL",
+          "url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/forecast/"
         }
       ]
     },
@@ -212,9 +224,9 @@
       "status": "candidata",
       "risk": "medio",
       "horizon": "Largo plazo (2 años o más)",
-      "price": "≈ US$1.479,15 (25/11, +1,97% según Morningstar; verificá el cierre en tu bróker)",
-      "discount": "≈ 35% debajo de su máximo de 52 semanas (US$2.290,92, según Morningstar); el mínimo es US$1.336,72",
-      "thesis": "Mercado Libre subió cerca de 2% el miércoles, otra vez a contramano del Nasdaq, y suma tres ruedas positivas desde la zona de mínimos del año. La caída de 2026 vino por márgenes más finos: en el tercer trimestre los ingresos crecieron 41% sin efecto cambiario, pero la empresa sacrificó ganancia para invertir en crédito y logística. Según GuruFocus cotiza a unas 38 veces sus ganancias, contra una mediana de 72 veces en los últimos cinco años. Citi la recomienda comprar con objetivo de US$2.050, mientras JPMorgan (US$1.850) y UBS (US$1.600) la tienen en neutral: aun el objetivo más bajo queda arriba del precio actual.",
+      "price": "≈ US$1.467,30 (cierre 25/11, +1,17% según MarketBeat; Morningstar informaba US$1.479,15: verificá en tu bróker)",
+      "discount": "≈ 36% debajo de su máximo de 52 semanas (US$2.290,92, según Morningstar); cae 27,2% en el año (MarketBeat)",
+      "thesis": "Mercado Libre subió el miércoles a contramano del Nasdaq y suma tres ruedas positivas desde la zona de mínimos del año, aunque todavía cae 27% en 2026. La caída vino por márgenes más finos: en el tercer trimestre los ingresos crecieron 41% sin efecto cambiario, pero la empresa sacrificó ganancia para invertir en crédito y logística. Según GuruFocus cotiza a unas 38 veces sus ganancias, contra una mediana de 72 veces en los últimos cinco años, y MarketBeat informa un precio objetivo promedio de US$2.160. Citi la recomienda comprar con objetivo de US$2.050, mientras JPMorgan (US$1.850) y UBS (US$1.600) la tienen en neutral: aun el objetivo más bajo queda arriba del precio actual.",
       "risks": "Si el real sigue débil o la empresa vuelve a sacrificar margen, la presión puede durar. La exposición a Argentina, con el riesgo país en 1.067 y la economía en recesión técnica, suma volatilidad. La suba de tasas en EE.UU. pega a los emergentes.",
       "watch": "Si sostiene la zona de US$1.400–1.450; el real brasileño.",
       "sources": [
@@ -229,6 +241,10 @@
         {
           "name": "GuruFocus (valuación, 23/11)",
           "url": "https://www.gurufocus.com/news/9215942/mercadolibre-inc-meli-stock-up-52-and-still-undervalued-gf-score-81100"
+        },
+        {
+          "name": "MarketBeat, MELI",
+          "url": "https://www.marketbeat.com/stocks/NASDAQ/MELI/"
         }
       ]
     },
@@ -240,10 +256,10 @@
       "status": "candidata",
       "risk": "medio",
       "horizon": "Mediano plazo (6 a 18 meses)",
-      "price": "≈ US$55,31 (cierre 25/11, ADR, +2,22%)",
+      "price": "≈ US$55,31 (último cierre del ADR, 25/11, +2,22%; Wall Street no operó el 26)",
       "discount": "Rango de 52 semanas US$37,69–64,60; ≈ 14% debajo del máximo y de las pocas del panel argentino que suben en el año",
-      "thesis": "Tenaris subió 2,22% el miércoles, acompañando la suba de casi 2% del petróleo, y recuperó parte de la baja del martes, que en buena medida fue por el corte de su dividendo anticipado (US$0,60 por acción según Google Finance). Vende tubos para la industria petrolera en todo el mundo y cobra en dólares, así que es la forma de tener una empresa del grupo Techint con menos exposición al riesgo argentino, que sigue arriba de 1.000 puntos. Según el informe de IEB del 20/11, junto con Ternium es la única del panel que sube en el año mientras el promedio de los ADR cae casi 30%.",
-      "risks": "Si la OPEP+ decide producir más el domingo, el petróleo puede volver a bajar y frenar los pedidos de tubos. Los aranceles en EE.UU. pueden afectar su negocio allí.",
+      "thesis": "Tenaris subió 2,22% el miércoles acompañando al petróleo, que esta mañana sigue firme con el WTI cerca de US$85,8 y el Brent en US$96,6 por los ataques en el Golfo. Vende tubos para la industria petrolera en todo el mundo y cobra en dólares, así que es la forma de tener una empresa del grupo Techint con menos exposición al riesgo argentino, que sigue en 1.067 puntos. Según el informe de IEB del 20/11, junto con Ternium es la única del panel que sube en el año mientras el promedio de los ADR cae casi 30%. Las energéticas lideraron el jueves en BYMA, así que conviene mirar cómo abre el ADR hoy antes de sumar.",
+      "risks": "Si la OPEP+ sorprende el domingo con más producción, el petróleo puede bajar y frenar los pedidos de tubos. Los aranceles en EE.UU. pueden afectar su negocio allí.",
       "watch": "La reunión de la OPEP+ del domingo 29; el petróleo arriba de US$80.",
       "sources": [
         {
@@ -257,6 +273,10 @@
         {
           "name": "KCH FM (informe de IEB)",
           "url": "https://kchcomunicacion.com/2026/11/22/adr-argentinos-en-wall-street-se-hunden-hasta-61-en-el-ano/"
+        },
+        {
+          "name": "Wisevoter (petróleo, 27/11)",
+          "url": "https://wisevoter.com/world/2026/11/27/brent-rises-ahead-of-opec-meeting"
         }
       ]
     },
@@ -269,11 +289,11 @@
       "status": "candidata",
       "risk": "medio",
       "horizon": "Mediano a largo plazo (1 a 3 años)",
-      "price": "≈ US$62,3 (ADR, 25/11, +1,9% según Forbes Argentina y Yahoo Finance; verificá la cotización en tu bróker)",
+      "price": "≈ US$62,3 (último cierre del ADR, 25/11); en BYMA $4.395 el 25/11 (Rava) y el jueves 26 subió alrededor de 3,3% con las energéticas: verificá en tu bróker",
       "discount": "Muy cerca de su mínimo de 52 semanas (US$60,65, del 20/11); objetivo promedio de 9 analistas ≈ US$121 (Investing.com)",
-      "thesis": "Pampa rebotó alrededor de 1,9% el miércoles y se despegó un poco de su mínimo de 52 semanas, en el día en que el riesgo país bajó 2,5%. Su negocio, generación eléctrica y gas de Vaca Muerta, es más estable que el de los bancos y por eso aparece en casi todas las carteras de la City para noviembre: PPI le da 13% de su cartera de acciones argentinas y la mantiene con YPF y TGS como eje energético, y Rosario Finanzas la cita entre las recomendadas. Investing.com informa nueve recomendaciones de compra, ninguna de venta y un objetivo promedio de US$121, cerca del doble del precio actual.",
+      "thesis": "Pampa acompañó el jueves la suba de las energéticas en BYMA, en un día en que lideraron Transener, Edenor y TGS, y el ADR sigue muy cerca de su mínimo de 52 semanas. Su negocio, generación eléctrica y gas de Vaca Muerta, es más estable que el de los bancos y por eso aparece en casi todas las carteras de la City para noviembre: PPI le da 13% de su cartera de acciones argentinas junto con YPF y TGS como eje energético. Investing.com informa nueve recomendaciones de compra, ninguna de venta y un objetivo promedio de US$121, cerca del doble del precio actual. Hoy el ADR vuelve a operar y va a mostrar si acompaña la suba local.",
       "risks": "Con el riesgo país arriba de 1.000 y la economía en recesión técnica, el panel argentino puede seguir bajo presión. El último balance quedó por debajo de lo esperado y los objetivos de los analistas son anteriores al deterioro de noviembre.",
-      "watch": "Si el riesgo país sigue bajando hacia 1.000; si el ADR se sostiene arriba de US$60.",
+      "watch": "Cómo abre el ADR hoy frente a la suba local del jueves; si el riesgo país baja hacia 1.000.",
       "sources": [
         {
           "name": "Forbes Argentina (ADR, 25/11)",
@@ -290,6 +310,14 @@
         {
           "name": "iProfesional (cartera de PPI para noviembre)",
           "url": "https://www.iprofesional.com/finanzas/469020-10-acciones-del-merval-que-recomienda-comprar-broker-top-de-la-city"
+        },
+        {
+          "name": "Rava, PAMP",
+          "url": "https://www.rava.com/perfil/PAMP"
+        },
+        {
+          "name": "The Rio Times (Merval, 26/11)",
+          "url": "https://www.riotimesonline.com/argentina-markets-merval-peso-thursday-november-26-2026"
         }
       ]
     },
@@ -301,11 +329,11 @@
       "status": "observacion",
       "risk": "alto",
       "horizon": "Largo plazo, solo con una parte chica",
-      "price": "≈ US$149,30 (cierre 25/11, −3,9%)",
+      "price": "≈ US$149,30 (último cierre, 25/11, −3,9%); antes de la apertura de hoy opera entre US$155,5 y US$156,6 (+4,2% a +4,9%)",
       "discount": "Llegó a caer más de 9% el miércoles; un banco la subió de categoría el martes con un objetivo unos 29% arriba de aquel precio (Motley Fool)",
-      "thesis": "Nvidia sigue en el centro de la tormenta: después del salto del lunes por el regreso de Jensen Huang como director ejecutivo, el martes perdió 5,86% y el miércoles otro 3,9%, tras llegar a caer más de 9%. Además, S&P Global Ratings puso su calificación AA en revisión con perspectiva negativa por dudas sobre la independencia del directorio y el control de la gerencia. Del lado positivo, esta mañana las tecnológicas de Asia rebotan, Kioxia sube más de 12% por un acuerdo con Nvidia y los aranceles anunciados resultaron menos duros de lo temido. Sigue siendo el principal proveedor de chips para inteligencia artificial, pero la dejamos en observación hasta que se aclaren las dudas de gobierno corporativo.",
+      "thesis": "Nvidia sigue en el centro de la escena: el lunes saltó 31,5% por el regreso de Jensen Huang como director ejecutivo, once días después de su renuncia, y después devolvió parte de la suba el martes y el miércoles. Esta mañana vuelve a subir más de 4% antes de la apertura y encabeza el rebote de los futuros del Nasdaq. Del lado de los fundamentos sigue siendo el principal proveedor de chips para inteligencia artificial, y Motley Fool citaba un objetivo mediano de los analistas de US$230. Pero S&P Global Ratings puso su calificación AA en revisión con perspectiva negativa por dudas sobre la independencia del directorio y el control de la gerencia, y el regreso de Huang generó críticas de ambos partidos en EE.UU.; la dejamos en observación hasta que se aclaren esas dudas.",
       "risks": "Nuevas novedades sobre gobierno corporativo o investigaciones; aranceles que alcancen a los semiconductores; suba de tasas en diciembre. Puede moverse 5% o más por día en ambas direcciones.",
-      "watch": "Si defiende la zona de US$145–150; novedades sobre la revisión de S&P y el directorio.",
+      "watch": "Si sostiene la suba de la mañana en la media jornada; novedades sobre la revisión de S&P y el directorio.",
       "sources": [
         {
           "name": "Yahoo Finance / Motley Fool (Nvidia, 25/11)",
@@ -318,6 +346,14 @@
         {
           "name": "Motley Fool (Nvidia, 24/11)",
           "url": "https://www.fool.com/coverage/stock-market-today/2026/11/24/stock-market-today-nov-24-nvidia-gives-back-usd240-billion-in-market-value-despite-wall-street-upgrade-signaling-29-upside/"
+        },
+        {
+          "name": "CNBC (regreso de Jensen Huang, 23/11)",
+          "url": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo-market-rally.html"
+        },
+        {
+          "name": "Forbes (futuros y tecnológicas, 27/11)",
+          "url": "https://www.forbes.com/sites/siladityaray/2026/11/27/stock-futures-surge-as-battered-ai-shares-rebound-ahead-of-shorterned-friday-trading/"
         }
       ]
     },
@@ -329,11 +365,11 @@
       "status": "observacion",
       "risk": "alto",
       "horizon": "Largo plazo, solo con una parte chica",
-      "price": "≈ US$31,5 (ADR, 25/11, −0,8% según Forbes Argentina y Rava; verificá la cotización en tu bróker)",
+      "price": "≈ US$31,5 (último cierre del ADR, 25/11); en BYMA la acción subió 5,7% el jueves 26: verificá la cotización en tu bróker",
       "discount": "Cerca de su mínimo en dos años; su máximo de 52 semanas había sido US$57,87",
-      "thesis": "YPF volvió a quedar entre las pocas en baja el miércoles (−0,8%), aun cuando el petróleo subió casi 2% y el resto de los ADR rebotó hasta 6%, lo que muestra que el mercado sigue castigándola como el reflejo más directo del riesgo argentino. Para quienes miran el largo plazo, sigue siendo la favorita de muchas carteras: PPI le asigna 17% de su cartera de acciones argentinas para noviembre por el crecimiento de Vaca Muerta, y cotiza cerca de la mitad de su máximo de 52 semanas. La mantenemos en observación hasta ver si la baja del riesgo país del miércoles se consolida y qué decide la OPEP+ el domingo.",
+      "thesis": "YPF fue la estrella del jueves en BYMA con una suba de 5,7%, después de varias ruedas de castigo, y el ADR acumula una baja de alrededor de 28,5% en noviembre según Diario Río Negro. El petróleo firme, con el Brent cerca de US$96,6, ayuda a su negocio, y PPI le asigna 17% de su cartera de acciones argentinas para noviembre por el crecimiento de Vaca Muerta. Sigue cerca de la mitad de su máximo de 52 semanas de US$57,87. La mantenemos en observación hasta ver si el ADR convalida hoy la suba local, qué decide la OPEP+ el domingo y si el riesgo país empieza a bajar de verdad.",
       "risks": "Riesgo país arriba de 1.000 y economía en recesión técnica; una decisión de la OPEP+ de producir más puede bajar el crudo; puede marcar nuevos mínimos si el clima vuelve a empeorar.",
-      "watch": "Si el riesgo país baja de 1.000; la reunión de la OPEP+ del domingo 29.",
+      "watch": "Cómo abre el ADR hoy; la reunión de la OPEP+ del domingo 29; si el riesgo país baja de 1.000.",
       "sources": [
         {
           "name": "Forbes Argentina (ADR, 25/11)",
@@ -350,40 +386,48 @@
         {
           "name": "Telesol (riesgo país, Merval y ADR, 25/11)",
           "url": "https://www.telesoldiario.com/economia/el-riesgo-pais-bajo-a-1067-puntos-tras-tocar-un-pico-intradiario"
+        },
+        {
+          "name": "Diario El Zonda (Merval, 26/11)",
+          "url": "https://www.diarioelzondasj.com.ar/economia/el-merval-subio-33-y-encadena-su-tercer-avance-seguido"
+        },
+        {
+          "name": "Diario Río Negro (riesgo país, 26/11)",
+          "url": "https://www.rionegro.com.ar/economia/el-riesgo-pais-se-mantiene-en-1-067-puntos-y-el-dolar-blue-sigue-por-encima-de-los-1-700-4815796/"
         }
       ]
     }
   ],
   "agenda": [
     {
-      "date": "Jue 26/11",
-      "event": "Acción de Gracias: Wall Street cerrado; BYMA opera normal de 10:30 a 18:00",
-      "why": "Sin Nueva York, los CEDEAR y los ADR que cotizan en pesos se mueven con poco volumen y precios menos representativos: mejor usar órdenes con precio límite."
-    },
-    {
       "date": "Vie 27/11",
       "event": "Wall Street opera media jornada (cierra a las 15:00 de Argentina)",
-      "why": "Primera reacción completa al detalle de los aranceles y al rebote de los futuros, pero con poca liquidez."
+      "why": "Primera rueda después de Acción de Gracias, con poco volumen: los movimientos pueden exagerarse, así que mejor usar órdenes con precio límite en CEDEAR y ADR."
     },
     {
       "date": "Dom 29/11",
       "event": "Reunión de la OPEP+",
-      "why": "Define la producción de petróleo para 2027 con el crudo en alza por los ataques en Medio Oriente; afecta a YPF, Pampa, Vista y Tenaris."
+      "why": "Define la producción de petróleo para 2027 con el Brent cerca de US$96 por los ataques en el Golfo; se espera que mantenga la producción. Afecta a YPF, Pampa, Vista y Tenaris."
     },
     {
       "date": "Lun 30/11",
       "event": "Último día hábil de noviembre",
-      "why": "El riesgo país acumula una suba de 35,6% en el mes: el cierre mensual muestra si la mejora del miércoles se sostiene."
+      "why": "El riesgo país sube cerca de 40% en el mes: el cierre mensual muestra si el rebote de los bonos de esta semana se sostiene."
+    },
+    {
+      "date": "Mar 1/12",
+      "event": "Índice ISM manufacturero y encuesta JOLTS de vacantes en EE.UU.",
+      "why": "Primeros datos de actividad y empleo de la semana; un dato fuerte refuerza la idea de suba de tasas."
+    },
+    {
+      "date": "Vie 4/12",
+      "event": "Informe de empleo de noviembre en EE.UU.",
+      "why": "El dato más importante antes de la Reserva Federal: define cuánto pesa la suba de tasas sobre las tecnológicas y los emergentes."
     },
     {
       "date": "Mié 9/12",
       "event": "Decisión de tasas de la Reserva Federal",
-      "why": "Con la inflación subyacente PCE en 3,3%, el mercado descuenta casi por completo una suba de tasas, algo que pesa sobre las tecnológicas y los emergentes."
-    },
-    {
-      "date": "Esta semana",
-      "event": "Riesgo país, dólar oficial en récord y recesión técnica",
-      "why": "El riesgo país bajó a 1.067 pero tocó 1.131 durante la rueda, y el oficial del Banco Nación marcó $1.630; si no se estabilizan, las acciones argentinas siguen bajo presión."
+      "why": "Con la inflación subyacente PCE en 3,3%, el mercado descuenta casi por completo una suba de tasas."
     }
   ],
   "history": [
@@ -816,6 +860,54 @@
           "ticker": "YPF",
           "status": "observacion",
           "price": "≈ US$31,5 (ADR, 25/11, −0,8% según Forbes Argentina y Rava; verificá la cotización en tu bróker)"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-27",
+      "label": "Vie 27/11",
+      "mood": "positivo",
+      "headline": "El Merval subió 3,3% sin Wall Street y esta mañana los futuros del Nasdaq ganan más de 2% por el rebote de las tecnológicas, en una media jornada",
+      "picks": [
+        {
+          "ticker": "BRKB",
+          "status": "candidata",
+          "price": "≈ US$579,32 (último cierre, 25/11, +0,37%; Wall Street no operó el 26)"
+        },
+        {
+          "ticker": "MSFT",
+          "status": "candidata",
+          "price": "≈ US$489,93 (último cierre, 25/11, −1,25%; Wall Street no operó el 26)"
+        },
+        {
+          "ticker": "GOOGL",
+          "status": "candidata",
+          "price": "≈ US$273,10 (último cierre, 25/11, −2,13%; Wall Street no operó el 26)"
+        },
+        {
+          "ticker": "MELI",
+          "status": "candidata",
+          "price": "≈ US$1.467,30 (cierre 25/11, +1,17% según MarketBeat; Morningstar informaba US$1.479,15: verificá en tu bróker)"
+        },
+        {
+          "ticker": "TS",
+          "status": "candidata",
+          "price": "≈ US$55,31 (último cierre del ADR, 25/11, +2,22%; Wall Street no operó el 26)"
+        },
+        {
+          "ticker": "PAMP",
+          "status": "candidata",
+          "price": "≈ US$62,3 (último cierre del ADR, 25/11); en BYMA $4.395 el 25/11 (Rava) y el jueves 26 subió alrededor de 3,3% con las energéticas: verificá en tu bróker"
+        },
+        {
+          "ticker": "NVDA",
+          "status": "observacion",
+          "price": "≈ US$149,30 (último cierre, 25/11, −3,9%); antes de la apertura de hoy opera entre US$155,5 y US$156,6 (+4,2% a +4,9%)"
+        },
+        {
+          "ticker": "YPF",
+          "status": "observacion",
+          "price": "≈ US$31,5 (último cierre del ADR, 25/11); en BYMA la acción subió 5,7% el jueves 26: verificá la cotización en tu bróker"
         }
       ]
     }
