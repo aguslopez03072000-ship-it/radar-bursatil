@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-26T20:25:00-03:00",
+  "updated": "2026-11-27T09:30:00-03:00",
   "threshold": 15,
-  "note": "Jueves de Acción de Gracias: Wall Street estuvo cerrado todo el día, así que no hubo rueda ni operaciones después del cierre (mañana viernes opera con cierre anticipado a las 13 de Nueva York). Las noticias de la noche no muestran ninguna acción con perpetuo en BingX moviéndose 10% o más, pero tampoco en la corrida de las 20:20 se pudieron consultar los precios de BingX 24/7.",
+  "note": "Viernes post Acción de Gracias, pre-apertura: ninguna acción con perpetuo en BingX se mueve 10% o más; lo más fuerte entre ellas es Nebius (+9,5%), seguida de Marvell (+7,3%), AMD (+7%), Micron (+6%) y Nvidia (+4,7%) por el rebote de la inteligencia artificial. Los que sí superan 10% (Banco Bradesco, IQM y Alvotech) no tienen perpetuo confirmado en BingX, y no se pudieron consultar los precios de BingX 24/7.",
   "items": [
     {
       "date": "2026-11-24",
