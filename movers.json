@@ -1,8 +1,23 @@
 {
-  "updated": "2026-11-27T09:30:00-03:00",
+  "updated": "2026-11-27T15:35:00-03:00",
   "threshold": 15,
-  "note": "Viernes post Acción de Gracias, pre-apertura: ninguna acción con perpetuo en BingX se mueve 10% o más; lo más fuerte entre ellas es Nebius (+9,5%), seguida de Marvell (+7,3%), AMD (+7%), Micron (+6%) y Nvidia (+4,7%) por el rebote de la inteligencia artificial. Los que sí superan 10% (Banco Bradesco, IQM y Alvotech) no tienen perpetuo confirmado en BingX, y no se pudieron consultar los precios de BingX 24/7.",
+  "note": "Viernes de rueda corta (cerró a las 15 de Argentina): ninguna acción con perpetuo en BingX se movió 15% o más en la rueda; lo más fuerte fue SanDisk (+13% a media rueda) por el rebote de chips, con Micron (+5,6%) atrás. Fuera de horario, Nu Holdings subió 11,6% antes de la apertura por la euforia en Brasil tras la designación del presidente de Bradesco como próximo ministro de Hacienda; no se pudieron consultar los precios de BingX 24/7.",
   "items": [
+    {
+      "date": "2026-11-27",
+      "label": "Vie 27/11",
+      "ticker": "NU",
+      "name": "Nu Holdings (Nubank)",
+      "change": 11.6,
+      "price": null,
+      "session": "pre-apertura",
+      "reason": "Subió con todos los activos brasileños después de que Luiz Carlos Trabuco Cappi, presidente del directorio de Bradesco, aceptara ser ministro de Hacienda de Brasil desde 2027; en la rueda siguió en alza.",
+      "futures": "BingX",
+      "source": {
+        "name": "StockTitan",
+        "url": "https://www.stocktitan.net/articles/stock-market-today-live-november-27-2026"
+      }
+    },
     {
       "date": "2026-11-24",
       "label": "Mar 24/11",
